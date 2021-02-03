@@ -202,7 +202,7 @@ methods_page <- tabPanel(
                              
                              HTML('The data were retrieved for all UMCs included in this proof-of-principle
                              dataset from the
-                        <a href="eu.trialstracker.net">EU Trials Tracker</a> by the EBM DataLab.'),
+                        <a href="https://eu.trialstracker.net">EU Trials Tracker</a> by the EBM DataLab.'),
                              
                              "While the EU Clinical Trials Register is one of the most important
                         European trial registries, it is not the only available registry. There are other
