@@ -450,6 +450,45 @@ server <- function (input, output, session) {
         
     })
 
+    output$allumc_opencode <- renderUI({
+
+        ## Value for Open Code
+
+        all_denom_oc <- odoc_data %>%
+            filter(
+                ! is.na (is_open_code),
+                language == "English"
+            ) %>%
+            nrow()
+
+        all_numer_oc <- odoc_data %>%
+            filter(
+                is_open_code,
+                language == "English"
+            ) %>%
+            nrow()
+
+        wellPanel(
+            style="padding-top: 0px; padding-bottom: 0px;",
+            h2(strong("Open Code"), align = "left"),
+            fluidRow(
+                column(
+                    12,
+                    metric_box(
+                        title = "Open Code",
+                        value = paste0(round(100*all_numer_oc/all_denom_oc), "%"),
+                        value_text = "of publications were Open Code",
+                        plot = plotlyOutput('plot_allumc_opencode', height="300px"),
+                        info_id = "infoALLUMCOpenCode",
+                        info_title = "Open Code (All UMCs)",
+                        info_text = allumc_opencode_tooltip
+                    )
+                )
+            )
+        )
+        
+    })
+
     color_palette <- c("#B6B6B6", "#879C9D", "#F1BA50", "#AA493A",
                      "#303A3E", "#007265", "#634587", "#000000",   #363457 #533A71 #011638 #634587
                      "#DCE3E5")
@@ -513,6 +552,13 @@ server <- function (input, output, session) {
     output$plot_allumc_opendata <- renderPlotly({
         return(plot_allumc_opendata(odoc_data, color_palette, color_palette_bars))
     })
+
+    ## Open Code
+
+    output$plot_allumc_opencode <- renderPlotly({
+        return(plot_allumc_opencode(odoc_data, color_palette, color_palette_bars))
+    })
+    
     
 }
 
