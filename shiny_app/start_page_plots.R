@@ -425,7 +425,7 @@ plot_randomization <- function (dataset, umc, color_palette) {
                 title = '<b>UMC</b>'
             ),
             yaxis = list(
-                title = '<b>Percentage Randomized</b>',
+                title = '<b>Randomized (%)</b>',
                 range = c(0, 100)
             ),
             paper_bgcolor = color_palette[9],
@@ -517,7 +517,7 @@ plot_blinding <- function (dataset, umc, color_palette) {
                 title = '<b>UMC</b>'
             ),
             yaxis = list(
-                title = '<b>Percentage Blinded</b>',
+                title = '<b>Blinded (%)</b>',
                 range = c(0, 100)
             ),
             paper_bgcolor = color_palette[9],
@@ -609,7 +609,7 @@ plot_power <- function (dataset, umc, color_palette) {
                 title = '<b>UMC</b>'
             ),
             yaxis = list(
-                title = '<b>Percentage Reporting a Power Calculation</b>',
+                title = '<b>Reporting a Power Calculation (%)</b>',
                 range = c(0, 100)
             ),
             paper_bgcolor = color_palette[9],
@@ -701,7 +701,7 @@ plot_iacuc <- function (dataset, umc, color_palette) {
                 title = '<b>UMC</b>'
             ),
             yaxis = list(
-                title = '<b>Percentage Reporting an IACUC statement</b>',
+                title = '<b>Reporting an IACUC statement (%)</b>',
                 range = c(0, 100)
             ),
             paper_bgcolor = color_palette[9],
