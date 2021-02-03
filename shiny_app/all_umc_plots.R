@@ -73,7 +73,7 @@ plot_allumc_openaccess <- function (dataset, color_palette) {
             ),
             yaxis = list(
                 title = '<b>Open Access (%)</b>',
-                range = c(0, round(max(plot_data$percentage)/5)*5)
+                range = c(0, ceiling(max(plot_data$percentage)/5)*5)
             ),
             paper_bgcolor = color_palette[9],
             plot_bgcolor = color_palette[9]
@@ -141,7 +141,7 @@ plot_allumc_opendata <- function (dataset, color_palette, color_palette_bars) {
             ),
             yaxis = list(
                 title = '<b>Open Data (%)</b>',
-                range = c(0, round(max(plot_data$percentage)/5)*5)
+                range = c(0, ceiling(max(plot_data$percentage)/5)*5)
             ),
             paper_bgcolor = color_palette[9],
             plot_bgcolor = color_palette[9]
@@ -209,7 +209,7 @@ plot_allumc_opencode <- function (dataset, color_palette, color_palette_bars) {
             ),
             yaxis = list(
                 title = '<b>Open Code (%)</b>',
-                range = c(0, round(max(plot_data$percentage)/5)*5)
+                range = c(0, ceiling(max(plot_data$percentage)/5)*5)
             ),
             paper_bgcolor = color_palette[9],
             plot_bgcolor = color_palette[9]
@@ -282,7 +282,7 @@ plot_allumc_clinicaltrials_trn <- function (dataset, color_palette) {
             ),
             yaxis = list(
                 title = '<b>TRN reporting (%)</b>',
-                range = c(0, round(max(plot_data$percentage)/5)*5)
+                range = c(0, ceiling(max(plot_data$percentage)/5)*5)
             ),
             paper_bgcolor = color_palette[9],
             plot_bgcolor = color_palette[9]
@@ -353,7 +353,7 @@ plot_allumc_animal_rando <- function (dataset, color_palette, color_palette_bars
             ),
             yaxis = list(
                 title = '<b>Randomized (%)</b>',
-                range = c(0, round(max(plot_data$percentage)/5)*5)
+                range = c(0, ceiling(max(plot_data$percentage)/5)*5)
             ),
             paper_bgcolor = color_palette[9],
             plot_bgcolor = color_palette[9]
@@ -422,7 +422,7 @@ plot_allumc_animal_blind <- function (dataset, color_palette, color_palette_bars
             ),
             yaxis = list(
                 title = '<b>Blinded (%)</b>',
-                range = c(0, round(max(plot_data$percentage)/5)*5)
+                range = c(0, ceiling(max(plot_data$percentage)/5)*5)
             ),
             paper_bgcolor = color_palette[9],
             plot_bgcolor = color_palette[9]
@@ -491,7 +491,7 @@ plot_allumc_animal_power <- function (dataset, color_palette, color_palette_bars
             ),
             yaxis = list(
                 title = '<b>Reporting a Power Calculation (%)</b>',
-                range = c(0, round(max(plot_data$percentage)/5)*5)
+                range = c(0, ceiling(max(plot_data$percentage)/5)*5)
             ),
             paper_bgcolor = color_palette[9],
             plot_bgcolor = color_palette[9]
@@ -561,7 +561,7 @@ plot_allumc_animal_iacuc <- function (dataset, color_palette, color_palette_bars
             ),
             yaxis = list(
                 title = '<b>Reporting an IACUC statement (%)</b>',
-                range = c(0, round(max(plot_data$percentage)/5)*5)
+                range = c(0, ceiling(max(plot_data$percentage)/5)*5)
             ),
             paper_bgcolor = color_palette[9],
             plot_bgcolor = color_palette[9]
