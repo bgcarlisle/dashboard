@@ -1,7 +1,6 @@
 ## Open Science plots
 
 ## Open Access
-
 plot_allumc_openaccess <- function (dataset, color_palette) {
 
     dataset <- dataset %>%
@@ -34,6 +33,8 @@ plot_allumc_openaccess <- function (dataset, color_palette) {
             ) %>%
             nrow()
 
+        umc_sum <- umc_gold + umc_green + umc_hybrid
+
         umc_denom <- dataset %>%
             filter(city == umc) %>%
             nrow()
@@ -41,17 +42,18 @@ plot_allumc_openaccess <- function (dataset, color_palette) {
         plot_data <- plot_data %>%
             bind_rows(
                 tribble(
-                    ~x_label, ~colour, ~percentage,
-                    capitalize(umc), "Gold", round(100*umc_gold/umc_denom),
-                    capitalize(umc), "Green", round(100*umc_green/umc_denom),
-                    capitalize(umc), "Hybrid", round(100*umc_hybrid/umc_denom)
+                    ~x_label, ~colour, ~percentage, ~sum,
+                    capitalize(umc), "Gold", round(100*umc_gold/umc_denom), 100-round(100*umc_sum/umc_denom),
+                    capitalize(umc), "Green", round(100*umc_green/umc_denom), 100-round(100*umc_sum/umc_denom),
+                    capitalize(umc), "Hybrid", round(100*umc_hybrid/umc_denom), 100-round(100*umc_sum/umc_denom)
                 )
             )
+    
     }
 
     plot_ly(
         plot_data,
-        x = ~x_label,
+        x = ~reorder(x_label, sum),
         color = ~colour,
         y = ~percentage,
         type = 'bar',
@@ -80,6 +82,7 @@ plot_allumc_openaccess <- function (dataset, color_palette) {
         )
     
 }
+
 
 ## Open Data
 
@@ -244,6 +247,13 @@ plot_allumc_clinicaltrials_trn <- function (dataset, color_palette) {
             ) %>%
             nrow()
 
+        umc_numer_either <- dataset %>%
+            filter(
+                city == umc,
+                ! is.na(abs_trn_1) | ! is.na(si_trn_1)
+            ) %>%
+            nrow()
+
         umc_denom <- dataset %>%
             filter(city == umc) %>%
             nrow()
@@ -251,16 +261,16 @@ plot_allumc_clinicaltrials_trn <- function (dataset, color_palette) {
         plot_data <- plot_data %>%
             bind_rows(
                 tribble(
-                    ~x_label, ~colour, ~percentage,
-                    capitalize(umc), "In abstract", round(100*umc_numer_abs/umc_denom),
-                    capitalize(umc), "Secondary information", round(100*umc_numer_si/umc_denom),
+                    ~x_label, ~colour, ~percentage, ~either,
+                    capitalize(umc), "In abstract", round(100*umc_numer_abs/umc_denom), 100-round(100*umc_numer_either/umc_denom),
+                    capitalize(umc), "Secondary information", round(100*umc_numer_si/umc_denom), 100-round(100*umc_numer_either/umc_denom)
                 )
             )
     }
 
      plot_ly(
         plot_data,
-        x = ~x_label,
+        x = ~reorder(x_label,either),
         color = ~colour,
         y = ~percentage,
         type = 'bar',
