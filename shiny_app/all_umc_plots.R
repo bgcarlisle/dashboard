@@ -49,9 +49,6 @@ plot_allumc_openaccess <- function (dataset, color_palette) {
             )
     }
 
-    
-        
-
     plot_ly(
         plot_data,
         x = ~x_label,
@@ -212,6 +209,79 @@ plot_allumc_opencode <- function (dataset, color_palette, color_palette_bars) {
             ),
             yaxis = list(
                 title = '<b>Open Code (%)</b>',
+                range = c(0, round(max(plot_data$percentage)/5)*5)
+            ),
+            paper_bgcolor = color_palette[9],
+            plot_bgcolor = color_palette[9]
+        )
+    
+}
+
+## TRN
+
+plot_allumc_clinicaltrials_trn <- function (dataset, color_palette) {
+
+    dataset <- dataset %>%
+        filter( is_human_ct == 1 )
+
+    plot_data <- tribble (
+        ~x_label, ~colour, ~percentage
+    )
+
+    for (umc in unique(dataset$city)) {
+
+        umc_numer_abs <- dataset %>%
+            filter(
+                ! is.na(abs_trn_1),
+                city == umc
+            ) %>%
+            nrow()
+
+        umc_numer_si <- dataset %>%
+            filter(
+                ! is.na(si_trn_1),
+                city == umc
+            ) %>%
+            nrow()
+
+        umc_denom <- dataset %>%
+            filter(city == umc) %>%
+            nrow()
+
+        plot_data <- plot_data %>%
+            bind_rows(
+                tribble(
+                    ~x_label, ~colour, ~percentage,
+                    capitalize(umc), "In abstract", round(100*umc_numer_abs/umc_denom),
+                    capitalize(umc), "Secondary information", round(100*umc_numer_si/umc_denom),
+                )
+            )
+    }
+
+     plot_ly(
+        plot_data,
+        x = ~x_label,
+        color = ~colour,
+        y = ~percentage,
+        type = 'bar',
+        colors = c(
+            "#F1BA50",
+            "#007265",
+            "#634587"
+        ),
+        marker = list(
+            line = list(
+                color = 'rgb(0,0,0)',
+                width = 1.5
+            )
+        )
+    ) %>%
+        layout(
+            xaxis = list(
+                title = '<b>UMC</b>'
+            ),
+            yaxis = list(
+                title = '<b>TRN reporting (%)</b>',
                 range = c(0, round(max(plot_data$percentage)/5)*5)
             ),
             paper_bgcolor = color_palette[9],

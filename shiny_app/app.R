@@ -489,6 +489,42 @@ server <- function (input, output, session) {
         
     })
 
+    output$allumc_clinicaltrials_trn <- renderUI({
+
+        ## Value for TRN
+        
+        all_numer_trn <- rm_data %>%
+            filter(
+                is_human_ct == 1,
+                ! is.na(abs_trn_1)
+            ) %>%
+            nrow()
+        
+        all_denom_trn <- rm_data %>%
+            filter(is_human_ct == 1) %>%
+            nrow()
+
+        wellPanel(
+            style="padding-top: 0px; padding-bottom: 0px;",
+            h2(strong("Trial Registry Number Reporting"), align = "left"),
+            fluidRow(
+                column(
+                    12,
+                    metric_box(
+                        title = "Trial Registry Number Reporting",
+                        value = paste0(round(100*all_numer_trn/all_denom_trn), "%"),
+                        value_text = "of clinical trial publications reported a TRN in the abstract",
+                        plot = plotlyOutput('plot_allumc_clinicaltrials_trn', height="300px"),
+                        info_id = "infoALLUMCTRN",
+                        info_title = "TRN reporting (All UMCs)",
+                        info_text = allumc_clinicaltrials_trn_tooltip
+                    )
+                )
+            )
+        )
+        
+    })
+
     color_palette <- c("#B6B6B6", "#879C9D", "#F1BA50", "#AA493A",
                      "#303A3E", "#007265", "#634587", "#000000",   #363457 #533A71 #011638 #634587
                      "#DCE3E5")
@@ -557,6 +593,14 @@ server <- function (input, output, session) {
 
     output$plot_allumc_opencode <- renderPlotly({
         return(plot_allumc_opencode(odoc_data, color_palette, color_palette_bars))
+    })
+
+    ## Clinical Trials
+
+    ## TRN
+
+    output$plot_allumc_clinicaltrials_trn <- renderPlotly({
+        return(plot_allumc_clinicaltrials_trn(rm_data, color_palette))
     })
     
     

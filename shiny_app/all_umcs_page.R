@@ -4,6 +4,8 @@ allumc_opendata_tooltip <- strwrap("This metric ...")
 
 allumc_opencode_tooltip <- strwrap("This metric ...")
 
+allumc_clinicaltrials_trn_tooltip <- strwrap("This metric ...")
+
 ## Define the page layout
 all_umcs_page <- tabPanel(
     "All UMC's", value = "tabAllUMCs",
@@ -29,5 +31,6 @@ all_umcs_page <- tabPanel(
     ),
     uiOutput("allumc_openaccess"),
     uiOutput("allumc_opendata"),
-    uiOutput("allumc_opencode")
+    uiOutput("allumc_opencode"),
+    uiOutput("allumc_clinicaltrials_trn")
 )
