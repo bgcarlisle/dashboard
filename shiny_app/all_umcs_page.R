@@ -10,6 +10,8 @@ allumc_clinicaltrials_sumres_tooltip <- strwrap("This metric ...")
 
 allumc_clinicaltrials_prereg_tooltip <- strwrap("This metric ...")
 
+allumc_clinicaltrials_timpub_tooltip <- strwrap("This metric ...")
+
 allumc_animal_rando_tooltip <- strwrap("This metric ...")
 
 allumc_animal_blind_tooltip <- strwrap("This metric ...")

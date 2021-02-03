@@ -302,6 +302,15 @@ server <- function (input, output, session) {
         all_denom_prereg <- iv_data %>%
             nrow()
 
+        ## Value for timely pub
+
+        all_numer_timpub <- iv_data %>%
+            filter(published_2a) %>%
+            nrow()
+
+        all_denom_timpub <- iv_data %>%
+            nrow()
+
         wellPanel(
             style="padding-top: 0px; padding-bottom: 0px;",
             h2(strong("Clinical Trials"), align = "left"),
@@ -340,6 +349,18 @@ server <- function (input, output, session) {
                         info_id = "infoPreReg",
                         info_title = "Trial Preregistration",
                         info_text = prereg_tooltip
+                    )
+                ),
+                column(
+                    col_width,
+                    metric_box(
+                        title = "Timely publication",
+                        value = paste0(round(100*all_numer_timpub/all_denom_timpub), "%"),
+                        value_text = "of clinical trials published results within 2 years",
+                        plot = plotlyOutput('plot_clinicaltrials_timpub', height="300px"),
+                        info_id = "infoTimPub",
+                        info_title = "Timely Publication",
+                        info_text = timpub_tooltip
                     )
                 )
                 
@@ -591,6 +612,15 @@ server <- function (input, output, session) {
         all_denom_prereg <- iv_data %>%
             nrow()
 
+        ## Value for timely pub
+
+        all_numer_timpub <- iv_data %>%
+            filter(published_2a) %>%
+            nrow()
+
+        all_denom_timpub <- iv_data %>%
+            nrow()
+
         wellPanel(
             style="padding-top: 0px; padding-bottom: 0px;",
             h2(strong("Clinical Trials"), align = "left"),
@@ -633,6 +663,20 @@ server <- function (input, output, session) {
                         info_id = "infoALLUMCPreReg",
                         info_title = "Preregistration (All UMCs)",
                         info_text = allumc_clinicaltrials_prereg_tooltip
+                    )
+                )
+            ),
+            fluidRow(
+                column(
+                    12,
+                    metric_box(
+                        title = "Timely Publication",
+                        value = paste0(round(100*all_numer_timpub/all_denom_timpub), "%"),
+                        value_text = "of clinical trials published results within 2 years",
+                        plot = plotlyOutput('plot_allumc_clinicaltrials_timpub', height="300px"),
+                        info_id = "infoALLUMCTimPub",
+                        info_title = "Timely Publication (All UMCs)",
+                        info_text = allumc_clinicaltrials_timpub_tooltip
                     )
                 )
             )
@@ -793,6 +837,11 @@ server <- function (input, output, session) {
     output$plot_clinicaltrials_prereg <- renderPlotly({
         return (plot_clinicaltrials_prereg(iv_data, input$selectUMC, color_palette))
     })
+    
+    ## Timely Publication plot
+    output$plot_clinicaltrials_timpub <- renderPlotly({
+        return (plot_clinicaltrials_timpub(iv_data, input$selectUMC, color_palette))
+    })
 
     ## Robustness plot
     output$plot_randomization <- renderPlotly({
@@ -850,10 +899,16 @@ server <- function (input, output, session) {
         return(plot_allumc_clinicaltrials_sumres(eutt_data, color_palette, color_palette_bars))
     })
 
-    ## Summary results
+    ## Preregistration
 
     output$plot_allumc_clinicaltrials_prereg <- renderPlotly({
         return(plot_allumc_clinicaltrials_prereg(iv_data, color_palette, color_palette_bars))
+    })
+
+    ## Timely publication
+
+    output$plot_allumc_clinicaltrials_timpub <- renderPlotly({
+        return(plot_allumc_clinicaltrials_timpub(iv_data, color_palette, color_palette_bars))
     })
     
     ## Robustness of Animal Studies
