@@ -39,7 +39,7 @@ source("all_umc_plots.R")
 
 ## Load pages
 source("start_page.R")
-source("all_umcs.R")
+source("all_umcs_page.R")
 source("methods_page.R")
 source("datasets_page.R")
 source("about_rm.R")
