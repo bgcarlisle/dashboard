@@ -578,6 +578,20 @@ server <- function (input, output, session) {
                         info_text = allumc_animal_rando_tooltip
                     )
                 )
+            ),
+            fluidRow(
+                column(
+                    12,
+                    metric_box(
+                        title = "Blinding",
+                        value = all_percent_blinded,
+                        value_text = "of animal studies report blinding",
+                        plot = plotlyOutput('plot_allumc_animal_blind', height="300px"),
+                        info_id = "infoAllUMCAnimalBlind",
+                        info_title = "Blinding",
+                        info_text = allumc_animal_blind_tooltip
+                    )
+                )
             )
         )
         
@@ -667,6 +681,12 @@ server <- function (input, output, session) {
 
     output$plot_allumc_animal_rando <- renderPlotly({
         return(plot_allumc_animal_rando(rm_data, color_palette, color_palette_bars))
+    })
+
+    ## Blinding
+
+    output$plot_allumc_animal_blind <- renderPlotly({
+        return(plot_allumc_animal_blind(rm_data, color_palette, color_palette_bars))
     })
     
 }
