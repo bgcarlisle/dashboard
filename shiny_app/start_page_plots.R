@@ -618,7 +618,7 @@ plot_power <- function (dataset, umc, color_palette) {
 
 }
 
-## Power calc
+## IACUC
 plot_iacuc <- function (dataset, umc, color_palette) {
 
     ## Calculate the numerator and denominator for the

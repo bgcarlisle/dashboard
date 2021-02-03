@@ -10,6 +10,10 @@ allumc_animal_rando_tooltip <- strwrap("This metric ...")
 
 allumc_animal_blind_tooltip <- strwrap("This metric ...")
 
+allumc_animal_power_tooltip <- strwrap("This metric ...")
+
+allumc_animal_iacuc_tooltip <- strwrap("This metric ...")
+
 ## Define the page layout
 all_umcs_page <- tabPanel(
     "All UMC's", value = "tabAllUMCs",

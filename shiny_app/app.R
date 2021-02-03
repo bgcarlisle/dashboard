@@ -592,6 +592,34 @@ server <- function (input, output, session) {
                         info_text = allumc_animal_blind_tooltip
                     )
                 )
+            ),
+            fluidRow(
+                column(
+                    12,
+                    metric_box(
+                        title = "Power calculation",
+                        value = all_percent_power,
+                        value_text = "of animal studies report a power calculation",
+                        plot = plotlyOutput('plot_allumc_animal_power', height="300px"),
+                        info_id = "infoAllUMCAnimalPower",
+                        info_title = "Power calculation",
+                        info_text = allumc_animal_power_tooltip
+                    )
+                )
+            ),
+            fluidRow(
+                column(
+                    12,
+                    metric_box(
+                        title = "IACUC statement",
+                        value = all_percent_iacuc,
+                        value_text = "of animal studies report an IACUC statement",
+                        plot = plotlyOutput('plot_allumc_animal_iacuc', height="300px"),
+                        info_id = "infoAllUMCAnimalIACUC",
+                        info_title = "IACUC statement",
+                        info_text = allumc_animal_iacuc_tooltip
+                    )
+                )
             )
         )
         
@@ -687,6 +715,18 @@ server <- function (input, output, session) {
 
     output$plot_allumc_animal_blind <- renderPlotly({
         return(plot_allumc_animal_blind(rm_data, color_palette, color_palette_bars))
+    })
+
+    ## Power calc
+
+    output$plot_allumc_animal_power <- renderPlotly({
+        return(plot_allumc_animal_power(rm_data, color_palette, color_palette_bars))
+    })
+
+    ## IACUC
+
+    output$plot_allumc_animal_iacuc <- renderPlotly({
+        return(plot_allumc_animal_iacuc(rm_data, color_palette, color_palette_bars))
     })
     
 }
