@@ -375,9 +375,86 @@ server <- function (input, output, session) {
 
     })
 
+    output$allumc_openaccess <- renderUI({
+        
+        all_numer_oa <- rm_data %>%
+            filter(
+                color == "gold" | color == "green" | color == "hybrid"
+            ) %>%
+            nrow()
+
+        all_denom_oa <- rm_data %>%
+            filter(
+                ! is.na(color)
+                
+            ) %>%
+            nrow()
+
+        wellPanel(
+            style="padding-top: 0px; padding-bottom: 0px;",
+            h2(strong("Open Science"), align = "left"),
+            fluidRow(
+                column(
+                    12,
+                    metric_box(
+                        title = "Open Access",
+                        value = paste0(round(100*all_numer_oa/all_denom_oa), "%"),
+                        value_text = "of publications were Open Access",
+                        plot = plotlyOutput('plot_allumc_openaccess', height="300px"),
+                        info_id = "infoALLUMCOpenAccess",
+                        info_title = "Open Access (All UMCs)",
+                        info_text = allumc_openaccess_tooltip
+                    )
+                )
+            )
+        )
+        
+    })
+
+    output$allumc_opendata <- renderUI({
+
+        ## Value for Open Data
+
+        all_denom_od <- odoc_data %>%
+            filter(
+                ! is.na (is_open_data),
+                language == "English"
+            ) %>%
+            nrow()
+
+        all_numer_od <- odoc_data %>%
+            filter(
+                is_open_data,
+                language == "English"
+            ) %>%
+            nrow()
+
+        wellPanel(
+            style="padding-top: 0px; padding-bottom: 0px;",
+            h2(strong("Open Data"), align = "left"),
+            fluidRow(
+                column(
+                    12,
+                    metric_box(
+                        title = "Open Data",
+                        value = paste0(round(100*all_numer_od/all_denom_od), "%"),
+                        value_text = "of publications were Open Data",
+                        plot = plotlyOutput('plot_allumc_opendata', height="300px"),
+                        info_id = "infoALLUMCOpenData",
+                        info_title = "Open Data (All UMCs)",
+                        info_text = allumc_opendata_tooltip
+                    )
+                )
+            )
+        )
+        
+    })
+
     color_palette <- c("#B6B6B6", "#879C9D", "#F1BA50", "#AA493A",
                      "#303A3E", "#007265", "#634587", "#000000",   #363457 #533A71 #011638 #634587
                      "#DCE3E5")
+
+    color_palette_bars <- c("#AA1C7D", "#879C9D", "#F1BA50", "#AA493A", "#303A3E", "#007265", "#634587", "#AA1C7D", "#879C9D", "#F1BA50", "#AA493A", "#303A3E", "#007265", "#634587")
 
     ## Start page plots ##
     
@@ -429,6 +506,12 @@ server <- function (input, output, session) {
 
     output$plot_allumc_openaccess <- renderPlotly({
         return(plot_allumc_openaccess(rm_data, color_palette))
+    })
+
+    ## Open Data
+
+    output$plot_allumc_opendata <- renderPlotly({
+        return(plot_allumc_opendata(odoc_data, color_palette, color_palette_bars))
     })
     
 }
