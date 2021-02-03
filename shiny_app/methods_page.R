@@ -308,6 +308,8 @@ trn_tooltip <- strwrap("This metric ...")
 
 sumres_tooltip <- strwrap("This metric ...")
 
+prereg_tooltip <- strwrap("This metric ...")
+
 ## Tooltips for Robustness metrics
 
 randomization_tooltip <- strwrap("This metric shows ...")

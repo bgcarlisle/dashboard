@@ -366,6 +366,68 @@ plot_allumc_clinicaltrials_sumres <- function (dataset, color_palette, color_pal
     
 }
 
+## Preregistration
+
+plot_allumc_clinicaltrials_prereg <- function (dataset, color_palette, color_palette_bars) {
+
+    plot_data <- tribble (
+        ~x_label, ~percentage
+    )
+
+    for (umc in unique(dataset$city)) {
+
+        umc_numer <- dataset %>%
+            filter(
+                city == umc,
+                preregistered
+            ) %>%
+            nrow()
+
+        umc_denom <- dataset %>%
+            filter(city == umc) %>%
+            nrow()
+
+        plot_data <- plot_data %>%
+            bind_rows(
+                tribble(
+                    ~x_label, ~percentage,
+                    capitalize(umc), round(100*umc_numer/umc_denom),
+                )
+            )
+    }
+
+    plot_data$x_label <- factor(
+        plot_data$x_label,
+        levels = unique(plot_data$x_label)[order(plot_data$percentage, decreasing=TRUE)]
+    )
+
+     plot_ly(
+        plot_data,
+        x = ~x_label,
+        y = ~percentage,
+        type = 'bar',
+        marker = list(
+            color = color_palette_bars,
+            line = list(
+                color = 'rgb(0,0,0)',
+                width = 1.5
+            )
+        )
+    ) %>%
+        layout(
+            xaxis = list(
+                title = '<b>UMC</b>'
+            ),
+            yaxis = list(
+                title = '<b>Preregistration (%)</b>',
+                range = c(0, ceiling(max(plot_data$percentage)/5)*5)
+            ),
+            paper_bgcolor = color_palette[9],
+            plot_bgcolor = color_palette[9]
+        )
+    
+}
+
 ## Animal studies
 
 ## Randomization

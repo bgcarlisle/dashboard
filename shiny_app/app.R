@@ -25,6 +25,26 @@ rm_data <- read_csv(
     ## SPECIFICATION WILL NEED TO BE UPDATED MANUALLY
 )
 
+## WARNING
+## Okay not really a warning
+## But kinda
+## So this part here will filter out everything but Articles.
+## This is because all the plots here assume that we're talking
+## about articles only. Things might change if the base data
+## set contains Reviews or whatever. We filtered these out
+## before uploading the CSV, so if you don't do that extra step
+## next time, this will catch you, but if you remove the
+## following filter, you'll need to make sure that all your
+## plots still  make sense.
+rm_data <- rm_data %>%
+    filter(
+        type == "Article" |
+        type == "Article; Data Paper" |
+        type == "Article; Proceedings Paper"
+    )
+
+rm_data$type %>% as.factor() %>% summary()
+
 odoc_data <- read_csv(
     "data/2021-01-26_pp-dataset-oa-od.csv"
     ## This one is for the open data/open code variables. We'll
@@ -36,6 +56,11 @@ eutt_data <- read_csv(
     "data/2021-02-03-eutt-pop-umcs.csv"
     ## This file is data that I copied and pasted directly from
     ## http://eu.trialstracker.net/ into LibreOffice Calc.
+)
+
+iv_data <- read_csv(
+    "data/2021-02-03-IntoValue2.csv"
+    # This is the IntoValue2 data set.
 )
 
 ## Load functions
@@ -107,7 +132,7 @@ server <- function (input, output, session) {
         }
     )
 
-    ## Dynamically determine column width of for displayed metrics
+    ## Dynamically determine column width for displayed metrics
     ## at program start; four columns if resolution large enough,
     ## otherwise two columns.
 
@@ -268,6 +293,15 @@ server <- function (input, output, session) {
             filter(due_or_not == "Due") %>%
             nrow()
 
+        ## Value for prereg
+
+        all_numer_prereg <- iv_data %>%
+            filter(preregistered) %>%
+            nrow()
+
+        all_denom_prereg <- iv_data %>%
+            nrow()
+
         wellPanel(
             style="padding-top: 0px; padding-bottom: 0px;",
             h2(strong("Clinical Trials"), align = "left"),
@@ -294,6 +328,18 @@ server <- function (input, output, session) {
                         info_id = "infoSumRes",
                         info_title = "Summary Results Reporting",
                         info_text = sumres_tooltip
+                    )
+                ),
+                column(
+                    col_width,
+                    metric_box(
+                        title = "Trial Preregistration",
+                        value = paste0(round(100*all_numer_prereg/all_denom_prereg), "%"),
+                        value_text = "of clinical trials were preregistered",
+                        plot = plotlyOutput('plot_clinicaltrials_prereg', height="300px"),
+                        info_id = "infoPreReg",
+                        info_title = "Trial Preregistration",
+                        info_text = prereg_tooltip
                     )
                 )
                 
@@ -536,6 +582,15 @@ server <- function (input, output, session) {
             filter(due_or_not == "Due") %>%
             nrow()
 
+        ## Value for prereg
+
+        all_numer_prereg <- iv_data %>%
+            filter(preregistered) %>%
+            nrow()
+
+        all_denom_prereg <- iv_data %>%
+            nrow()
+
         wellPanel(
             style="padding-top: 0px; padding-bottom: 0px;",
             h2(strong("Clinical Trials"), align = "left"),
@@ -564,6 +619,20 @@ server <- function (input, output, session) {
                         info_id = "infoALLUMCSumRes",
                         info_title = "Summary results reporting (All UMCs)",
                         info_text = allumc_clinicaltrials_sumres_tooltip
+                    )
+                )
+            ),
+            fluidRow(
+                column(
+                    12,
+                    metric_box(
+                        title = "Trial Preregistration",
+                        value = paste0(round(100*all_numer_prereg/all_denom_prereg), "%"),
+                        value_text = "of clinical trials were preregistered",
+                        plot = plotlyOutput('plot_allumc_clinicaltrials_prereg', height="300px"),
+                        info_id = "infoALLUMCPreReg",
+                        info_title = "Preregistration (All UMCs)",
+                        info_text = allumc_clinicaltrials_prereg_tooltip
                     )
                 )
             )
@@ -719,6 +788,11 @@ server <- function (input, output, session) {
     output$plot_clinicaltrials_sumres <- renderPlotly({
         return (plot_clinicaltrials_sumres(eutt_data, input$selectUMC, color_palette))
     })
+    
+    ## Preregistration plot
+    output$plot_clinicaltrials_prereg <- renderPlotly({
+        return (plot_clinicaltrials_prereg(iv_data, input$selectUMC, color_palette))
+    })
 
     ## Robustness plot
     output$plot_randomization <- renderPlotly({
@@ -774,6 +848,12 @@ server <- function (input, output, session) {
 
     output$plot_allumc_clinicaltrials_sumres <- renderPlotly({
         return(plot_allumc_clinicaltrials_sumres(eutt_data, color_palette, color_palette_bars))
+    })
+
+    ## Summary results
+
+    output$plot_allumc_clinicaltrials_prereg <- renderPlotly({
+        return(plot_allumc_clinicaltrials_prereg(iv_data, color_palette, color_palette_bars))
     })
     
     ## Robustness of Animal Studies
