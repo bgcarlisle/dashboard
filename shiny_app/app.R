@@ -475,7 +475,7 @@ server <- function (input, output, session) {
 
     output$allumc_clinicaltrials <- renderUI({
 
-        ## Value for TRN
+        ## Value for All UMC TRN
         
         all_numer_trn <- rm_data %>%
             filter(
@@ -502,6 +502,80 @@ server <- function (input, output, session) {
                         info_id = "infoALLUMCTRN",
                         info_title = "TRN reporting (All UMCs)",
                         info_text = allumc_clinicaltrials_trn_tooltip
+                    )
+                )
+            )
+        )
+        
+    })
+
+    output$allumc_robustness <- renderUI({
+
+        ## Values for All UMC Robustness metrics
+
+        all_numer_rando <- rm_data %>%
+            filter(
+                is_animal == 1,
+                ! is.na(sciscore),
+                type == "Article"
+            ) %>%
+            select(randomization) %>%
+            sum(na.rm=TRUE)
+
+        all_numer_blinded <- rm_data %>%
+            filter(
+                is_animal == 1,
+                ! is.na(sciscore),
+                type == "Article"
+            ) %>%
+            select(blinding) %>%
+            sum(na.rm=TRUE)
+
+        all_numer_power <- rm_data %>%
+            filter(
+                is_animal == 1,
+                ! is.na(sciscore),
+                type == "Article"
+            ) %>%
+            select(power) %>%
+            sum(na.rm=TRUE)
+
+        all_numer_iacuc <- rm_data %>%
+            filter(
+                is_animal == 1,
+                ! is.na(sciscore),
+                type == "Article"
+            ) %>%
+            select(iacuc) %>%
+            sum(na.rm=TRUE)
+
+        all_denom_animal_sciscore <- rm_data %>%
+            filter(
+                is_animal == 1,
+                ! is.na(sciscore),
+                type == "Article"
+            ) %>%
+            nrow()
+
+        all_percent_randomized <- paste0(round(100*all_numer_rando/all_denom_animal_sciscore), "%")
+        all_percent_blinded <- paste0(round(100*all_numer_blinded/all_denom_animal_sciscore), "%")
+        all_percent_power <- paste0(round(100*all_numer_power/all_denom_animal_sciscore), "%")
+        all_percent_iacuc <- paste0(round(100*all_numer_iacuc/all_denom_animal_sciscore), "%")
+
+        wellPanel(
+            style="padding-top: 0px; padding-bottom: 0px;",
+            h2(strong("Robustness of Animal Studies"), align = "left"),
+            fluidRow(
+                column(
+                    12,
+                    metric_box(
+                        title = "Randomization",
+                        value = all_percent_randomized,
+                        value_text = "of animal studies report randomization",
+                        plot = plotlyOutput('plot_allumc_animal_rando', height="300px"),
+                        info_id = "infoAllUMCAnimalRando",
+                        info_title = "Randomization",
+                        info_text = allumc_animal_rando_tooltip
                     )
                 )
             )
@@ -587,6 +661,13 @@ server <- function (input, output, session) {
         return(plot_allumc_clinicaltrials_trn(rm_data, color_palette))
     })
     
+    ## Robustness of Animal Studies
+
+    ## Randomization
+
+    output$plot_allumc_animal_rando <- renderPlotly({
+        return(plot_allumc_animal_rando(rm_data, color_palette, color_palette_bars))
+    })
     
 }
 
