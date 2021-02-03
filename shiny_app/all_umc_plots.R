@@ -49,6 +49,9 @@ plot_allumc_openaccess <- function (dataset, color_palette) {
             )
     }
 
+    
+        
+
     plot_ly(
         plot_data,
         x = ~x_label,
@@ -72,8 +75,8 @@ plot_allumc_openaccess <- function (dataset, color_palette) {
                 title = '<b>UMC</b>'
             ),
             yaxis = list(
-                title = '<b>Open Access</b>',
-                range = c(0, 100)
+                title = '<b>Open Access (%)</b>',
+                range = c(0, round(max(plot_data$percentage)/5)*5)
             ),
             paper_bgcolor = color_palette[9],
             plot_bgcolor = color_palette[9]
@@ -140,8 +143,14 @@ plot_allumc_opendata <- function (dataset, color_palette, color_palette_bars) {
                 title = '<b>UMC</b>'
             ),
             yaxis = list(
-                title = '<b>Open Data</b>',
-                range = c(0, 100)
+                title = '<b>Open Data (%)</b>',
+                range = c(0, round(max(plot_data$percentage)/5)*5)
+            ),
+            paper_bgcolor = color_palette[9],
+            plot_bgcolor = color_palette[9]
+        )
+    
+}
 
 ## Open Code
 
