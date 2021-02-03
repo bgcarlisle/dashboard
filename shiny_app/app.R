@@ -375,7 +375,9 @@ server <- function (input, output, session) {
 
     })
 
-    output$allumc_openaccess <- renderUI({
+    output$allumc_openscience <- renderUI({
+
+        ## Value for All UMC Open Access
         
         all_numer_oa <- rm_data %>%
             filter(
@@ -387,6 +389,38 @@ server <- function (input, output, session) {
             filter(
                 ! is.na(color)
                 
+            ) %>%
+            nrow()
+        
+        ## Value for All UMC Open Data
+
+        all_denom_od <- odoc_data %>%
+            filter(
+                ! is.na (is_open_data),
+                language == "English"
+            ) %>%
+            nrow()
+
+        all_numer_od <- odoc_data %>%
+            filter(
+                is_open_data,
+                language == "English"
+            ) %>%
+            nrow()
+        
+        ## Value for All UMC Open Code
+ 
+        all_denom_oc <- odoc_data %>%
+            filter(
+                ! is.na (is_open_code),
+                language == "English"
+            ) %>%
+            nrow()
+
+        all_numer_oc <- odoc_data %>%
+            filter(
+                is_open_code,
+                language == "English"
             ) %>%
             nrow()
 
@@ -406,32 +440,7 @@ server <- function (input, output, session) {
                         info_text = allumc_openaccess_tooltip
                     )
                 )
-            )
-        )
-        
-    })
-
-    output$allumc_opendata <- renderUI({
-
-        ## Value for Open Data
-
-        all_denom_od <- odoc_data %>%
-            filter(
-                ! is.na (is_open_data),
-                language == "English"
-            ) %>%
-            nrow()
-
-        all_numer_od <- odoc_data %>%
-            filter(
-                is_open_data,
-                language == "English"
-            ) %>%
-            nrow()
-
-        wellPanel(
-            style="padding-top: 0px; padding-bottom: 0px;",
-            h2(strong("Open Data"), align = "left"),
+            ),
             fluidRow(
                 column(
                     12,
@@ -445,32 +454,7 @@ server <- function (input, output, session) {
                         info_text = allumc_opendata_tooltip
                     )
                 )
-            )
-        )
-        
-    })
-
-    output$allumc_opencode <- renderUI({
-
-        ## Value for Open Code
-
-        all_denom_oc <- odoc_data %>%
-            filter(
-                ! is.na (is_open_code),
-                language == "English"
-            ) %>%
-            nrow()
-
-        all_numer_oc <- odoc_data %>%
-            filter(
-                is_open_code,
-                language == "English"
-            ) %>%
-            nrow()
-
-        wellPanel(
-            style="padding-top: 0px; padding-bottom: 0px;",
-            h2(strong("Open Code"), align = "left"),
+            ),
             fluidRow(
                 column(
                     12,
@@ -485,11 +469,11 @@ server <- function (input, output, session) {
                     )
                 )
             )
+            
         )
-        
     })
 
-    output$allumc_clinicaltrials_trn <- renderUI({
+    output$allumc_clinicaltrials <- renderUI({
 
         ## Value for TRN
         
@@ -506,7 +490,7 @@ server <- function (input, output, session) {
 
         wellPanel(
             style="padding-top: 0px; padding-bottom: 0px;",
-            h2(strong("Trial Registry Number Reporting"), align = "left"),
+            h2(strong("Clinical Trials"), align = "left"),
             fluidRow(
                 column(
                     12,

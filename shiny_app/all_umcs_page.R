@@ -29,8 +29,6 @@ all_umcs_page <- tabPanel(
             )
         )
     ),
-    uiOutput("allumc_openaccess"),
-    uiOutput("allumc_opendata"),
-    uiOutput("allumc_opencode"),
-    uiOutput("allumc_clinicaltrials_trn")
+    uiOutput("allumc_openscience"),
+    uiOutput("allumc_clinicaltrials")
 )
