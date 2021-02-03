@@ -32,6 +32,12 @@ odoc_data <- read_csv(
     ## We promise.
 )
 
+eutt_data <- read_csv(
+    "data/2021-02-03-eutt-pop-umcs.csv"
+    ## This file is data that I copied and pasted directly from
+    ## http://eu.trialstracker.net/ into LibreOffice Calc.
+)
+
 ## Load functions
 source("ui_elements.R")
 source("start_page_plots.R")
@@ -235,6 +241,8 @@ server <- function (input, output, session) {
             alignment <- "right"
         }
 
+        ## Value for TRN
+
         all_numer_trn <- rm_data %>%
             filter(
                 is_human_ct == 1,
@@ -244,6 +252,20 @@ server <- function (input, output, session) {
         
         all_denom_trn <- rm_data %>%
             filter(is_human_ct == 1) %>%
+            nrow()
+
+        ## Value for summary results
+            
+        all_numer_sumres <- eutt_data %>%
+            filter (
+                due_or_not == "Due",
+                status == "Reported results" |
+                status == "Reported results Terminated"
+            ) %>%
+            nrow()
+
+        all_denom_sumres <- eutt_data %>%
+            filter(due_or_not == "Due") %>%
             nrow()
 
         wellPanel(
@@ -260,6 +282,18 @@ server <- function (input, output, session) {
                         info_id = "infoTRN",
                         info_title = "Trial Registry Number Reporting",
                         info_text = trn_tooltip
+                    )
+                ),
+                column(
+                    col_width,
+                    metric_box(
+                        title = "Summary Results Reporting",
+                        value = paste0(round(100*all_numer_sumres/all_denom_sumres), "%"),
+                        value_text = "of due clinical trials reporting summary results",
+                        plot = plotlyOutput('plot_clinicaltrials_sumres', height="300px"),
+                        info_id = "infoSumRes",
+                        info_title = "Summary Results Reporting",
+                        info_text = sumres_tooltip
                     )
                 )
                 
@@ -488,6 +522,20 @@ server <- function (input, output, session) {
             filter(is_human_ct == 1) %>%
             nrow()
 
+        ## Value for All UMC summary results reporting
+           
+        all_numer_sumres <- eutt_data %>%
+            filter (
+                due_or_not == "Due",
+                status == "Reported results" |
+                status == "Reported results Terminated"
+            ) %>%
+            nrow()
+
+        all_denom_sumres <- eutt_data %>%
+            filter(due_or_not == "Due") %>%
+            nrow()
+
         wellPanel(
             style="padding-top: 0px; padding-bottom: 0px;",
             h2(strong("Clinical Trials"), align = "left"),
@@ -502,6 +550,20 @@ server <- function (input, output, session) {
                         info_id = "infoALLUMCTRN",
                         info_title = "TRN reporting (All UMCs)",
                         info_text = allumc_clinicaltrials_trn_tooltip
+                    )
+                )
+            ),
+            fluidRow(
+                column(
+                    12,
+                    metric_box(
+                        title = "Summary Results Reporting",
+                        value = paste0(round(100*all_numer_sumres/all_denom_sumres), "%"),
+                        value_text = "of due clinical trials reporting summary results",
+                        plot = plotlyOutput('plot_allumc_clinicaltrials_sumres', height="300px"),
+                        info_id = "infoALLUMCSumRes",
+                        info_title = "Summary results reporting (All UMCs)",
+                        info_text = allumc_clinicaltrials_sumres_tooltip
                     )
                 )
             )
@@ -652,6 +714,11 @@ server <- function (input, output, session) {
     output$plot_clinicaltrials_trn <- renderPlotly({
         return (plot_clinicaltrials_trn(rm_data, input$selectUMC, color_palette))
     })
+    
+    ## Summary results plot
+    output$plot_clinicaltrials_sumres <- renderPlotly({
+        return (plot_clinicaltrials_sumres(eutt_data, input$selectUMC, color_palette))
+    })
 
     ## Robustness plot
     output$plot_randomization <- renderPlotly({
@@ -701,6 +768,12 @@ server <- function (input, output, session) {
 
     output$plot_allumc_clinicaltrials_trn <- renderPlotly({
         return(plot_allumc_clinicaltrials_trn(rm_data, color_palette))
+    })
+
+    ## Summary results
+
+    output$plot_allumc_clinicaltrials_sumres <- renderPlotly({
+        return(plot_allumc_clinicaltrials_sumres(eutt_data, color_palette, color_palette_bars))
     })
     
     ## Robustness of Animal Studies
