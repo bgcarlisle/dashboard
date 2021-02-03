@@ -85,8 +85,6 @@ plot_allumc_openaccess <- function (dataset, color_palette) {
 
 plot_allumc_opendata <- function (dataset, color_palette, color_palette_bars) {
 
-    dataset <- odoc_data
-
     dataset <- dataset %>%
         filter(
             ! is.na(is_open_data),
