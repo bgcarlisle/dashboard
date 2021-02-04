@@ -295,20 +295,23 @@ server <- function (input, output, session) {
 
         ## Value for prereg
 
-        all_numer_prereg <- iv_data %>%
+        iv_data_unique <- iv_data %>%
+            distinct(id, .keep_all = TRUE)
+
+        all_numer_prereg <- iv_data_unique %>%
             filter(preregistered) %>%
             nrow()
 
-        all_denom_prereg <- iv_data %>%
+        all_denom_prereg <- iv_data_unique %>%
             nrow()
 
         ## Value for timely pub
 
-        all_numer_timpub <- iv_data %>%
+        all_numer_timpub <- iv_data_unique %>%
             filter(published_2a) %>%
             nrow()
 
-        all_denom_timpub <- iv_data %>%
+        all_denom_timpub <- iv_data_unique %>%
             nrow()
 
         wellPanel(
@@ -605,20 +608,23 @@ server <- function (input, output, session) {
 
         ## Value for prereg
 
-        all_numer_prereg <- iv_data %>%
+        iv_data_unique <- iv_data %>%
+            distinct(id, .keep_all = TRUE)
+
+        all_numer_prereg <- iv_data_unique %>%
             filter(preregistered) %>%
             nrow()
 
-        all_denom_prereg <- iv_data %>%
+        all_denom_prereg <- iv_data_unique %>%
             nrow()
 
         ## Value for timely pub
 
-        all_numer_timpub <- iv_data %>%
+        all_numer_timpub <- iv_data_unique %>%
             filter(published_2a) %>%
             nrow()
 
-        all_denom_timpub <- iv_data %>%
+        all_denom_timpub <- iv_data_unique %>%
             nrow()
 
         wellPanel(
