@@ -25,9 +25,20 @@ rm_data <- read_csv(
     ## SPECIFICATION WILL NEED TO BE UPDATED MANUALLY
 )
 
+## Generates the UMC list for the drop-down menu
+ddumcs <- rm_data %>%
+    select(city)
+
+ddumcs$umcno <- substr(ddumcs$city, 5, nchar(ddumcs$city)) %>%
+    as.numeric()
+
+ddumcs <- ddumcs %>%
+    arrange(umcno) %>%
+    select(city)
+
 umclist <- c(
     "All",
-    unique(rm_data$city)
+    ddumcs$city %>% unique()
 )
 
 ## WARNING
