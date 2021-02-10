@@ -83,9 +83,19 @@ The data set from (2.) is joined by `doi` with TRN reporting information to prov
 | `si_registry_3`  | string  | Registry corresponding to TRN in SI (3)       |
 | `si_registry_4`  | string  | Registry corresponding to TRN in SI (4)       |
 
-### 4. Robustness metrics
+### 4. Animal research
 
-The data set from (3.) is joined by the `pmid_dimensions` column with robustness metrics provided by Sciscore to provide the following additional columns
+All unique values from `pmid_dimensions` column from (3.) are tested for whether they would appear in a search for animal research developed by [Hooijmans et al (2010)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3104815/), using https://codeberg.org/bgcarlisle/PubmedIntersectionCheck
+
+The resulting data set is joined to the data set from (3.) to provide the following additional column
+
+| Column      | Type    | Details                                            |
+|-------------|---------|----------------------------------------------------|
+| `is_animal` | boolean | Does this paper reflect experimentation on animals |
+
+### 5. Robustness metrics
+
+The data set from (4.) is joined by the `pmid_dimensions` column with robustness metrics provided by Sciscore to provide the following additional columns
 
 | Column                     | Type    | Details                                       |
 |----------------------------|---------|-----------------------------------------------|
@@ -114,9 +124,9 @@ The data set from (3.) is joined by the `pmid_dimensions` column with robustness
 | `plasmid_with_rrid`        |         |                                               |
 | `plasmid_rrid_suggested`   |         |                                               |
 
-### 5. Open code and open data
+### 6. Open code and open data
 
-The data set from (4.) is joined by `doi`, `city` and `year_published` to provide the following additional columns
+The data set from (5.) is joined by `doi`, `city` and `year_published` to provide the following additional columns
 
 | Column                 | Type        | Description                       |
 |------------------------|-------------|-----------------------------------|
