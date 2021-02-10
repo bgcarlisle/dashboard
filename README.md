@@ -45,7 +45,7 @@ The `shiny_app/` folder contains the code that is run to generate the Shiny app.
 
 ### 2. Open access information
 
-The data set from (1.) is joined by `pmid_dimensions` column with open access information by the PMID column to provide the following additional columns
+The data set from (1.) is joined by `pmid_dimensions` with open access information to provide the following additional columns
 
 | Column      | Type        | Details                              |
 |-------------|-------------|--------------------------------------|
