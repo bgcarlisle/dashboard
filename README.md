@@ -95,7 +95,7 @@ The resulting data set is joined by `pmid_dimensions` to the data set from (3.) 
 
 ### 5. Robustness metrics
 
-The data set from (4.) is joined by the `pmid_dimensions` column with robustness metrics provided by Sciscore to provide the following additional columns
+The data set from (4.) is joined by the `pmid_dimensions` column with robustness metrics provided by Sciscore to provide the following additional columns (see [merge-animals-and-sciscore.R](prep/merge-animals-and-sciscore.R) for details)
 
 | Column                     | Type    | Details                                       |
 |----------------------------|---------|-----------------------------------------------|
