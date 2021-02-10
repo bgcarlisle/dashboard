@@ -3,7 +3,8 @@ library(DBI)
 
 ### Read in the data set that has OA and TRN columns
 original <- read_csv(
-    "~/Downloads/rm-dash/2021-01-26_pp-dataset-oa-trn-sciscore-od.csv",
+    "dataset.csv",
+    ## You may have to manually specify the column types
     col_types="ccdddcccccdccccdlllllcddccccDlccccccccccccccccccccddddddddddddddddddddddddlcclclcc"
 )
 
@@ -13,13 +14,7 @@ original <- read_csv(
 ### Use the Pubmed search string from:
 ### https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3104815/
 
-animals <- read_csv("2021-01-19_13-06-59-checked-pmids-animal.csv")
-
-### Then generate the following CSV using the same R script as above, but this time
-### use the following search string:
-### "clinical trial"[pt] NOT (animals [mh] NOT humans [mh])
-
-clinical_trials <- read_csv("2021-01-19_13-03-31-checked-pmids-clinical.csv")
+animals <- read_csv("checked-pmids-animal.csv")
 
 joined <- original %>%
     left_join(animals, by=c("pmid_dimensions" = "pmid")) %>%
