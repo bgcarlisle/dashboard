@@ -3,11 +3,9 @@ library(DBI)
 
 ### Read in the data set that has OA and TRN columns
 original <- read_csv(
-    "2021-01-29_pp-dataset-trn.csv",
-    col_types="ccdddcccccdcccdllllllcddccccDlcccccccccccccccccccc"
+    "~/Downloads/rm-dash/2021-01-26_pp-dataset-oa-trn-sciscore-od.csv",
+    col_types="ccdddcccccdccccdlllllcddccccDlccccccccccccccccccccddddddddddddddddddddddddlcclclcc"
 )
-
-## Actually, didn't end up using this because the columns were already in the CSV
 
 ### Generate the following CSV using the CSV above and the R script at the following address:
 ### https://codeberg.org/bgcarlisle/PubmedIntersectionCheck
@@ -25,9 +23,7 @@ clinical_trials <- read_csv("2021-01-19_13-03-31-checked-pmids-clinical.csv")
 
 joined <- original %>%
     left_join(animals, by=c("pmid_dimensions" = "pmid")) %>%
-    rename(animals = found) %>%
-    left_join(clinical_trials, by=c("pmid_dimensions" = "pmid")) %>%
-    rename(clinicaltrial = found)
+    rename(is_animal = found)
 
 joined_filename <- Sys.time() %>%
     str_replace_all(":", "-") %>%
@@ -36,8 +32,6 @@ joined_filename <- Sys.time() %>%
 
 joined %>%
     write_csv(joined_filename)
-
-## But I did do this part
 
 ### Now join with Sciscore data
 
@@ -48,9 +42,6 @@ sciscore_reports <- con %>%
 
 original$pmid_dimensions <- original$pmid_dimensions %>%
     as.character
-
-## joined$pmid_dimensions <- joined$pmid_dimensions %>%
-##    as.character()
 
 joinedwithsciscore <- original %>%
     left_join(sciscore_reports, by=c("pmid_dimensions" = "pmid"))
