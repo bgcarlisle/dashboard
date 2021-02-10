@@ -29,12 +29,19 @@ rm_data <- read_csv(
 ddumcs <- rm_data %>%
     select(city)
 
-ddumcs$umcno <- substr(ddumcs$city, 5, nchar(ddumcs$city)) %>%
-    as.numeric()
+if (sum(substr(ddumcs$city, 1, 4) == "UMC ") == nrow(ddumcs)) {
+    ddumcs$umcno <- substr(ddumcs$city, 5, nchar(ddumcs$city)) %>%
+        as.numeric()
 
-ddumcs <- ddumcs %>%
-    arrange(umcno) %>%
-    select(city)
+    ddumcs <- ddumcs %>%
+        arrange(umcno) %>%
+        select(city)
+} else {
+
+    ddumcs <- ddumcs %>%
+        arrange(city)
+    
+}
 
 umclist <- c(
     "All",
