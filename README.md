@@ -16,6 +16,8 @@ The `shiny_app/` folder contains the code that is run to generate the Shiny app.
 
 ### 1. Original data set based on Web of Science and Dimensions search
 
+The following columns came from a search of Web of Science and Dimensions
+
 | Column                 | Type        | Details                                |
 |------------------------|-------------|----------------------------------------|
 | `doi`                  | string      | Digital Object Identifier              |
