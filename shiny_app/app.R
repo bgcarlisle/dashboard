@@ -27,7 +27,7 @@ rm_data <- read_csv(
 
 umclist <- c(
     "All",
-    rm_data$city %>% unique()
+    unique(rm_data$city)
 )
 
 ## WARNING
