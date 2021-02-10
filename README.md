@@ -87,7 +87,7 @@ The data set from (2.) is joined by `doi` with TRN reporting information to prov
 
 All unique values from `pmid_dimensions` column from (3.) are tested for whether they would appear in a search for animal research developed by [Hooijmans et al (2010)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3104815/), using https://codeberg.org/bgcarlisle/PubmedIntersectionCheck
 
-The resulting data set is joined to the data set from (3.) to provide the following additional column
+The resulting data set is joined by `pmid_dimensions` to the data set from (3.) to provide the following additional column
 
 | Column      | Type    | Details                                            |
 |-------------|---------|----------------------------------------------------|
