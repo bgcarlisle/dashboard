@@ -44,27 +44,7 @@ start_page <- tabPanel(
                 selectInput(
                     "selectUMC",
                     strong("Choose UMC"),
-                    choices = list(
-
-                        ## This needs to be updated manually
-                        ## From here:
-                        ## rm_data$city %>% unique()
-                        
-                        "Show average only" = "all",
-                        "Berlin" = "berlin",
-                        "Bochum" = "bochum",
-                        "Cologne" = "cologne",
-                        "Duisberg-Essen" = "duisburg-essen",
-                        "Erlangen" = "erlangen",
-                        "Hamburg" = "hamburg",
-                        "Hannover" = "hannover",
-                        "Leipzig" = "leipzig",
-                        "Magdeburg" = "magdeburg",
-                        "Oldenburg" = "oldenburg",
-                        "Rostock" = "rostock",
-                        "Witten" = "witten",
-                        "Wurzburg" = "wurzburg"
-                    ),
+                    choices = umclist,
                     selected = NA
                 )
             )

@@ -25,6 +25,11 @@ rm_data <- read_csv(
     ## SPECIFICATION WILL NEED TO BE UPDATED MANUALLY
 )
 
+umclist <- c(
+    "All",
+    rm_data$city %>% unique()
+)
+
 ## WARNING
 ## Okay not really a warning
 ## But kinda
