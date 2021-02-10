@@ -140,3 +140,7 @@ The data set from (5.) is joined by `doi`, `city` and `year_published` to provid
 | `is_open_code`         | boolean     | Whether the article has open code |
 | `open_data_statements` | string      | Extracted open data statement     |
 | `open_code_statements` | string      | Extracted open code statement     |
+
+### 7. Prepare UMC names
+
+The UMC names in the `city` column are now all in lower case. Capitalize them with [umc-names-caps.R](prep/umc-names-caps.R "umc-names-caps.R")
