@@ -33,8 +33,10 @@ methods_page <- tabPanel(
                                question. Based on these results, we generated a proof-of-principle dataset with
                                publications from UMCs with a specificity equal to or higher than 85 (n=13 UMCs). For
                                each UMC, we selected a random sample of 500 articles. Reviews were exluded from
-                               the development of this proof-of-principle dataset as most metrics are based on
-                                      articles.")),
+                               the development of this smaller proof-of-principle dataset as most metrics are
+                               based on articles. The code used to generate the UMC publication set, process
+                               samples for specificity checks, and create the proof-of-principle dataset are openly
+                                      available at: [enter link to repository in GitHub].")),
                                value = "methodsPanels_PublicationSearch",
                                style = "default")),
     
