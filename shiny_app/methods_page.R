@@ -5,7 +5,8 @@ methods_page <- tabPanel(
     h4(HTML('This dashboard displays a proof-of-principle dataset for responsible metrics at German University
     Medical Centers (UMCs). Please note that the data presented in this dashboard is still under development
     and should not be used &#8211 solely or in part &#8211 to compare UMCs or inform policy decisions.
-    You can find more information on our methods for individual metrics by extending the panels below.')),
+    You can find more information on our methods for individual metrics by extending the panels below. You
+            can also find a list of tools used for data collection at the bottom of this page.')),
     
     h2("Publication search"),
     bsCollapse(id = "methodsPanels_PublicationSearch",
