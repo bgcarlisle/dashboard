@@ -135,7 +135,7 @@ methods_page <- tabPanel(
                         a publication."),
                
                
-               methods_panel("Potential Green Open Access (OA)",
+               methods_panel("Potential Green Open Access (OA) - in progress!",
                              
                              "This metric measures how many publications currently hidden behind a paywall
                              could be made openly accessible in a repository based on journal self-archiving
