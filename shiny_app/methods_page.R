@@ -135,7 +135,7 @@ methods_page <- tabPanel(
                         a publication."),
                
                
-               methods_panel("Potential Green Open Access (OA) - in progress!",
+               methods_panel("Potential Green Open Access (OA) - coming soon!",
                              
                              "This metric measures how many publications currently hidden behind a paywall
                              could be made openly accessible in a repository based on journal self-archiving
@@ -248,7 +248,7 @@ methods_page <- tabPanel(
                              
                              "This metric measures if the clinical trials are registered before the
                         start date of the study, according to the information given on ClinicalTrials.gov.
-                        The idea of prospective registration of studies is to make the trail specifications,
+                        The idea of prospective registration of studies is to make the trial specifications,
                         including primary and secondary outcomes, publicly available before study start.
                         Prospective registration adds transparency, helps protect against outcome switching.",
                              
