@@ -7,6 +7,8 @@ about_rm_page <- tabPanel(
              particularly like to thank Nico Riedel who designed an initial version of this dashboard, which
              we adapted for use with multiple institutions.'),
     br(),
+    h4("UMC publication search"),
+    helpText('Franzen, Delwen (Conceptualization, Methodology, Technical Implementation, Validation); Saksone, Lana (Conceptualization, Methodology, Validation); Grabitz, Peter (Conceptualization, Methodology); Riedel, Nico (Conceptualization, Methodology, Technical Implementation); Carlisle, Benjamin Gregory (Methodology, Technical Implementation, Validation), Holst, Martin (Conceptualization, Validation); Salholz-Hillel, Maia (Conceptualization, Methodology); Strech, Daniel (Conceptualization, Methodology)'),
     h4("ODDPub - Open Data & Code detection"),
     helpText('Riedel, Nico (Conceptualization, Methodology, Technical Implementation, Validation);
                                 Bobrov, Evgeny (Conceptualization, Methodology, Validation);
