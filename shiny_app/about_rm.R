@@ -9,6 +9,7 @@ about_rm_page <- tabPanel(
     br(),
     h4("UMC publication search"),
     helpText('Franzen, Delwen (Conceptualization, Methodology, Technical Implementation, Validation); Saksone, Lana (Conceptualization, Methodology, Validation); Grabitz, Peter (Conceptualization, Methodology); Riedel, Nico (Conceptualization, Methodology, Technical Implementation); Carlisle, Benjamin Gregory (Methodology, Technical Implementation, Validation), Holst, Martin (Conceptualization, Validation); Salholz-Hillel, Maia (Conceptualization, Methodology); Strech, Daniel (Conceptualization, Methodology)'),
+    br(),
     h4("ODDPub - Open Data & Code detection"),
     helpText('Riedel, Nico (Conceptualization, Methodology, Technical Implementation, Validation);
                                 Bobrov, Evgeny (Conceptualization, Methodology, Validation);
