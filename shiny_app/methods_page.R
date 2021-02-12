@@ -272,9 +272,8 @@ methods_page <- tabPanel(
                              HTML("The robustness metrics assess whether animal studies in our publication set
                         adhere to a core set of reporting standards for animal studies as described by
                         <a href=https://www.nature.com/articles/nature11556>Landis et al. (2012)</a>.
-                        Specifically, we focus on the following research parameters: reporting of blinding,
-                        randomization, and sample size estimation. We also display whether an Institutional
-                                  Animal Care and Use Committee (IACUC) statement is reported."),
+                        Specifically, we focus on the following research parameters: reporting of investigator
+                        blinding, randomization of subjects, and sample size estimation."),
                              
                              HTML('In a first step, we filtered the publication dataset for animal studies based
                         on a previously published <a href=https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3104815/
