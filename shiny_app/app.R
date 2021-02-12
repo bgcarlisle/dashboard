@@ -518,7 +518,7 @@ server <- function (input, output, session) {
             preregvaltext <- "No clinical trials for this metric were captured by this method for this UMC"
         } else {
             preregval <- paste0(round(100*all_numer_prereg/all_denom_prereg), "%")
-            preregvaltext <- "of clinical trials were preregistered"
+            preregvaltext <- "of clinical trials were prospectively registered"
         }
 
         ## Value for timely pub
@@ -954,10 +954,10 @@ server <- function (input, output, session) {
                     metric_box(
                         title = "Prospective registration",
                         value = paste0(round(100*all_numer_prereg/all_denom_prereg), "%"),
-                        value_text = "of clinical trials were preregistered",
+                        value_text = "of clinical trials were prospectively registered",
                         plot = plotlyOutput('plot_allumc_clinicaltrials_prereg', height="300px"),
                         info_id = "infoALLUMCPreReg",
-                        info_title = "Preregistration (All UMCs)",
+                        info_title = "Prospective registration (All UMCs)",
                         info_text = allumc_clinicaltrials_prereg_tooltip
                     )
                 )
