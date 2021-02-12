@@ -839,12 +839,12 @@ server <- function (input, output, session) {
                 column(
                     12,
                     metric_box(
-                        title = "Open Data",
+                        title = "Any Open Data",
                         value = paste0(round(100*all_numer_od/all_denom_od), "%"),
-                        value_text = "of publications were Open Data",
+                        value_text = "of 2018 analyzable publications mentioned sharing of data",
                         plot = plotlyOutput('plot_allumc_opendata', height="300px"),
                         info_id = "infoALLUMCOpenData",
-                        info_title = "Open Data (All UMCs)",
+                        info_title = "Any Open Data (All UMCs)",
                         info_text = allumc_opendata_tooltip
                     )
                 )
@@ -853,12 +853,12 @@ server <- function (input, output, session) {
                 column(
                     12,
                     metric_box(
-                        title = "Open Code",
+                        title = "Any Open Code",
                         value = paste0(round(100*all_numer_oc/all_denom_oc), "%"),
-                        value_text = "of publications were Open Code",
+                        value_text = "of 2018 analyzable publications mentioned sharing of code",
                         plot = plotlyOutput('plot_allumc_opencode', height="300px"),
                         info_id = "infoALLUMCOpenCode",
-                        info_title = "Open Code (All UMCs)",
+                        info_title = "Any Open Code (All UMCs)",
                         info_text = allumc_opencode_tooltip
                     )
                 )
