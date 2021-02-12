@@ -358,7 +358,7 @@ server <- function (input, output, session) {
                     metric_box(
                         title = "Randomization",
                         value = all_percent_randomized,
-                        value_text = "of animal studies report randomization",
+                        value_text = "of analyzable 2018 animal studies report randomization",
                         plot = plotlyOutput('plot_randomization', height="300px"),
                         info_id = "infoRandomization",
                         info_title = "Randomization",
@@ -370,7 +370,7 @@ server <- function (input, output, session) {
                     metric_box(
                         title = "Blinding",
                         value = all_percent_blinded,
-                        value_text = "of animal studies report blinding",
+                        value_text = "of analyzable 2018 animal studies report blinding",
                         plot = plotlyOutput('plot_blinding', height="300px"),
                         info_id = "infoBlinding",
                         info_title = "Blinding",
@@ -382,7 +382,7 @@ server <- function (input, output, session) {
                     metric_box(
                         title = "Power calculation",
                         value = all_percent_power,
-                        value_text = "of animal studies report a power calculation",
+                        value_text = "of analyzable 2018 animal studies report a power calculation",
                         plot = plotlyOutput('plot_power', height="300px"),
                         info_id = "infoPower",
                         info_title = "Power",
