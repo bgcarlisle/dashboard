@@ -95,7 +95,7 @@ source("all_umc_plots.R")
 source("start_page.R")
 source("all_umcs_page.R")
 source("methods_page.R")
-source("datasets_page.R")
+## source("datasets_page.R")
 source("about_rm.R")
 
 ## Define UI
@@ -106,7 +106,7 @@ ui <- tagList(
         start_page,
         all_umcs_page,
         methods_page,
-        datasets_page,
+        ## datasets_page,
         about_rm_page,
         tags$head
         (
@@ -191,11 +191,11 @@ server <- function (input, output, session) {
                         'buttonMethods',
                         'See methods'
                     ),
-                    actionButton(
-                        style = "color: white; background-color: #aa1c7d;",
-                        'buttonDatasets',
-                        'See data sets'
-                    ),
+                    ## actionButton(
+                    ##     style = "color: white; background-color: #aa1c7d;",
+                    ##     'buttonDatasets',
+                    ##     'See data sets'
+                    ## ),
                     br()
                 )
             ),
