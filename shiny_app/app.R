@@ -222,6 +222,7 @@ server <- function (input, output, session) {
     output$robustness_metrics <- renderUI({
 
         req(input$width)
+        req(input$selectUMC)
 
         if (input$width < 1400) {
             col_width <- 6
@@ -409,6 +410,7 @@ server <- function (input, output, session) {
     output$clinicaltrials_metrics <- renderUI({
 
         req(input$width)
+        req(input$selectUMC)
 
         if (input$width < 1400) {
             col_width <- 6
@@ -601,6 +603,7 @@ server <- function (input, output, session) {
     output$openscience_metrics <- renderUI({
 
         req(input$width)
+        req(input$selectUMC)
 
         if (input$width < 1400) {
             col_width <- 6
