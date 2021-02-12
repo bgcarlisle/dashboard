@@ -164,9 +164,14 @@ server <- function (input, output, session) {
             fluidRow(
                 column(
                     8,
-                    h1(style = "margin-left:0cm", strong("Proof-of-principle Responsible Metrics Dashboard"), align = "left"),
+                    h1(style = "margin-left:0cm", strong("Proof-of-principle Responsible Metrics Dashboard (2018)"), align = "left"),
                     h4(style = "margin-left:0cm",
-                       "This dashboard is a proof-of-principle overview of several metrics of open and responsible research for several German University Medical Centres (UMC's). For more detailed information on the methods used to calculate those metrics, the dataset underlying the metrics, or resources to improve your own research practices, click one of the following buttons."),
+                       "This dashboard is a proof-of-principle overview of several metrics of open and robust
+                       research for several German University Medical Centres (UMCs). Besides the metrics
+                       Summary Results Reporting, Prospective Registration, and Timely Publication, all other
+                       publication-based metrics are based on publications published in 2018. For more detailed
+                       information on the methods used to calculate those metrics or the dataset underlying
+                       the metrics, click one of the following buttons."),
                     h4(style = "margin-left:0cm",
                        "This dashboard is a pilot that is still under development, and should not be used to compare UMC's or inform policy. More metrics may be added in the future."),
                     br()
