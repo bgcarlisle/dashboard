@@ -733,7 +733,7 @@ server <- function (input, output, session) {
                     metric_box(
                         title = "Open Access",
                         value = paste0(round(100*all_numer_oa/all_denom_oa), "%"),
-                        value_text = "of publications were Open Access",
+                        value_text = "of 2018 publications are Open Access",
                         plot = plotlyOutput('plot_opensci_oa', height="300px"),
                         info_id = "infoOpenAccess",
                         info_title = "Open Access",
@@ -743,24 +743,24 @@ server <- function (input, output, session) {
                 column(
                     col_width,
                     metric_box(
-                        title = "Open Data",
+                        title = "Any Open Data",
                         value = paste0(round(100*all_numer_od/all_denom_od), "%"),
-                        value_text = "of analyzable publications reported Open Data",
+                        value_text = "of 2018 analyzable publications mentioned sharing of data",
                         plot = plotlyOutput('plot_opensci_od', height="300px"),
                         info_id = "infoOpenData",
-                        info_title = "Open Data",
+                        info_title = "Any Open Data",
                         info_text = opendata_tooltip
                     )
                 ),
                 column(
                     col_width,
                     metric_box(
-                        title = "Open Code",
+                        title = "Any Open Code",
                         value = paste0(round(100*all_numer_oc/all_denom_oc), "%"),
-                        value_text = "of analyzable publications reported Open Code",
+                        value_text = "of 2018 analyzable publications mentioned sharing of code",
                         plot = plotlyOutput('plot_opensci_oc', height="300px"),
                         info_id = "infoOpenCode",
-                        info_title = "Open Code",
+                        info_title = "Any Open Code",
                         info_text = opencode_tooltip
                     )
                 )
