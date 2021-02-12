@@ -98,7 +98,7 @@ plot_opensci_oa <- function (dataset, umc, color_palette) {
                 title = '<b>UMC</b>'
             ),
             yaxis = list(
-                title = '<b>Open Access</b>',
+                title = '<b>Percentage of publications</b>',
                 range = c(0, 100)
             ),
             paper_bgcolor = color_palette[9],
@@ -168,7 +168,7 @@ plot_opensci_od <- function (dataset, umc, color_palette) {
                 title = '<b>UMC</b>'
             ),
             yaxis = list(
-                title = '<b>Open Data</b>',
+                title = '<b>Percentage of publications</b>',
                 range = c(0, 100)
             ),
             paper_bgcolor = color_palette[9],
@@ -239,7 +239,7 @@ plot_opensci_oc <- function (dataset, umc, color_palette) {
                 title = '<b>UMC</b>'
             ),
             yaxis = list(
-                title = '<b>Open Code</b>',
+                title = '<b>Percentage of publications</b>',
                 range = c(0, 100)
             ),
             paper_bgcolor = color_palette[9],
@@ -331,7 +331,7 @@ plot_clinicaltrials_trn <- function (dataset, umc, color_palette) {
                 title = '<b>UMC</b>'
             ),
             yaxis = list(
-                title = '<b>TRN reporting</b>',
+                title = '<b>TRN reporting (%)</b>',
                 range = c(0, 100)
             ),
             paper_bgcolor = color_palette[9],
@@ -405,7 +405,7 @@ plot_clinicaltrials_sumres <- function (dataset, umc, color_palette) {
                 title = '<b>UMC</b>'
             ),
             yaxis = list(
-                title = '<b>TRN reporting</b>',
+                title = '<b>Summary results reporting (%)</b>',
                 range = c(0, 100)
             ),
             paper_bgcolor = color_palette[9],
@@ -414,7 +414,7 @@ plot_clinicaltrials_sumres <- function (dataset, umc, color_palette) {
     
 }
 
-# Preregistration
+# Prospective registration
 plot_clinicaltrials_prereg <- function (dataset, umc, color_palette) {
 
     all_denom <- dataset %>%
@@ -472,7 +472,7 @@ plot_clinicaltrials_prereg <- function (dataset, umc, color_palette) {
                 title = '<b>UMC</b>'
             ),
             yaxis = list(
-                title = '<b>Preregistration (%)</b>',
+                title = '<b>Prospective registration (%)</b>',
                 range = c(0, 100)
             ),
             paper_bgcolor = color_palette[9],

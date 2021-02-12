@@ -74,7 +74,7 @@ plot_allumc_openaccess <- function (dataset, color_palette) {
                 title = '<b>UMC</b>'
             ),
             yaxis = list(
-                title = '<b>Open Access (%)</b>',
+                title = '<b>Percentage of publications</b>',
                 range = c(0, ceiling(max(plot_data$percentage)/5)*5)
             ),
             paper_bgcolor = color_palette[9],
@@ -143,7 +143,7 @@ plot_allumc_opendata <- function (dataset, color_palette, color_palette_bars) {
                 title = '<b>UMC</b>'
             ),
             yaxis = list(
-                title = '<b>Open Data (%)</b>',
+                title = '<b>Percentage of publications</b>',
                 range = c(0, ceiling(max(plot_data$percentage)/5)*5)
             ),
             paper_bgcolor = color_palette[9],
@@ -211,7 +211,7 @@ plot_allumc_opencode <- function (dataset, color_palette, color_palette_bars) {
                 title = '<b>UMC</b>'
             ),
             yaxis = list(
-                title = '<b>Open Code (%)</b>',
+                title = '<b>Percentage of publications</b>',
                 range = c(0, ceiling(max(plot_data$percentage)/5)*5)
             ),
             paper_bgcolor = color_palette[9],
@@ -366,7 +366,7 @@ plot_allumc_clinicaltrials_sumres <- function (dataset, color_palette, color_pal
     
 }
 
-## Preregistration
+## Prospective registration
 
 plot_allumc_clinicaltrials_prereg <- function (dataset, color_palette, color_palette_bars) {
 
@@ -419,7 +419,7 @@ plot_allumc_clinicaltrials_prereg <- function (dataset, color_palette, color_pal
                 title = '<b>UMC</b>'
             ),
             yaxis = list(
-                title = '<b>Preregistration (%)</b>',
+                title = '<b>Prospective registration (%)</b>',
                 range = c(0, ceiling(max(plot_data$percentage)/5)*5)
             ),
             paper_bgcolor = color_palette[9],

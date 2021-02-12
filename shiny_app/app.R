@@ -358,7 +358,7 @@ server <- function (input, output, session) {
                     metric_box(
                         title = "Randomization",
                         value = all_percent_randomized,
-                        value_text = "of animal studies report randomization",
+                        value_text = "of analyzable 2018 animal studies report randomization",
                         plot = plotlyOutput('plot_randomization', height="300px"),
                         info_id = "infoRandomization",
                         info_title = "Randomization",
@@ -370,7 +370,7 @@ server <- function (input, output, session) {
                     metric_box(
                         title = "Blinding",
                         value = all_percent_blinded,
-                        value_text = "of animal studies report blinding",
+                        value_text = "of analyzable 2018 animal studies report blinding",
                         plot = plotlyOutput('plot_blinding', height="300px"),
                         info_id = "infoBlinding",
                         info_title = "Blinding",
@@ -382,7 +382,7 @@ server <- function (input, output, session) {
                     metric_box(
                         title = "Power calculation",
                         value = all_percent_power,
-                        value_text = "of animal studies report a power calculation",
+                        value_text = "of analyzable 2018 animal studies report a power calculation",
                         plot = plotlyOutput('plot_power', height="300px"),
                         info_id = "infoPower",
                         info_title = "Power",
@@ -518,7 +518,7 @@ server <- function (input, output, session) {
             preregvaltext <- "No clinical trials for this metric were captured by this method for this UMC"
         } else {
             preregval <- paste0(round(100*all_numer_prereg/all_denom_prereg), "%")
-            preregvaltext <- "of clinical trials were preregistered"
+            preregvaltext <- "of clinical trials were prospectively registered"
         }
 
         ## Value for timely pub
@@ -547,7 +547,7 @@ server <- function (input, output, session) {
                     metric_box(
                         title = "Trial Registry Number Reporting",
                         value = paste0(round(100*all_numer_trn/all_denom_trn), "%"),
-                        value_text = "of PubMed-classified clinical trial publications reported a TRN in the abstract",
+                        value_text = "of 2018 PubMed-classified clinical trial publications reported a TRN in the abstract",
                         plot = plotlyOutput('plot_clinicaltrials_trn', height="300px"),
                         info_id = "infoTRN",
                         info_title = "Trial Registry Number Reporting",
@@ -733,7 +733,7 @@ server <- function (input, output, session) {
                     metric_box(
                         title = "Open Access",
                         value = paste0(round(100*all_numer_oa/all_denom_oa), "%"),
-                        value_text = "of publications were Open Access",
+                        value_text = "of 2018 publications are Open Access",
                         plot = plotlyOutput('plot_opensci_oa', height="300px"),
                         info_id = "infoOpenAccess",
                         info_title = "Open Access",
@@ -743,24 +743,24 @@ server <- function (input, output, session) {
                 column(
                     col_width,
                     metric_box(
-                        title = "Open Data",
+                        title = "Any Open Data",
                         value = paste0(round(100*all_numer_od/all_denom_od), "%"),
-                        value_text = "of analyzable publications reported Open Data",
+                        value_text = "of 2018 analyzable publications mentioned sharing of data",
                         plot = plotlyOutput('plot_opensci_od', height="300px"),
                         info_id = "infoOpenData",
-                        info_title = "Open Data",
+                        info_title = "Any Open Data",
                         info_text = opendata_tooltip
                     )
                 ),
                 column(
                     col_width,
                     metric_box(
-                        title = "Open Code",
+                        title = "Any Open Code",
                         value = paste0(round(100*all_numer_oc/all_denom_oc), "%"),
-                        value_text = "of analyzable publications reported Open Code",
+                        value_text = "of 2018 analyzable publications mentioned sharing of code",
                         plot = plotlyOutput('plot_opensci_oc', height="300px"),
                         info_id = "infoOpenCode",
-                        info_title = "Open Code",
+                        info_title = "Any Open Code",
                         info_text = opencode_tooltip
                     )
                 )
@@ -827,7 +827,7 @@ server <- function (input, output, session) {
                     metric_box(
                         title = "Open Access",
                         value = paste0(round(100*all_numer_oa/all_denom_oa), "%"),
-                        value_text = "of publications were Open Access",
+                        value_text = "of 2018 publications are Open Access",
                         plot = plotlyOutput('plot_allumc_openaccess', height="300px"),
                         info_id = "infoALLUMCOpenAccess",
                         info_title = "Open Access (All UMCs)",
@@ -839,12 +839,12 @@ server <- function (input, output, session) {
                 column(
                     12,
                     metric_box(
-                        title = "Open Data",
+                        title = "Any Open Data",
                         value = paste0(round(100*all_numer_od/all_denom_od), "%"),
-                        value_text = "of publications were Open Data",
+                        value_text = "of 2018 analyzable publications mentioned sharing of data",
                         plot = plotlyOutput('plot_allumc_opendata', height="300px"),
                         info_id = "infoALLUMCOpenData",
-                        info_title = "Open Data (All UMCs)",
+                        info_title = "Any Open Data (All UMCs)",
                         info_text = allumc_opendata_tooltip
                     )
                 )
@@ -853,12 +853,12 @@ server <- function (input, output, session) {
                 column(
                     12,
                     metric_box(
-                        title = "Open Code",
+                        title = "Any Open Code",
                         value = paste0(round(100*all_numer_oc/all_denom_oc), "%"),
-                        value_text = "of publications were Open Code",
+                        value_text = "of 2018 analyzable publications mentioned sharing of code",
                         plot = plotlyOutput('plot_allumc_opencode', height="300px"),
                         info_id = "infoALLUMCOpenCode",
-                        info_title = "Open Code (All UMCs)",
+                        info_title = "Any Open Code (All UMCs)",
                         info_text = allumc_opencode_tooltip
                     )
                 )
@@ -926,7 +926,7 @@ server <- function (input, output, session) {
                     metric_box(
                         title = "Trial Registry Number Reporting",
                         value = paste0(round(100*all_numer_trn/all_denom_trn), "%"),
-                        value_text = "of clinical trial publications reported a TRN in the abstract",
+                        value_text = "of 2018 PubMed-classified clinical trial publications reported a TRN in the abstract",
                         plot = plotlyOutput('plot_allumc_clinicaltrials_trn', height="300px"),
                         info_id = "infoALLUMCTRN",
                         info_title = "TRN reporting (All UMCs)",
@@ -954,10 +954,10 @@ server <- function (input, output, session) {
                     metric_box(
                         title = "Prospective registration",
                         value = paste0(round(100*all_numer_prereg/all_denom_prereg), "%"),
-                        value_text = "of clinical trials were preregistered",
+                        value_text = "of clinical trials were prospectively registered",
                         plot = plotlyOutput('plot_allumc_clinicaltrials_prereg', height="300px"),
                         info_id = "infoALLUMCPreReg",
-                        info_title = "Preregistration (All UMCs)",
+                        info_title = "Prospective registration (All UMCs)",
                         info_text = allumc_clinicaltrials_prereg_tooltip
                     )
                 )
@@ -1042,7 +1042,7 @@ server <- function (input, output, session) {
                     metric_box(
                         title = "Randomization",
                         value = all_percent_randomized,
-                        value_text = "of animal studies report randomization",
+                        value_text = "of analyzable 2018 animal studies report randomization",
                         plot = plotlyOutput('plot_allumc_animal_rando', height="300px"),
                         info_id = "infoAllUMCAnimalRando",
                         info_title = "Randomization",
@@ -1056,7 +1056,7 @@ server <- function (input, output, session) {
                     metric_box(
                         title = "Blinding",
                         value = all_percent_blinded,
-                        value_text = "of animal studies report blinding",
+                        value_text = "of analyzable 2018 animal studies report blinding",
                         plot = plotlyOutput('plot_allumc_animal_blind', height="300px"),
                         info_id = "infoAllUMCAnimalBlind",
                         info_title = "Blinding",
@@ -1070,7 +1070,7 @@ server <- function (input, output, session) {
                     metric_box(
                         title = "Power calculation",
                         value = all_percent_power,
-                        value_text = "of animal studies report a power calculation",
+                        value_text = "of analyzable 2018 animal studies report a power calculation",
                         plot = plotlyOutput('plot_allumc_animal_power', height="300px"),
                         info_id = "infoAllUMCAnimalPower",
                         info_title = "Power calculation",
