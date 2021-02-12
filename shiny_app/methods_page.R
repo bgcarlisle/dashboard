@@ -5,7 +5,8 @@ methods_page <- tabPanel(
     h4(HTML('This dashboard displays a proof-of-principle dataset for responsible metrics at German University
     Medical Centers (UMCs). Please note that the data presented in this dashboard is still under development
     and should not be used &#8211 solely or in part &#8211 to compare UMCs or inform policy decisions.
-    You can find more information on our methods for individual metrics by extending the panels below.')),
+    You can find more information on our methods for individual metrics by extending the panels below. You
+            can also find a list of tools used for data collection at the bottom of this page.')),
     
     h2("Publication search"),
     bsCollapse(id = "methodsPanels_PublicationSearch",
@@ -32,8 +33,10 @@ methods_page <- tabPanel(
                                question. Based on these results, we generated a proof-of-principle dataset with
                                publications from UMCs with a specificity equal to or higher than 85 (n=13 UMCs). For
                                each UMC, we selected a random sample of 500 articles. Reviews were exluded from
-                               the development of this proof-of-principle dataset as most metrics are based on
-                                      articles.")),
+                               the development of this smaller proof-of-principle dataset as most metrics are
+                               based on articles. The code used to generate the UMC publication set, process
+                               samples for specificity checks, and create the proof-of-principle dataset are openly
+                                      available at: [enter link to repository in GitHub].")),
                                value = "methodsPanels_PublicationSearch",
                                style = "default")),
     
@@ -132,7 +135,7 @@ methods_page <- tabPanel(
                         a publication."),
                
                
-               methods_panel("Potential Green Open Access (OA)",
+               methods_panel("Potential Green Open Access (OA) - in progress!",
                              
                              "This metric measures how many publications currently hidden behind a paywall
                              could be made openly accessible in a repository based on journal self-archiving
@@ -275,22 +278,45 @@ methods_page <- tabPanel(
                              
                              HTML('In a first step, we filtered the publication dataset for animal studies based
                         on a previously published <a href=https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3104815/
-                        >PubMed search query</a>. We focused on animal studies as these The parameters in question were extracted with
+                        >PubMed search query</a>. The robustness measures were evaluated with
                         <a href="https://www.sciencedirect.com/science/article/pii/S2589004220308907">SciScore</a>,
                         an automated tool which evaluates research articles based on their adherence to rigour
                         and reproducibility criteria.'),
                              
-                             HTML("There are several limitations: We identified animal studies based on a
-                        previously published PubMed search filter which has been shown to retrieve more records
-                        than the regular search method in PubMed (<i>Limit: Animals</i>). However, we did not
-                        test its sensitivity and specificity in the context of this proof-of-principle dataset.
-                        Moreover, this PubMed search filter does not distinguish between publications in which
-                        animals are mentioned, and publications in which animals are the main research subject.
-                        It also does not identify animal studies in our publication set not indexed in PubMed.
-                        Finally, it is important to note that randomization, blinding, and sample size
-                        estimation in most cases do not apply to early-stage exploratory research
-                        (hypothesis-generating experiments). At this stage, we do not have a way of distinguishing
-                                  these studies from confirmatory, hypothesis-testing experiments.")))
+                             HTML("There are several limitations: <i>(1) Identification of animal studies.</i>
+                        We identified animal studies based on a previously published PubMed search filter
+                        which has been shown to retrieve more records than the regular search method in PubMed
+                        (<i>Limit: Animals</i>). However, we did not test its sensitivity and specificity in
+                        the context of this proof-of-principle dataset. Moreover, this PubMed search filter
+                        does not distinguish between publications in which animals are mentioned, and
+                        publications in which animals are the main research subject. It also does not identify
+                        animal studies in our publication set not indexed in PubMed. <i> (2) Evaluation of
+                        robustness measures.</i> For the purposes of this dashboard, we obtained SciScore data
+                        for publications in the PubMed Central (PMC) corpus. At this stage, we do not have this
+                        data for publications in our dataset not indexed in PMC. The robustness measures depend
+                        on the performance of the SciScore classifier (see more information on classifier
+                        performance analysis in <a href=https://www.sciencedirect.com/science/article/pii/S2589004220308907?via%3Dihub#mmc1
+                        >this publication</a>). Finally, it is important to note that randomization, blinding,
+                        and sample size estimation may not always apply, especially in early-stage
+                        exploratory research (hypothesis-generating experiments). At present, we do not have a
+                        way of distinguishing these studies from confirmatory, hypothesis-testing experiments."))),
+               
+    h2("Tools used for data collection"),
+    helpText(HTML('<a href="http://login.webofknowledge.com/error/Error?Src=Cookie&Alias=WOK5&Error=roaming%2Cip&PathInfo=%2F&ErrorCode=AUTH_PREFERENCE_ERROR&RouterURL=http%3A%2F%2Fwww.webofknowledge.com%2F&Domain=.webofknowledge.com"
+                  >Web of Science</a>')),
+    helpText(HTML('<a href="https://app.dimensions.ai/discover/publication">Dimensions</a>')),
+    helpText(HTML('<a href="https://numbat.bgcarlisle.com/">Numbat Systematic Review Manager</a>')),
+    helpText(HTML('<a href="https://github.com/NicoRiedel/unpaywallR"> UnpaywallR </a>')),
+    helpText(HTML('<a href="https://shareyourpaper.org/permissions/about">
+                  ShareYourPaper permissions checker API</a> from the Open Access Button')),
+    helpText(HTML('<a href="https://github.com/quest-bih/oddpub" > ODDPub </a>
+                  and <a href="https://datascience.codata.org/article/10.5334/dsj-2020-042/">
+                  related publication </a>')),
+    helpText(HTML('<a href="https://github.com/maia-sh/ctregistries"> ctregistries R package </a>')),
+    helpText(HTML('<a href="https://eu.trialstracker.net/">EU Trials Tracker </a>')),
+    helpText(HTML('Data extracted with <a href="https://www.sciscore.com/">SciScore tool</a>, also see the
+                  <a href="https://www.sciencedirect.com/science/article/pii/S2589004220308907?via%3Dihub#mmc1">
+                  related publication </a>'))
 )
 
 

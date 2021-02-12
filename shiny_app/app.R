@@ -164,7 +164,7 @@ server <- function (input, output, session) {
             fluidRow(
                 column(
                     8,
-                    h1(style = "margin-left:0cm", strong("Responsible Metrics Dashboard"), align = "left"),
+                    h1(style = "margin-left:0cm", strong("Proof-of-principle Responsible Metrics Dashboard"), align = "left"),
                     h4(style = "margin-left:0cm",
                        "This dashboard is a proof-of-principle overview of several metrics of open and responsible research for several German University Medical Centres (UMC's). For more detailed information on the methods used to calculate those metrics, the dataset underlying the metrics, or resources to improve your own research practices, click one of the following buttons."),
                     h4(style = "margin-left:0cm",
@@ -402,7 +402,7 @@ server <- function (input, output, session) {
                     metric_box(
                         title = "Trial Registry Number Reporting",
                         value = paste0(round(100*all_numer_trn/all_denom_trn), "%"),
-                        value_text = "of clinical trial publications reported a TRN in the abstract",
+                        value_text = "of PubMed-classified clinical trial publications reported a TRN in the abstract",
                         plot = plotlyOutput('plot_clinicaltrials_trn', height="300px"),
                         info_id = "infoTRN",
                         info_title = "Trial Registry Number Reporting",
