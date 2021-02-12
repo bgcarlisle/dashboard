@@ -170,8 +170,7 @@ server <- function (input, output, session) {
                        research for several German University Medical Centres (UMCs). Besides the metrics
                        Summary Results Reporting, Prospective Registration, and Timely Publication, all other
                        publication-based metrics are based on publications published in 2018. For more detailed
-                       information on the methods used to calculate those metrics or the dataset underlying
-                       the metrics, click one of the following buttons."),
+                       information on the methods used to calculate those metrics, click one of the following buttons."),
                     h4(style = "margin-left:0cm",
                        "This dashboard is a pilot that is still under development, and should not be used to compare UMC's or inform policy. More metrics may be added in the future."),
                     br()
