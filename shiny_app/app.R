@@ -231,14 +231,36 @@ server <- function (input, output, session) {
             alignment <- "right"
         }
 
-        all_numer_rando <- rm_data %>%
-            filter(
-                is_animal == 1,
-                ! is.na(sciscore),
-                type == "Article"
-            ) %>%
-            select(randomization) %>%
-            sum(na.rm=TRUE)
+        ## Value for randomization
+
+        if (input$selectUMC == "All") {
+
+            all_numer_rando <- rm_data %>%
+                filter(
+                    is_animal == 1,
+                    ! is.na(sciscore),
+                    type == "Article"
+                ) %>%
+                select(randomization) %>%
+                sum(na.rm=TRUE)
+            
+        } else {
+
+            all_numer_rando <- rm_data %>%
+                filter(city == input$selectUMC) %>%
+                filter(
+                    is_animal == 1,
+                    ! is.na(sciscore),
+                    type == "Article"
+                ) %>%
+                select(randomization) %>%
+                sum(na.rm=TRUE)
+            
+        }
+
+        ## Value for Blinding
+
+        if (input$selectUMC == "All") {
 
         all_numer_blinded <- rm_data %>%
             filter(
@@ -248,15 +270,47 @@ server <- function (input, output, session) {
             ) %>%
             select(blinding) %>%
             sum(na.rm=TRUE)
+            
+        } else {
 
-        all_numer_power <- rm_data %>%
+        all_numer_blinded <- rm_data %>%
+            filter(city == input$selectUMC) %>%
             filter(
                 is_animal == 1,
                 ! is.na(sciscore),
                 type == "Article"
             ) %>%
-            select(power) %>%
+            select(blinding) %>%
             sum(na.rm=TRUE)
+            
+        }
+
+        ## Value for Power calc
+
+        if (input$selectUMC == "All") {
+
+            all_numer_power <- rm_data %>%
+                filter(
+                    is_animal == 1,
+                    ! is.na(sciscore),
+                    type == "Article"
+                ) %>%
+                select(power) %>%
+                sum(na.rm=TRUE)
+            
+        } else {
+
+            all_numer_power <- rm_data %>%
+                filter(city == input$selectUMC) %>%
+                filter(
+                    is_animal == 1,
+                    ! is.na(sciscore),
+                    type == "Article"
+                ) %>%
+                select(power) %>%
+                sum(na.rm=TRUE)
+            
+        }
 
         ## all_numer_iacuc <- rm_data %>%
         ##     filter(
@@ -267,13 +321,28 @@ server <- function (input, output, session) {
         ##     select(iacuc) %>%
         ##     sum(na.rm=TRUE)
 
-        all_denom_animal_sciscore <- rm_data %>%
-            filter(
-                is_animal == 1,
-                ! is.na(sciscore),
-                type == "Article"
-            ) %>%
-            nrow()
+        if (input$selectUMC == "All") {
+
+            all_denom_animal_sciscore <- rm_data %>%
+                filter(
+                    is_animal == 1,
+                    ! is.na(sciscore),
+                    type == "Article"
+                ) %>%
+                nrow()
+            
+        } else {
+
+            all_denom_animal_sciscore <- rm_data %>%
+                filter(city == input$selectUMC) %>%
+                filter(
+                    is_animal == 1,
+                    ! is.na(sciscore),
+                    type == "Article"
+                ) %>%
+                nrow()
+            
+        }
 
         all_percent_randomized <- paste0(round(100*all_numer_rando/all_denom_animal_sciscore), "%")
         all_percent_blinded <- paste0(round(100*all_numer_blinded/all_denom_animal_sciscore), "%")
@@ -351,35 +420,91 @@ server <- function (input, output, session) {
 
         ## Value for TRN
 
-        all_numer_trn <- rm_data %>%
-            filter(
-                is_human_ct == 1,
-                ! is.na(abs_trn_1)
-            ) %>%
-            nrow()
-        
-        all_denom_trn <- rm_data %>%
-            filter(is_human_ct == 1) %>%
-            nrow()
+        if (input$selectUMC == "All") {
+
+            all_numer_trn <- rm_data %>%
+                filter(
+                    is_human_ct == 1,
+                    ! is.na(abs_trn_1)
+                ) %>%
+                nrow()
+            
+            all_denom_trn <- rm_data %>%
+                filter(is_human_ct == 1) %>%
+                nrow()
+            
+        } else {
+
+            all_numer_trn <- rm_data %>%
+                filter(city == input$selectUMC) %>%
+                filter(
+                    is_human_ct == 1,
+                    ! is.na(abs_trn_1)
+                ) %>%
+                nrow()
+            
+            all_denom_trn <- rm_data %>%
+                filter(city == input$selectUMC) %>%
+                filter(is_human_ct == 1) %>%
+                nrow()
+            
+        }
 
         ## Value for summary results
-            
-        all_numer_sumres <- eutt_data %>%
-            filter (
-                due_or_not == "Due",
-                status == "Reported results" |
-                status == "Reported results Terminated"
-            ) %>%
-            nrow()
 
-        all_denom_sumres <- eutt_data %>%
-            filter(due_or_not == "Due") %>%
-            nrow()
+        if (input$selectUMC == "All") {
+            
+            all_numer_sumres <- eutt_data %>%
+                filter (
+                    due_or_not == "Due",
+                    status == "Reported results" |
+                    status == "Reported results Terminated"
+                ) %>%
+                nrow()
+
+            all_denom_sumres <- eutt_data %>%
+                filter(due_or_not == "Due") %>%
+                nrow()
+            
+        } else {
+            
+            all_numer_sumres <- eutt_data %>%
+                filter(city == input$selectUMC) %>%
+                filter (
+                    due_or_not == "Due",
+                    status == "Reported results" |
+                    status == "Reported results Terminated"
+                ) %>%
+                nrow()
+
+            all_denom_sumres <- eutt_data %>%
+                filter(city == input$selectUMC) %>%
+                filter(due_or_not == "Due") %>%
+                nrow()
+            
+        }
+
+        if (all_denom_sumres == 0) {
+            sumresval <- "Not applicable"
+            sumresvaltext <- "No clinical trials for this metric were captured by this method for this UMC"
+        } else {
+            sumresval <- paste0(round(100*all_numer_sumres/all_denom_sumres), "%")
+            sumresvaltext <- "of due clinical trials reporting summary results"
+        }
 
         ## Value for prereg
 
-        iv_data_unique <- iv_data %>%
-            distinct(id, .keep_all = TRUE)
+        if (input$selectUMC == "All") {
+
+            iv_data_unique <- iv_data %>%
+                distinct(id, .keep_all = TRUE)
+            
+        } else {
+
+            iv_data_unique <- iv_data %>%
+                filter(city == input$selectUMC) %>%
+                distinct(id, .keep_all = TRUE)
+        }
 
         all_numer_prereg <- iv_data_unique %>%
             filter(preregistered) %>%
@@ -387,6 +512,14 @@ server <- function (input, output, session) {
 
         all_denom_prereg <- iv_data_unique %>%
             nrow()
+
+        if (all_denom_prereg == 0) {
+            preregval <- "Not applicable"
+            preregvaltext <- "No clinical trials for this metric were captured by this method for this UMC"
+        } else {
+            preregval <- paste0(round(100*all_numer_prereg/all_denom_prereg), "%")
+            preregvaltext <- "of clinical trials were preregistered"
+        }
 
         ## Value for timely pub
 
@@ -396,6 +529,14 @@ server <- function (input, output, session) {
 
         all_denom_timpub <- iv_data_unique %>%
             nrow()
+
+        if (all_denom_timpub == 0) {
+            timpubval <- "Not applicable"
+            timpubvaltext <- "No clinical trials for this metric were captured by this method for this UMC"
+        } else {
+            timpubval <- paste0(round(100*all_numer_timpub/all_denom_timpub), "%")
+            timpubvaltext <- "of clinical trials published results within 2 years"
+        }
 
         wellPanel(
             style="padding-top: 0px; padding-bottom: 0px;",
@@ -417,8 +558,8 @@ server <- function (input, output, session) {
                     col_width,
                     metric_box(
                         title = "Summary Results Reporting",
-                        value = paste0(round(100*all_numer_sumres/all_denom_sumres), "%"),
-                        value_text = "of due clinical trials reporting summary results",
+                        value = sumresval,
+                        value_text = sumresvaltext,
                         plot = plotlyOutput('plot_clinicaltrials_sumres', height="300px"),
                         info_id = "infoSumRes",
                         info_title = "Summary Results Reporting",
@@ -429,8 +570,8 @@ server <- function (input, output, session) {
                     col_width,
                     metric_box(
                         title = "Prospective registration",
-                        value = paste0(round(100*all_numer_prereg/all_denom_prereg), "%"),
-                        value_text = "of clinical trials were preregistered",
+                        value = preregval,
+                        value_text = preregvaltext,
                         plot = plotlyOutput('plot_clinicaltrials_prereg', height="300px"),
                         info_id = "infoPreReg",
                         info_title = "Prospective registration",
@@ -441,8 +582,8 @@ server <- function (input, output, session) {
                     col_width,
                     metric_box(
                         title = "Timely publication",
-                        value = paste0(round(100*all_numer_timpub/all_denom_timpub), "%"),
-                        value_text = "of clinical trials published results within 2 years",
+                        value = timpubval,
+                        value_text = timpubvaltext,
                         plot = plotlyOutput('plot_clinicaltrials_timpub', height="300px"),
                         info_id = "infoTimPub",
                         info_title = "Timely Publication",
@@ -471,51 +612,117 @@ server <- function (input, output, session) {
 
         ## Value for Open Access
 
-        all_numer_oa <- rm_data %>%
-            filter(
-                color == "gold" | color == "green" | color == "hybrid"
-                
-            ) %>%
-            nrow()
+        if ( input$selectUMC == "All") {
+            
+            all_numer_oa <- rm_data %>%
+                filter(
+                    color == "gold" | color == "green" | color == "hybrid"
+                    
+                ) %>%
+                nrow()
 
-        all_denom_oa <- rm_data %>%
-            filter(
-                ! is.na(color)
-                
-            ) %>%
-            nrow()
+            all_denom_oa <- rm_data %>%
+                filter(
+                    ! is.na(color)
+                    
+                ) %>%
+                nrow()
+            
+        } else {
+            
+            all_numer_oa <- rm_data %>%
+                filter(city == input$selectUMC) %>%
+                filter(
+                    color == "gold" | color == "green" | color == "hybrid"
+                    
+                ) %>%
+                nrow()
+
+            all_denom_oa <- rm_data %>%
+                filter(city == input$selectUMC) %>%
+                filter(
+                    ! is.na(color)
+                    
+                ) %>%
+                nrow()
+            
+        }
 
         ## Value for Open Data
 
-        all_denom_od <- odoc_data %>%
-            filter(
-                ! is.na (is_open_data),
-                language == "English"
-            ) %>%
-            nrow()
+        if ( input$selectUMC == "All") {
+            
+            all_denom_od <- odoc_data %>%
+                filter(
+                    ! is.na (is_open_data),
+                    language == "English"
+                ) %>%
+                nrow()
 
-        all_numer_od <- odoc_data %>%
-            filter(
-                is_open_data,
-                language == "English"
-            ) %>%
-            nrow()
+            all_numer_od <- odoc_data %>%
+                filter(
+                    is_open_data,
+                    language == "English"
+                ) %>%
+                nrow()
 
+        } else {
+            
+            all_denom_od <- odoc_data %>%
+                filter(city == input$selectUMC) %>%
+                filter(
+                    ! is.na (is_open_data),
+                    language == "English"
+                ) %>%
+                nrow()
+
+            all_numer_od <- odoc_data %>%
+                filter(city == input$selectUMC) %>%
+                filter(
+                    is_open_data,
+                    language == "English"
+                ) %>%
+                nrow()
+
+        }
+        
         ## Value for Open Code
 
-        all_denom_oc <- odoc_data %>%
-            filter(
-                ! is.na (is_open_code),
-                language == "English"
-            ) %>%
-            nrow()
+        if ( input$selectUMC == "All") {
 
-        all_numer_oc <- odoc_data %>%
-            filter(
-                is_open_code,
-                language == "English"
-            ) %>%
-            nrow()
+            all_denom_oc <- odoc_data %>%
+                filter(
+                    ! is.na (is_open_code),
+                    language == "English"
+                ) %>%
+                nrow()
+
+            all_numer_oc <- odoc_data %>%
+                filter(
+                    is_open_code,
+                    language == "English"
+                ) %>%
+                nrow()
+            
+        } else {
+
+            all_denom_oc <- odoc_data %>%
+                filter(city == input$selectUMC) %>%
+                filter(
+                    ! is.na (is_open_code),
+                    language == "English"
+                ) %>%
+                nrow()
+
+            all_numer_oc <- odoc_data %>%
+                filter(city == input$selectUMC) %>%
+                filter(
+                    is_open_code,
+                    language == "English"
+                ) %>%
+                nrow()
+            
+        }
         
         wellPanel(
             style="padding-top: 0px; padding-bottom: 0px;",
