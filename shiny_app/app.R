@@ -429,12 +429,12 @@ server <- function (input, output, session) {
                 column(
                     col_width,
                     metric_box(
-                        title = "Trial Preregistration",
+                        title = "Prospective registration",
                         value = paste0(round(100*all_numer_prereg/all_denom_prereg), "%"),
                         value_text = "of clinical trials were preregistered",
                         plot = plotlyOutput('plot_clinicaltrials_prereg', height="300px"),
                         info_id = "infoPreReg",
-                        info_title = "Trial Preregistration",
+                        info_title = "Prospective registration",
                         info_text = prereg_tooltip
                     )
                 ),
@@ -746,7 +746,7 @@ server <- function (input, output, session) {
                 column(
                     12,
                     metric_box(
-                        title = "Trial Preregistration",
+                        title = "Prospective registration",
                         value = paste0(round(100*all_numer_prereg/all_denom_prereg), "%"),
                         value_text = "of clinical trials were preregistered",
                         plot = plotlyOutput('plot_allumc_clinicaltrials_prereg', height="300px"),
