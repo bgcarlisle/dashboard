@@ -12,8 +12,8 @@ library(R.utils)
 
 ## Load data
 rm_data <- read_csv(
-    "data/2021-01-31_pop_with_oa_trn_sciscore.csv",
-    col_types="ccdddcccccdcccdllllllcddccccDlccccccccccccccccccccdddddddddddddddddddddddd"
+    "data/2021-01-26_pp-dataset-oa-trn-sciscore-od-animals.csv",
+    col_types="ccdddcccccdccccdlllllcddccccDlccccccccccccccccccccddddddddddddddddddddddddlcclclccd"
     ## Need to specify column types here because read_csv
     ## only looks at the first few rows to determine type
     ## automatically, and if they're all empty, assumes
@@ -67,13 +67,6 @@ rm_data <- rm_data %>%
     )
 
 rm_data$type %>% as.factor() %>% summary()
-
-odoc_data <- read_csv(
-    "data/2021-01-26_pp-dataset-oa-od.csv"
-    ## This one is for the open data/open code variables. We'll
-    ## harmonize this all into a single data file at some point.
-    ## We promise.
-)
 
 eutt_data <- read_csv(
     "data/2021-02-03-eutt-pop-umcs.csv"
@@ -655,14 +648,14 @@ server <- function (input, output, session) {
 
         if ( input$selectUMC == "All") {
             
-            all_denom_od <- odoc_data %>%
+            all_denom_od <- rm_data %>%
                 filter(
                     ! is.na (is_open_data),
                     language == "English"
                 ) %>%
                 nrow()
 
-            all_numer_od <- odoc_data %>%
+            all_numer_od <- rm_data %>%
                 filter(
                     is_open_data,
                     language == "English"
@@ -671,7 +664,7 @@ server <- function (input, output, session) {
 
         } else {
             
-            all_denom_od <- odoc_data %>%
+            all_denom_od <- rm_data %>%
                 filter(city == input$selectUMC) %>%
                 filter(
                     ! is.na (is_open_data),
@@ -679,7 +672,7 @@ server <- function (input, output, session) {
                 ) %>%
                 nrow()
 
-            all_numer_od <- odoc_data %>%
+            all_numer_od <- rm_data %>%
                 filter(city == input$selectUMC) %>%
                 filter(
                     is_open_data,
@@ -693,14 +686,14 @@ server <- function (input, output, session) {
 
         if ( input$selectUMC == "All") {
 
-            all_denom_oc <- odoc_data %>%
+            all_denom_oc <- rm_data %>%
                 filter(
                     ! is.na (is_open_code),
                     language == "English"
                 ) %>%
                 nrow()
 
-            all_numer_oc <- odoc_data %>%
+            all_numer_oc <- rm_data %>%
                 filter(
                     is_open_code,
                     language == "English"
@@ -709,7 +702,7 @@ server <- function (input, output, session) {
             
         } else {
 
-            all_denom_oc <- odoc_data %>%
+            all_denom_oc <- rm_data %>%
                 filter(city == input$selectUMC) %>%
                 filter(
                     ! is.na (is_open_code),
@@ -717,7 +710,7 @@ server <- function (input, output, session) {
                 ) %>%
                 nrow()
 
-            all_numer_oc <- odoc_data %>%
+            all_numer_oc <- rm_data %>%
                 filter(city == input$selectUMC) %>%
                 filter(
                     is_open_code,
@@ -791,14 +784,14 @@ server <- function (input, output, session) {
         
         ## Value for All UMC Open Data
 
-        all_denom_od <- odoc_data %>%
+        all_denom_od <- rm_data %>%
             filter(
                 ! is.na (is_open_data),
                 language == "English"
             ) %>%
             nrow()
 
-        all_numer_od <- odoc_data %>%
+        all_numer_od <- rm_data %>%
             filter(
                 is_open_data,
                 language == "English"
@@ -807,14 +800,14 @@ server <- function (input, output, session) {
         
         ## Value for All UMC Open Code
  
-        all_denom_oc <- odoc_data %>%
+        all_denom_oc <- rm_data %>%
             filter(
                 ! is.na (is_open_code),
                 language == "English"
             ) %>%
             nrow()
 
-        all_numer_oc <- odoc_data %>%
+        all_numer_oc <- rm_data %>%
             filter(
                 is_open_code,
                 language == "English"
@@ -1114,12 +1107,12 @@ server <- function (input, output, session) {
     
     ## Open Data plot
     output$plot_opensci_od <- renderPlotly({
-        return (plot_opensci_od(odoc_data, input$selectUMC, color_palette))
+        return (plot_opensci_od(rm_data, input$selectUMC, color_palette))
     })
     
     ## Open Code plot
     output$plot_opensci_oc <- renderPlotly({
-        return (plot_opensci_oc(odoc_data, input$selectUMC, color_palette))
+        return (plot_opensci_oc(rm_data, input$selectUMC, color_palette))
     })
     
     ## TRN plot
@@ -1175,13 +1168,13 @@ server <- function (input, output, session) {
     ## Open Data
 
     output$plot_allumc_opendata <- renderPlotly({
-        return(plot_allumc_opendata(odoc_data, color_palette, color_palette_bars))
+        return(plot_allumc_opendata(rm_data, color_palette, color_palette_bars))
     })
 
     ## Open Code
 
     output$plot_allumc_opencode <- renderPlotly({
-        return(plot_allumc_opencode(odoc_data, color_palette, color_palette_bars))
+        return(plot_allumc_opencode(rm_data, color_palette, color_palette_bars))
     })
 
     ## Clinical Trials
