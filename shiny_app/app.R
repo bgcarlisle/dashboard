@@ -66,8 +66,6 @@ rm_data <- rm_data %>%
         type == "Article; Proceedings Paper"
     )
 
-rm_data$type %>% as.factor() %>% summary()
-
 eutt_data <- read_csv(
     "data/2021-02-03-eutt-pop-umcs.csv"
     ## This file is data that I copied and pasted directly from
@@ -88,7 +86,7 @@ source("all_umc_plots.R")
 source("start_page.R")
 source("all_umcs_page.R")
 source("methods_page.R")
-## source("datasets_page.R")
+source("datasets_page.R")
 source("about_rm.R")
 
 ## Define UI
@@ -99,7 +97,7 @@ ui <- tagList(
         start_page,
         all_umcs_page,
         methods_page,
-        ## datasets_page,
+        datasets_page,
         about_rm_page,
         tags$head
         (
@@ -183,11 +181,11 @@ server <- function (input, output, session) {
                         'buttonMethods',
                         'See methods'
                     ),
-                    ## actionButton(
-                    ##     style = "color: white; background-color: #aa1c7d;",
-                    ##     'buttonDatasets',
-                    ##     'See data sets'
-                    ## ),
+                    actionButton(
+                        style = "color: white; background-color: #aa1c7d;",
+                        'buttonDatasets',
+                        'See data sets'
+                    ),
                     br()
                 )
             ),
@@ -1228,6 +1226,20 @@ server <- function (input, output, session) {
     ## output$plot_allumc_animal_iacuc <- renderPlotly({
     ##     return(plot_allumc_animal_iacuc(rm_data, color_palette, color_palette_bars))
     ## })
+
+    ## Generate data tables
+
+    output$data_table_rm_data <- DT::renderDataTable({
+        make_datatable(rm_data)
+    })
+
+    output$data_table_eutt_data <- DT::renderDataTable({
+        make_datatable(eutt_data)
+    })
+
+    output$data_table_iv_data <- DT::renderDataTable({
+        make_datatable(iv_data)
+    })
     
 }
 
