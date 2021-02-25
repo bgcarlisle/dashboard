@@ -541,9 +541,9 @@ server <- function (input, output, session) {
                 column(
                     col_width,
                     metric_box(
-                        title = "Trial Registry Number Reporting",
+                        title = "TRN Reporting",
                         value = paste0(round(100*all_numer_trn/all_denom_trn), "%"),
-                        value_text = "of 2018 PubMed-classified clinical trial publications reported a TRN in the abstract",
+                        value_text = "of clinical trials reported a TRN in the abstract",
                         plot = plotlyOutput('plot_clinicaltrials_trn', height="300px"),
                         info_id = "infoTRN",
                         info_title = "Trial Registry Number Reporting",
