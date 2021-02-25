@@ -18,13 +18,14 @@ umcs <- tribble(
     "Oldenburg", "oldenburg",
     "Rostock", "rostock",
     "Witten", "witten",
-    "Wurzburg", "wurzburg"    
+    "Würzburg", "wurzburg"    
 )
 
-## Open data
+## Main data file
 
 od <- read_csv(
-    "data/2021-01-26_pp-dataset-oa-od.csv"
+    "2021-01-26_pp-dataset-oa-trn-sciscore-od-animals-before-caps.csv",
+    col_types="ccdddcccccdccccdlllllcddccccDlccccccccccccccccccccddddddddddddddddddddddddlcclclccd"
 )
 
 od %>%
@@ -32,26 +33,12 @@ od %>%
     mutate(city = NULL) %>%
     rename(city = umc) %>%
     relocate(city, .after = doi) %>%
-    write_csv("data/2021-01-26_pp-dataset-oa-od.csv")
+    write_csv("2021-01-26_pp-dataset-oa-trn-sciscore-od-animals.csv")
 
-## Sciscore
-
-sci <- read_csv(
-    "data/2021-01-31_pop_with_oa_trn_sciscore.csv",
-    col_types = "ccdddcccccdcccdllllllcddccccDlccccccccccccccccccccdddddddddddddddddddddddd"
-)
-
-sci %>%
-    left_join(umcs) %>%
-    mutate(city = NULL) %>%
-    rename(city = umc) %>%
-    relocate(city, .after = doi) %>%
-    write_csv("data/2021-01-31_pop_with_oa_trn_sciscore.csv")
-
-## IV2
+## IV1-2
 
 iv <- read_csv(
-    "data/2021-02-03-IntoValue2.csv"
+    "2021-02-25-IntoValue1-2.csv"
 )
 
 iv %>%
@@ -59,7 +46,7 @@ iv %>%
     mutate(city = NULL) %>%
     rename(city = umc) %>%
     relocate(city, .after = id) %>%
-    write_csv("data/2021-02-03-IntoValue2.csv")
+    write_csv("2021-02-25-IntoValue1-2-umc.csv")
 
 ## EUTT
 

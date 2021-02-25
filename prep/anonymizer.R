@@ -24,7 +24,7 @@ anon <- tribble(
 ## Open data
 
 od <- read_csv(
-    "2021-01-26_pp-dataset-oa-od.csv"
+    "2021-01-26_pp-dataset-oa-trn-sciscore-od-animals.csv"
 )
 
 od %>%
@@ -32,7 +32,7 @@ od %>%
     mutate(city = NULL) %>%
     rename(city = anon) %>%
     relocate(city, .after = doi) %>%
-    write_csv("2021-01-26_pp-dataset-oa-od.csv")
+    write_csv("2021-01-26_pp-dataset-oa-trn-sciscore-od-animals.csv")
 
 ## Sciscore
 
@@ -48,10 +48,10 @@ sci %>%
     relocate(city, .after = doi) %>%
     write_csv("2021-01-31_pop_with_oa_trn_sciscore.csv")
 
-## IV2
+## IV1-2
 
 iv <- read_csv(
-    "2021-02-03-IntoValue2.csv"
+    "2021-02-25-IntoValue1-2.csv"
 )
 
 iv %>%
@@ -59,7 +59,7 @@ iv %>%
     mutate(city = NULL) %>%
     rename(city = anon) %>%
     relocate(city, .after = id) %>%
-    write_csv("2021-02-03-IntoValue2.csv")
+    write_csv("2021-02-25-IntoValue1-2-anon.csv")
 
 ## EUTT
 

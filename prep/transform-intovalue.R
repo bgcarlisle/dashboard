@@ -1,9 +1,9 @@
 library(tidyverse)
 
-iv <- read_csv("2021-02-03-IntoValue2-original.csv")
+iv <- readRDS("2021-02-24-intovalue-enhanced-pmid.rds")
 rm_data <- read_csv(
-    "../shiny_app/data/2021-01-31_pop_with_oa_trn_sciscore.csv",
-    col_types="ccdddcccccdcccdllllllcddccccDlccccccccccccccccccccdddddddddddddddddddddddd"
+    "../shiny_app/umc-data/2021-01-26_pp-dataset-oa-trn-sciscore-od-animals.csv",
+    col_types="ccdddcccccdccccdlllllcddccccDlccccccccccccccccccccddddddddddddddddddddddddlcclclccd"
     ## Need to specify column types here because read_csv
     ## only looks at the first few rows to determine type
     ## automatically, and if they're all empty, assumes
@@ -44,20 +44,22 @@ rm_data$city %>%
     unique()
 
 ## This prints out the names of the remaining UMC's to be identified
-iv %>%
+iv.remaining <- iv %>%
     filter( is.na(city) ) %>%
-    arrange(lead_cities) %>%
-    select(lead_cities) %>%
-    unique()
+    arrange(lead_cities)
+
+iv.remaining$lead_cities %>% unique()
 
 iv$preregistered <- iv$days_reg_to_start > 0
 iv$published_2a <- iv$days_reg_to_publ < 365*2 & ! is.na(iv$days_reg_to_publ)
 
-## This writes the final CSV out to the data/ folder
+## This writes the final CSV out
 
 iv <- iv %>%
     filter( ! is.na(city) ) %>%
-    select(id, city, preregistered, published_2a)
+    filter(has_german_umc_lead) %>%
+    filter(! is_dupe) %>%
+    select(id, city, completion_date, preregistered, published_2a)
 
 iv %>%
-    write_csv("../shiny_app/data/2021-02-03-IntoValue2.csv")
+    write_csv("2021-02-25-IntoValue1-2.csv")

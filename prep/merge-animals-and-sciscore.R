@@ -3,10 +3,17 @@ library(DBI)
 
 ### Read in the data set that has OA and TRN columns
 original <- read_csv(
-    "dataset.csv",
-    ## You may have to manually specify the column types
+    "~/Downloads/cleaned_data/2021-01-26_pp-dataset-oa-trn-sciscore-od.csv",
     col_types="ccdddcccccdccccdlllllcddccccDlccccccccccccccccccccddddddddddddddddddddddddlcclclcc"
+    ## You may have to manually specify the column types
 )
+
+original %>%
+    group_by(pmid_dimensions) %>%
+    slice_head() %>%
+    rename(pmid = pmid_dimensions) %>%
+    select(pmid) %>%
+    write_csv("pmids.csv")
 
 ### Generate the following CSV using the CSV above and the R script at the following address:
 ### https://codeberg.org/bgcarlisle/PubmedIntersectionCheck
