@@ -366,7 +366,8 @@ server <- function (input, output, session) {
                         plot = plotlyOutput('plot_blinding', height="300px"),
                         info_id = "infoBlinding",
                         info_title = "Blinding",
-                        info_text = blinding_tooltip
+                        info_text = blinding_tooltip,
+                        "left"
                     )
                 ),
                 column(
@@ -378,7 +379,8 @@ server <- function (input, output, session) {
                         plot = plotlyOutput('plot_power', height="300px"),
                         info_id = "infoPower",
                         info_title = "Power",
-                        info_text = power_tooltip
+                        info_text = power_tooltip,
+                        "left"
                     )
                 )##,
                 ## column(
@@ -390,7 +392,8 @@ server <- function (input, output, session) {
                 ##         plot = plotlyOutput('plot_iacuc', height="300px"),
                 ##         info_id = "infoIACUC",
                 ##         info_title = "IACUC",
-                ##         info_text = iacuc_tooltip
+                ##         info_text = iacuc_tooltip,
+                ##         "left"
                 ##     )
                 ## )
             )
@@ -556,7 +559,8 @@ server <- function (input, output, session) {
                         plot = plotlyOutput('plot_clinicaltrials_sumres', height="300px"),
                         info_id = "infoSumRes",
                         info_title = "Summary Results Reporting",
-                        info_text = sumres_tooltip
+                        info_text = sumres_tooltip,
+                        "left"
                     )
                 ),
                 column(
@@ -568,7 +572,8 @@ server <- function (input, output, session) {
                         plot = plotlyOutput('plot_clinicaltrials_prereg', height="300px"),
                         info_id = "infoPreReg",
                         info_title = "Prospective registration",
-                        info_text = prereg_tooltip
+                        info_text = prereg_tooltip,
+                        "left"
                     )
                 ),
                 column(
@@ -580,7 +585,8 @@ server <- function (input, output, session) {
                         plot = plotlyOutput('plot_clinicaltrials_timpub', height="300px"),
                         info_id = "infoTimPub",
                         info_title = "Timely Publication",
-                        info_text = timpub_tooltip
+                        info_text = timpub_tooltip,
+                        "left"
                     )
                 )
                 
@@ -743,7 +749,8 @@ server <- function (input, output, session) {
                         plot = plotlyOutput('plot_opensci_od', height="300px"),
                         info_id = "infoOpenData",
                         info_title = "Any Open Data",
-                        info_text = opendata_tooltip
+                        info_text = opendata_tooltip,
+                        "left"
                     )
                 ),
                 column(
@@ -755,7 +762,8 @@ server <- function (input, output, session) {
                         plot = plotlyOutput('plot_opensci_oc', height="300px"),
                         info_id = "infoOpenCode",
                         info_title = "Any Open Code",
-                        info_text = opencode_tooltip
+                        info_text = opencode_tooltip,
+                        "left"
                     )
                 )
             )
