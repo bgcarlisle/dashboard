@@ -45,7 +45,7 @@ datasets_page <- tabPanel(
     bsCollapse(
         id="datasetPanels_iv_data",
         bsCollapsePanel(
-            strong("IntoValue data set"),
+            strong("IntoValue 1 and 2"),
             DT::dataTableOutput("data_table_iv_data"),
             style="default"
         )
