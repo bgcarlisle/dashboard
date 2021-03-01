@@ -417,72 +417,170 @@ plot_clinicaltrials_sumres <- function (dataset, umc, color_palette) {
 # Prospective registration
 plot_clinicaltrials_prereg <- function (dataset, umc, color_palette) {
 
-    all_denom <- dataset %>%
-        nrow()
-    
-    all_numer <- dataset %>%
-        filter(preregistered) %>%
-        nrow()
+    dataset$year <- dataset$completion_date %>%
+        format("%Y")
+
+    years <- seq(from=min(dataset$year), to=max(dataset$year))
 
     if ( umc != "all" ) {
         ## If the selected UMC is not "all," calculate
-        ## the percentage
-
-        umc_denom <- dataset %>%
-            filter(city == umc) %>%
-            nrow()
-
-        umc_numer <- dataset %>%
-            filter(
-                city == umc,
-                preregistered
-            ) %>%
-            nrow()
+        ## the percentage for each year
 
         plot_data <- tribble(
-            ~x_label, ~percentage,
-            "All", round(100*all_numer/all_denom),
-            capitalize(umc), round(100*umc_numer/umc_denom),
+            ~year, ~umc_percentage, ~all_percentage
         )
-        
+
+        for (current_year in years) {
+
+            numer_for_year <- dataset %>%
+                filter(
+                    city == umc,
+                    year == current_year,
+                    preregistered
+                ) %>%
+                nrow()
+
+            denom_for_year <- dataset %>%
+                filter(
+                    city == umc,
+                    year == current_year
+                ) %>%
+                nrow()
+
+            all_numer_for_year <-  dataset %>%
+                filter(
+                    year == current_year,
+                    preregistered
+                ) %>%
+                nrow()
+
+            all_denom_for_year <- dataset %>%
+                filter(
+                    year == current_year
+                ) %>%
+                nrow()
+
+            percentage_for_year <- 100*numer_for_year/denom_for_year
+
+            all_percentage_for_year <- 100*all_numer_for_year/all_denom_for_year
+            
+            plot_data <- plot_data %>%
+                bind_rows(
+                    tribble(
+                        ~year, ~umc_percentage, ~all_percentage,
+                        current_year, percentage_for_year, all_percentage_for_year
+                    )
+                )
+            
+        }
+
+        plot_ly(
+            plot_data,
+            x = ~year,
+            y = ~umc_percentage,
+            name = umc,
+            type = 'scatter',
+            mode = 'lines+markers',
+            marker = list(
+                color = color_palette[3],
+                line = list(
+                    color = 'rgb(0,0,0)',
+                    width = 1.5
+                )
+            )
+        ) %>%
+            add_trace(
+                y=~all_percentage,
+                name='All',
+                marker = list(color = color_palette[2])
+                ) %>%
+                    layout(
+                        xaxis = list(
+                            title = '<b>UMC</b>',
+                            dtick = 1
+                        ),
+                        yaxis = list(
+                            title = '<b>Prospective registration (%)</b>',
+                            range = c(0, 100)
+                        ),
+                        paper_bgcolor = color_palette[9],
+                        plot_bgcolor = color_palette[9],
+                        legend = list(xanchor= "right")
+                    )
+                
     } else {
 
         plot_data <- tribble(
-            ~x_label, ~percentage,
-            "All", round(100*all_numer/all_denom)
+            ~year, ~percentage
         )
-        
-    }
 
-    plot_ly(
-        plot_data,
-        x = ~x_label,
-        y = ~percentage,
-        type = 'bar',
-        marker = list(
-            color = color_palette[3],
-            line = list(
-                color = 'rgb(0,0,0)',
-                width = 1.5
+        for (current_year in years) {
+
+            numer_for_year <- dataset %>%
+                filter(
+                    year == current_year,
+                    preregistered
+                ) %>%
+                nrow()
+
+            denom_for_year <- dataset %>%
+                filter(
+                    year == current_year
+                ) %>%
+                nrow()
+
+            percentage_for_year <- 100*numer_for_year/denom_for_year
+            
+            plot_data <- plot_data %>%
+                bind_rows(
+                    tribble(
+                        ~year, ~percentage,
+                        current_year, percentage_for_year
+                    )
+                )
+            
+        }
+        
+        plot_ly(
+            plot_data,
+            x = ~year,
+            y = ~percentage,
+            name = umc,
+            type = 'scatter',
+            mode = 'lines+markers',
+            marker = list(
+                color = color_palette[3],
+                line = list(
+                    color = 'rgb(0,0,0)',
+                    width = 1.5
+                )
             )
-        )
-    ) %>%
-        layout(
-            xaxis = list(
-                title = '<b>UMC</b>'
-            ),
-            yaxis = list(
-                title = '<b>Prospective registration (%)</b>',
-                range = c(0, 100)
-            ),
-            paper_bgcolor = color_palette[9],
-            plot_bgcolor = color_palette[9]
-        )
+        ) %>%
+            layout(
+                yaxis = list(
+                    title = '<b>Prospective registration (%)</b>',
+                    range = c(0, 100)
+                ),
+                xaxis = list(
+                    title = '<b>UMC</b>',
+                    dtick = 1
+                ),
+                paper_bgcolor = color_palette[9],
+                plot_bgcolor = color_palette[9],
+                legend = list(xanchor= "right")
+            )
+
+    }
     
 }
 
 # Timely publication
 plot_clinicaltrials_timpub <- function (dataset, umc, color_palette) {
+
+    dataset$year <- dataset$completion_date %>%
+        format("%Y")
+
+    years <- seq(from=min(dataset$year), to=max(dataset$year))
 
     all_denom <- dataset %>%
         nrow()
@@ -495,56 +593,149 @@ plot_clinicaltrials_timpub <- function (dataset, umc, color_palette) {
         ## If the selected UMC is not "all," calculate
         ## the percentage
 
-        umc_denom <- dataset %>%
-            filter(city == umc) %>%
-            nrow()
-
-        umc_numer <- dataset %>%
-            filter(
-                city == umc,
-                published_2a
-            ) %>%
-            nrow()
-
         plot_data <- tribble(
-            ~x_label, ~percentage,
-            "All", round(100*all_numer/all_denom),
-            capitalize(umc), round(100*umc_numer/umc_denom),
+            ~year, ~umc_percentage, ~all_percentage
         )
+
+        for (current_year in years) {
+
+            umc_numer <-  dataset %>%
+                filter(
+                    city == umc,
+                    year == current_year,
+                    published_2a
+                ) %>%
+                nrow()
+
+            umc_denom <-  dataset %>%
+                filter(
+                    city == umc,
+                    year == current_year
+                ) %>%
+                nrow()
+
+            all_numer <-  dataset %>%
+                filter(
+                    year == current_year,
+                    published_2a
+                ) %>%
+                nrow()
+
+            all_denom <-  dataset %>%
+                filter(
+                    year == current_year
+                ) %>%
+                nrow()
+
+            umc_percentage <- 100*umc_numer/umc_denom
+            all_percentage <- 100*all_numer/all_denom
+
+            plot_data <- plot_data %>%
+                bind_rows(
+                    tribble(
+                        ~year, ~umc_percentage, ~all_percentage,
+                        current_year, umc_percentage, all_percentage
+                    )
+                )
+            
+        }
+
+        plot_ly(
+            plot_data,
+            x = ~year,
+            y = ~umc_percentage,
+            name = umc,
+            type = 'scatter',
+            mode = 'lines+markers',
+            marker = list(
+                color = color_palette[3],
+                line = list(
+                    color = 'rgb(0,0,0)',
+                    width = 1.5
+                )
+            )
+        ) %>%
+            add_trace(
+                y=~all_percentage,
+                name='All',
+                marker = list(color = color_palette[2])
+            ) %>%
+            layout(
+                xaxis = list(
+                    title = '<b>UMC</b>',
+                    dtick = 1
+                ),
+                yaxis = list(
+                    title = '<b>Published within 2 years (%)</b>',
+                    range = c(0, 100)
+                ),
+                paper_bgcolor = color_palette[9],
+                plot_bgcolor = color_palette[9],
+                legend = list(xanchor= "right")
+            )
         
     } else {
-
         plot_data <- tribble(
-            ~x_label, ~percentage,
-            "All", round(100*all_numer/all_denom)
+            ~year, ~all_percentage
         )
+
+        for (current_year in years) {
+
+            all_numer <-  dataset %>%
+                filter(
+                    year == current_year,
+                    published_2a
+                ) %>%
+                nrow()
+
+            all_denom <-  dataset %>%
+                filter(
+                    year == current_year
+                ) %>%
+                nrow()
+            all_percentage <- 100*all_numer/all_denom
+
+            plot_data <- plot_data %>%
+                bind_rows(
+                    tribble(
+                        ~year, ~all_percentage,
+                        current_year, all_percentage
+                    )
+                )
+            
+        }
+
+        plot_ly(
+            plot_data,
+            x = ~year,
+            y = ~all_percentage,
+            name = umc,
+            type = 'scatter',
+            mode = 'lines+markers',
+            marker = list(
+                color = color_palette[3],
+                line = list(
+                    color = 'rgb(0,0,0)',
+                    width = 1.5
+                )
+            )
+        ) %>%
+            layout(
+                xaxis = list(
+                    title = '<b>UMC</b>',
+                    dtick = 1
+                ),
+                yaxis = list(
+                    title = '<b>Published within 2 years (%)</b>',
+                    range = c(0, 100)
+                ),
+                paper_bgcolor = color_palette[9],
+                plot_bgcolor = color_palette[9],
+                legend = list(xanchor= "right")
+            )
+        
         
     }
-
-    plot_ly(
-        plot_data,
-        x = ~x_label,
-        y = ~percentage,
-        type = 'bar',
-        marker = list(
-            color = color_palette[3],
-            line = list(
-                color = 'rgb(0,0,0)',
-                width = 1.5
-            )
-        )
-    ) %>%
-        layout(
-            xaxis = list(
-                title = '<b>UMC</b>'
-            ),
-            yaxis = list(
-                title = '<b>Published within 2 years (%)</b>',
-                range = c(0, 100)
-            ),
-            paper_bgcolor = color_palette[9],
-            plot_bgcolor = color_palette[9]
-        )
     
 }
 
