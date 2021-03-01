@@ -723,6 +723,45 @@ server <- function (input, output, session) {
                 nrow()
             
         }
+
+        ## Value for Green OA
+
+        if ( input$selectUMC == "All") {
+
+            denom_greenoa <- rm_data %>%
+                filter(
+                    color == "closed",
+                    ! is.na(permission_postprint)
+                ) %>%
+                nrow()
+
+            numer_greenoa <- rm_data %>%
+                filter(
+                    color == "closed",
+                    ! is.na(permission_postprint),
+                    permission_postprint == TRUE
+                ) %>%
+                nrow()
+            
+        } else {
+
+            denom_greenoa <- rm_data %>%
+                filter(
+                    color == "closed",
+                    ! is.na(permission_postprint),
+                    city == input$selectUMC
+                ) %>%
+                nrow()
+
+            numer_greenoa <- rm_data %>%
+                filter(
+                    color == "closed",
+                    ! is.na(permission_postprint),
+                    permission_postprint == TRUE,
+                    city == input$selectUMC
+                ) %>%
+                nrow()
+        }
         
         wellPanel(
             style="padding-top: 0px; padding-bottom: 0px;",
@@ -763,6 +802,19 @@ server <- function (input, output, session) {
                         info_id = "infoOpenCode",
                         info_title = "Any Open Code",
                         info_text = opencode_tooltip,
+                        "left"
+                    )
+                ),
+                column(
+                    col_width,
+                    metric_box(
+                        title = "Green Open Access",
+                        value = paste0(numer_greenoa, "/", denom_greenoa),
+                        value_text = "publications currently behind a paywall could be made openly accessible by depositing the accepted version in a repository",
+                        plot = plotlyOutput('plot_opensci_green_oa', height="300px"),
+                        info_id = "infoGreenOA",
+                        info_title = "Green Open Access",
+                        info_text = greenopenaccess_tooltip,
                         "left"
                     )
                 )
@@ -1119,6 +1171,11 @@ server <- function (input, output, session) {
     ## Open Code plot
     output$plot_opensci_oc <- renderPlotly({
         return (plot_opensci_oc(rm_data, input$selectUMC, color_palette))
+    })
+    
+    ## Green Open Access plot
+    output$plot_opensci_green_oa <- renderPlotly({
+        return (plot_opensci_green_oa(rm_data, input$selectUMC, color_palette))
     })
     
     ## TRN plot

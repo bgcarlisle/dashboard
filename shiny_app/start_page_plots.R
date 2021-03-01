@@ -178,7 +178,6 @@ plot_opensci_od <- function (dataset, umc, color_palette) {
 }
 
 ## Open Code
-
 plot_opensci_oc <- function (dataset, umc, color_palette) {
 
     ## Remove non-analyzable and non-English data points
@@ -204,6 +203,75 @@ plot_opensci_oc <- function (dataset, umc, color_palette) {
 
         umc_numer <- plot_data %>%
             filter(city == umc, is_open_code == TRUE) %>%
+            nrow()
+
+        plot_data <- tribble(
+            ~x_label, ~percentage,
+            "All", round(100*all_numer/all_denom),
+            capitalize(umc), round(100*umc_numer/umc_denom)
+        )
+        
+    } else {
+
+        plot_data <- tribble(
+            ~x_label, ~percentage,
+            "All", round(100*all_numer/all_denom)
+        )
+
+    }
+
+    plot_ly(
+        plot_data,
+        x = ~x_label,
+        y = ~percentage,
+        type = 'bar',
+        marker = list(
+            color = color_palette[3],
+            line = list(
+                color = 'rgb(0,0,0)',
+                width = 1.5
+            )
+        )
+    ) %>%
+        layout(
+            xaxis = list(
+                title = '<b>UMC</b>'
+            ),
+            yaxis = list(
+                title = '<b>Percentage of publications</b>',
+                range = c(0, 100)
+            ),
+            paper_bgcolor = color_palette[9],
+            plot_bgcolor = color_palette[9]
+        )
+    
+}
+
+## Green open access
+plot_opensci_green_oa <- function (dataset, umc, color_palette) {
+
+    plot_data <- dataset %>%
+        filter(
+            color == "closed",
+            ! is.na(permission_postprint)
+        )
+
+    all_denom <- plot_data %>%
+        nrow()
+
+    all_numer <- plot_data$permission_postprint %>%
+        sum()
+
+    if ( umc != "all" ) {
+        ## If the selected UMC is not "all," calculate
+        ## the percentage
+
+        umc_denom <- plot_data %>%
+            filter(city == umc) %>%
+            nrow()
+
+        umc_numer <- plot_data %>%
+            filter(city == umc, permission_postprint == TRUE) %>%
             nrow()
 
         plot_data <- tribble(
