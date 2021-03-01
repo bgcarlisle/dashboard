@@ -23,16 +23,17 @@ anon <- tribble(
 
 ## Open data
 
-od <- read_csv(
-    "2021-01-26_pp-dataset-oa-trn-sciscore-od-animals.csv"
+rm <- read_csv(
+    "2021-03-01_pp-dataset-oa-trn-sciscore-od-animals-permissions.csv",
+     col_types="ccdddcccccdccccdlllllcddlccccccccccccccccccccddddddddddddddddddddddddlcclclccdccccDlclclllccccdcDlll"
 )
 
-od %>%
+rm %>%
     left_join(anon) %>%
     mutate(city = NULL) %>%
     rename(city = anon) %>%
     relocate(city, .after = doi) %>%
-    write_csv("2021-01-26_pp-dataset-oa-trn-sciscore-od-animals.csv")
+    write_csv("2021-03-01_pp-dataset-oa-trn-sciscore-od-animals-permissions-anon.csv")
 
 ## Sciscore
 

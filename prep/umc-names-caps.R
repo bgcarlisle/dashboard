@@ -23,17 +23,17 @@ umcs <- tribble(
 
 ## Main data file
 
-od <- read_csv(
-    "2021-01-26_pp-dataset-oa-trn-sciscore-od-animals-before-caps.csv",
-    col_types="ccdddcccccdccccdlllllcddccccDlccccccccccccccccccccddddddddddddddddddddddddlcclclccd"
+rm <- read_csv(
+    "2021-03-01_pp-dataset-oa-trn-sciscore-od-animals-permissions.csv",
+    col_types="ccdddcccccdccccdlllllcddlccccccccccccccccccccddddddddddddddddddddddddlcclclccdccccDlclclllccccdcDlll"
 )
 
-od %>%
+rm %>%
     left_join(umcs) %>%
     mutate(city = NULL) %>%
     rename(city = umc) %>%
     relocate(city, .after = doi) %>%
-    write_csv("2021-01-26_pp-dataset-oa-trn-sciscore-od-animals.csv")
+    write_csv("2021-03-01_pp-dataset-oa-trn-sciscore-od-animals-permissions-caps.csv")
 
 ## IV1-2
 
