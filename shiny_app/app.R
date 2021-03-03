@@ -541,18 +541,6 @@ server <- function (input, output, session) {
                 column(
                     col_width,
                     metric_box(
-                        title = "TRN Reporting",
-                        value = paste0(round(100*all_numer_trn/all_denom_trn), "%"),
-                        value_text = "of clinical trials reported a TRN in the abstract",
-                        plot = plotlyOutput('plot_clinicaltrials_trn', height="300px"),
-                        info_id = "infoTRN",
-                        info_title = "Trial Registry Number Reporting",
-                        info_text = trn_tooltip
-                    )
-                ),
-                column(
-                    col_width,
-                    metric_box(
                         title = "Summary Results Reporting",
                         value = sumresval,
                         value_text = sumresvaltext,
@@ -587,6 +575,18 @@ server <- function (input, output, session) {
                         info_title = "Timely Publication",
                         info_text = timpub_tooltip,
                         "left"
+                    )
+                ),
+                column(
+                    col_width,
+                    metric_box(
+                        title = "TRN Reporting",
+                        value = paste0(round(100*all_numer_trn/all_denom_trn), "%"),
+                        value_text = "of clinical trials reported a TRN in the abstract",
+                        plot = plotlyOutput('plot_clinicaltrials_trn', height="300px"),
+                        info_id = "infoTRN",
+                        info_title = "Trial Registry Number Reporting",
+                        info_text = trn_tooltip
                     )
                 )
                 
