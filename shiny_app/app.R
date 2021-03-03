@@ -766,6 +766,11 @@ server <- function (input, output, session) {
         wellPanel(
             style="padding-top: 0px; padding-bottom: 0px;",
             h2(strong("Open Science"), align = "left"),
+            checkboxInput(
+                "opensci_absval",
+                strong("Show absolute numbers"),
+                value = FALSE
+            ),
             fluidRow(
                 column(
                     col_width,
@@ -1160,7 +1165,7 @@ server <- function (input, output, session) {
     
     ## Open Access plot
     output$plot_opensci_oa <- renderPlotly({
-        return (plot_opensci_oa(rm_data, input$selectUMC, color_palette))
+        return (plot_opensci_oa(rm_data, input$selectUMC, input$opensci_absval, color_palette))
     })
     
     ## Open Data plot

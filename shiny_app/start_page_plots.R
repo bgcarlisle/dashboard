@@ -2,7 +2,7 @@
 
 ## Open Access
 
-plot_opensci_oa <- function (dataset, umc, color_palette) {
+plot_opensci_oa <- function (dataset, umc, absval, color_palette) {
 
     ## Calculate the numerators and the denominator for the
     ## "all" bars
@@ -52,22 +52,52 @@ plot_opensci_oa <- function (dataset, umc, color_palette) {
                 color == "hybrid",
                 city == umc
             ) %>%
-            nrow()     
+            nrow()
 
-        plot_data <- tribble(
-            ~x_label,        ~gold,                         ~green,                         ~hybrid,
-            "All",           round(100*all_gold/all_denom), round(100*all_green/all_denom), round(100*all_hybrid/all_denom),
-            capitalize(umc), round(100*umc_gold/umc_denom), round(100*umc_green/umc_denom), round(100*umc_hybrid/umc_denom)
-        )
+        if (absval) {
+
+            plot_data <- tribble(
+                ~x_label, ~gold,    ~green,    ~hybrid,
+                "All",    all_gold, all_green, all_hybrid,
+                umc,      umc_gold, umc_green, umc_hybrid
+            )
+            
+        } else {
+
+            plot_data <- tribble(
+                ~x_label, ~gold,                         ~green,                         ~hybrid,
+                "All",    round(100*all_gold/all_denom), round(100*all_green/all_denom), round(100*all_hybrid/all_denom),
+                umc,      round(100*umc_gold/umc_denom), round(100*umc_green/umc_denom), round(100*umc_hybrid/umc_denom)
+            )
+            
+        }
 
         plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
 
     } else {
-        plot_data <- tribble(
-            ~x_label, ~gold,                         ~green,                         ~hybrid,
-            "All",    round(100*all_gold/all_denom), round(100*all_green/all_denom), round(100*all_hybrid/all_denom)
-        )
+
+        if (absval) {
+            
+            plot_data <- tribble(
+                ~x_label, ~gold,    ~green,    ~hybrid,
+                "All",    all_gold, all_green, all_hybrid
+            )
+            
+        } else {
+            
+            plot_data <- tribble(
+                ~x_label, ~gold,                         ~green,                         ~hybrid,
+                "All",    round(100*all_gold/all_denom), round(100*all_green/all_denom), round(100*all_hybrid/all_denom)
+            )
+
+        }
         
+    }
+
+    if (absval) {
+        upperlimit <- max(sum(all_gold, all_green, all_hybrid), sum(umc_gold, umc_green, umc_hybrid))
+    } else {
+        upperlimit <- 100
     }
     
     plot_ly(
@@ -113,7 +143,7 @@ plot_opensci_oa <- function (dataset, umc, color_palette) {
             ),
             yaxis = list(
                 title = '<b>Percentage of publications</b>',
-                range = c(0, 100)
+                range = c(0, upperlimit)
             ),
             paper_bgcolor = color_palette[9],
             plot_bgcolor = color_palette[9]
