@@ -135,7 +135,7 @@ methods_page <- tabPanel(
                         a publication."),
                
                
-               methods_panel("Potential Green Open Access (OA) - coming soon!",
+               methods_panel("Potential Green Open Access (OA)",
                              
                              "This metric measures how many publications currently hidden behind a paywall
                              could be made openly accessible in a repository based on journal self-archiving
@@ -428,3 +428,25 @@ greenopenaccess_tooltip <- strwrap("This is the number of publications currently
 #                          use committee statement.") %>%
 #     
 # paste(collapse = " ")
+
+lim_randomization_tooltip <- strwrap("It is important to note that randomization, blinding, and sample size estimation may not always apply, especially in early-stage exploratory research (hypothesis-generating experiments). At present, we do not have a way of distinguishing these studies from confirmatory, hypothesis-testing experiments.")
+lim_blinding_tooltip <- strwrap("")
+lim_power_tooltip <- strwrap("")
+lim_sumres_tooltip <- strwrap("")
+lim_prereg_tooltip <- strwrap("")
+lim_timpub_tooltip <- strwrap("")
+lim_trn_tooltip <- strwrap("")
+lim_openaccess_tooltip <- strwrap("")
+lim_greenopenaccess_tooltip <- strwrap("")
+lim_opendata_tooltip <- strwrap("")
+lim_opencode_tooltip <- strwrap("")
+lim_allumc_openaccess_tooltip <- strwrap("")
+lim_allumc_opendata_tooltip <- strwrap("")
+lim_allumc_opencode_tooltip <- strwrap("")
+lim_allumc_clinicaltrials_trn_tooltip <- strwrap("")
+lim_allumc_clinicaltrials_sumres_tooltip <- strwrap("")
+lim_allumc_clinicaltrials_prereg_tooltip <- strwrap("")
+lim_allumc_clinicaltrials_timpub_tooltip <- strwrap("")
+lim_allumc_animal_rando_tooltip <- strwrap("")
+lim_allumc_animal_blind_tooltip <- strwrap("")
+lim_allumc_animal_power_tooltip <- strwrap("")

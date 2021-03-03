@@ -354,7 +354,10 @@ server <- function (input, output, session) {
                         plot = plotlyOutput('plot_randomization', height="300px"),
                         info_id = "infoRandomization",
                         info_title = "Randomization",
-                        info_text = randomization_tooltip
+                        info_text = randomization_tooltip,
+                        lim_id = "limRandomization",
+                        lim_title = "Limitations: Randomization",
+                        lim_text = lim_randomization_tooltip
                     )
                 ),
                 column(
@@ -366,7 +369,10 @@ server <- function (input, output, session) {
                         plot = plotlyOutput('plot_blinding', height="300px"),
                         info_id = "infoBlinding",
                         info_title = "Blinding",
-                        info_text = blinding_tooltip
+                        info_text = blinding_tooltip,
+                        lim_id = "limBlinding",
+                        lim_title = "Limitations: Blinding",
+                        lim_text = lim_blinding_tooltip
                     )
                 ),
                 column(
@@ -378,7 +384,10 @@ server <- function (input, output, session) {
                         plot = plotlyOutput('plot_power', height="300px"),
                         info_id = "infoPower",
                         info_title = "Power",
-                        info_text = power_tooltip
+                        info_text = power_tooltip,
+                        lim_id = "limPower",
+                        lim_title = "Limitations: Power",
+                        lim_text = lim_power_tooltip
                     )
                 )##,
                 ## column(
@@ -544,7 +553,10 @@ server <- function (input, output, session) {
                         plot = plotlyOutput('plot_clinicaltrials_sumres', height="300px"),
                         info_id = "infoSumRes",
                         info_title = "Summary Results Reporting",
-                        info_text = sumres_tooltip
+                        info_text = sumres_tooltip,
+                        lim_id = "limSumRes",
+                        lim_title = "Limitations: Summary Results Reporting",
+                        lim_text = lim_sumres_tooltip
                     )
                 ),
                 column(
@@ -556,7 +568,10 @@ server <- function (input, output, session) {
                         plot = plotlyOutput('plot_clinicaltrials_prereg', height="300px"),
                         info_id = "infoPreReg",
                         info_title = "Prospective registration",
-                        info_text = prereg_tooltip
+                        info_text = prereg_tooltip,
+                        lim_id = "limPreReg",
+                        lim_title = "Limitations: Prospective registration",
+                        lim_text = lim_prereg_tooltip
                     )
                 ),
                 column(
@@ -568,7 +583,10 @@ server <- function (input, output, session) {
                         plot = plotlyOutput('plot_clinicaltrials_timpub', height="300px"),
                         info_id = "infoTimPub",
                         info_title = "Timely Publication",
-                        info_text = timpub_tooltip
+                        info_text = timpub_tooltip,
+                        lim_id = "lim",
+                        lim_title = "Limitations: Timely Publication",
+                        lim_text = lim_timpub_tooltip
                     )
                 ),
                 column(
@@ -580,7 +598,10 @@ server <- function (input, output, session) {
                         plot = plotlyOutput('plot_clinicaltrials_trn', height="300px"),
                         info_id = "infoTRN",
                         info_title = "Trial Registry Number Reporting",
-                        info_text = trn_tooltip
+                        info_text = trn_tooltip,
+                        lim_id = "limTRN",
+                        lim_title = "Limitations: Trial Registry Number Reporting",
+                        lim_text = lim_trn_tooltip
                     )
                 )
                 
@@ -775,7 +796,10 @@ server <- function (input, output, session) {
                         plot = plotlyOutput('plot_opensci_oa', height="300px"),
                         info_id = "infoOpenAccess",
                         info_title = "Open Access",
-                        info_text = openaccess_tooltip
+                        info_text = openaccess_tooltip,
+                        lim_id = "limOpenAccess",
+                        lim_title = "Limitations: Open Access",
+                        lim_text = lim_openaccess_tooltip
                     )
                 ),
                 column(
@@ -787,7 +811,10 @@ server <- function (input, output, session) {
                         plot = plotlyOutput('plot_opensci_green_oa', height="300px"),
                         info_id = "infoGreenOA",
                         info_title = "Potential Green Open Access",
-                        info_text = greenopenaccess_tooltip
+                        info_text = greenopenaccess_tooltip,
+                        lim_id = "limGreenOA",
+                        lim_title = "Limitations: Potential Green Open Access",
+                        lim_text = lim_greenopenaccess_tooltip
                     )
                 ),
                 column(
@@ -799,7 +826,10 @@ server <- function (input, output, session) {
                         plot = plotlyOutput('plot_opensci_od', height="300px"),
                         info_id = "infoOpenData",
                         info_title = "Any Open Data",
-                        info_text = opendata_tooltip
+                        info_text = opendata_tooltip,
+                        lim_id = "limOpenData",
+                        lim_title = "Limitations: Any Open Data",
+                        lim_text = lim_opendata_tooltip
                     )
                 ),
                 column(
@@ -811,7 +841,10 @@ server <- function (input, output, session) {
                         plot = plotlyOutput('plot_opensci_oc', height="300px"),
                         info_id = "infoOpenCode",
                         info_title = "Any Open Code",
-                        info_text = opencode_tooltip
+                        info_text = opencode_tooltip,
+                        lim_id = "limOpenCode",
+                        lim_title = "Limitations: Any Open Code",
+                        lim_text = lim_opencode_tooltip
                     )
                 )
                 
@@ -882,7 +915,10 @@ server <- function (input, output, session) {
                         plot = plotlyOutput('plot_allumc_openaccess', height="300px"),
                         info_id = "infoALLUMCOpenAccess",
                         info_title = "Open Access (All UMCs)",
-                        info_text = allumc_openaccess_tooltip
+                        info_text = allumc_openaccess_tooltip,
+                        lim_id = "limALLUMCOpenAccess",
+                        lim_title = "Limitations: Open Access (All UMCs)",
+                        lim_text = lim_allumc_openaccess_tooltip
                     )
                 )
             ),
@@ -896,7 +932,10 @@ server <- function (input, output, session) {
                         plot = plotlyOutput('plot_allumc_opendata', height="300px"),
                         info_id = "infoALLUMCOpenData",
                         info_title = "Any Open Data (All UMCs)",
-                        info_text = allumc_opendata_tooltip
+                        info_text = allumc_opendata_tooltip,
+                        lim_id = "limALLUMCOpenData",
+                        lim_title = "Limitations: Any Open Data (All UMCs)",
+                        lim_text = lim_allumc_opendata_tooltip
                     )
                 )
             ),
@@ -910,7 +949,10 @@ server <- function (input, output, session) {
                         plot = plotlyOutput('plot_allumc_opencode', height="300px"),
                         info_id = "infoALLUMCOpenCode",
                         info_title = "Any Open Code (All UMCs)",
-                        info_text = allumc_opencode_tooltip
+                        info_text = allumc_opencode_tooltip,
+                        lim_id = "limALLUMCOpenCode",
+                        lim_title = "Limitations: Any Open Code (All UMCs)",
+                        lim_text = lim_allumc_opencode_tooltip
                     )
                 )
             )
@@ -981,7 +1023,10 @@ server <- function (input, output, session) {
                         plot = plotlyOutput('plot_allumc_clinicaltrials_trn', height="300px"),
                         info_id = "infoALLUMCTRN",
                         info_title = "TRN reporting (All UMCs)",
-                        info_text = allumc_clinicaltrials_trn_tooltip
+                        info_text = allumc_clinicaltrials_trn_tooltip,
+                        lim_id = "limALLUMCTRN",
+                        lim_title = "Limitations: TRN reporting (All UMCs)",
+                        lim_text = lim_allumc_clinicaltrials_trn_tooltip
                     )
                 )
             ),
@@ -995,7 +1040,10 @@ server <- function (input, output, session) {
                         plot = plotlyOutput('plot_allumc_clinicaltrials_sumres', height="300px"),
                         info_id = "infoALLUMCSumRes",
                         info_title = "Summary results reporting (All UMCs)",
-                        info_text = allumc_clinicaltrials_sumres_tooltip
+                        info_text = allumc_clinicaltrials_sumres_tooltip,
+                        lim_id = "limALLUMCSumRes",
+                        lim_title = "Limitations: Summary results reporting (All UMCs)",
+                        lim_text = lim_allumc_clinicaltrials_sumres_tooltip
                     )
                 )
             ),
@@ -1009,7 +1057,10 @@ server <- function (input, output, session) {
                         plot = plotlyOutput('plot_allumc_clinicaltrials_prereg', height="300px"),
                         info_id = "infoALLUMCPreReg",
                         info_title = "Prospective registration (All UMCs)",
-                        info_text = allumc_clinicaltrials_prereg_tooltip
+                        info_text = allumc_clinicaltrials_prereg_tooltip,
+                        lim_id = "limALLUMCPreReg",
+                        lim_title = "Limitations: Prospective registration (All UMCs)",
+                        lim_text = lim_allumc_clinicaltrials_prereg_tooltip
                     )
                 )
             ),
@@ -1023,7 +1074,10 @@ server <- function (input, output, session) {
                         plot = plotlyOutput('plot_allumc_clinicaltrials_timpub', height="300px"),
                         info_id = "infoALLUMCTimPub",
                         info_title = "Timely Publication (All UMCs)",
-                        info_text = allumc_clinicaltrials_timpub_tooltip
+                        info_text = allumc_clinicaltrials_timpub_tooltip,
+                        lim_id = "limALLUMCTimPub",
+                        lim_title = "Limitations: Timely Publication (All UMCs)",
+                        lim_text = lim_allumc_clinicaltrials_timpub_tooltip
                     )
                 )
             )
@@ -1097,7 +1151,10 @@ server <- function (input, output, session) {
                         plot = plotlyOutput('plot_allumc_animal_rando', height="300px"),
                         info_id = "infoAllUMCAnimalRando",
                         info_title = "Randomization",
-                        info_text = allumc_animal_rando_tooltip
+                        info_text = allumc_animal_rando_tooltip,
+                        lim_id = "limAllUMCAnimalRando",
+                        lim_title = "Limitations: Randomization",
+                        lim_text = lim_allumc_animal_rando_tooltip
                     )
                 )
             ),
@@ -1111,7 +1168,10 @@ server <- function (input, output, session) {
                         plot = plotlyOutput('plot_allumc_animal_blind', height="300px"),
                         info_id = "infoAllUMCAnimalBlind",
                         info_title = "Blinding",
-                        info_text = allumc_animal_blind_tooltip
+                        info_text = allumc_animal_blind_tooltip,
+                        lim_id = "limAllUMCAnimalBlind",
+                        lim_title = "Limitations: Blinding",
+                        lim_text = lim_allumc_animal_blind_tooltip
                     )
                 )
             ),
@@ -1125,7 +1185,10 @@ server <- function (input, output, session) {
                         plot = plotlyOutput('plot_allumc_animal_power', height="300px"),
                         info_id = "infoAllUMCAnimalPower",
                         info_title = "Power calculation",
-                        info_text = allumc_animal_power_tooltip
+                        info_text = allumc_animal_power_tooltip,
+                        lim_id = "limAllUMCAnimalPower",
+                        lim_title = "Limitations: Power calculation",
+                        lim_text = lim_allumc_animal_power_tooltip
                     )
                 )
             )##,

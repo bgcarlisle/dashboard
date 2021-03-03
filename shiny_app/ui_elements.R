@@ -48,17 +48,31 @@ overall_design_options <- tags$head(
 
 
 metric_box <- function(title, value, value_text, plot,
-                       info_id, info_title, info_text)
+                       info_id, info_title, info_text,
+                       lim_id, lim_title, lim_text)
 {
   wellPanel(style = "padding-top: 0px; padding-bottom: 0px; background-color:#DCE3E5",
             fluidRow(
-              column(8, align="left", h4(strong(title))),
-              column(4, align="right",h4(actionButton(inputId = info_id, label = "", icon = icon("info-circle"),
-                                     class = "btn-primary", style='padding:1px')),
-                     bsPopover(info_id, info_title, info_text,
-                               "left"),
-                     tags$style(".popover{width: 300px;}"))
-              ),
+                column(8, align="left", h4(strong(title))),
+                column(
+                    2,
+                    align="right",
+                    h4(actionButton(inputId = info_id, label = "", icon = icon("info-circle"),
+                                       class = "btn-primary", style='padding:1px')),
+                    bsPopover(info_id, info_title, info_text,
+                              "left"),
+                    tags$style(".popover{width: 300px;}")
+                ),
+                column(
+                    2,
+                    align="right",
+                    h4(actionButton(inputId = lim_id, label = "", icon = icon("exclamation-triangle"),
+                                       class = "btn-primary", style='padding:1px')),
+                    bsPopover(lim_id, lim_title, lim_text,
+                              "left"),
+                    tags$style(".popover{width: 300px;}")
+                )
+            ),
             h1(style = "color: #aa1c7d;text-align:left;font-size:40px;", value),
             h4(style = "color: #aa1c7d;text-align:left;font-size:18px;", value_text),
             plot)
