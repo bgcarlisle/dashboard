@@ -1175,12 +1175,12 @@ server <- function (input, output, session) {
     
     ## Open Code plot
     output$plot_opensci_oc <- renderPlotly({
-        return (plot_opensci_oc(rm_data, input$selectUMC, color_palette))
+        return (plot_opensci_oc(rm_data, input$selectUMC, input$opensci_absnum, color_palette))
     })
     
     ## Green Open Access plot
     output$plot_opensci_green_oa <- renderPlotly({
-        return (plot_opensci_green_oa(rm_data, input$selectUMC, color_palette))
+        return (plot_opensci_green_oa(rm_data, input$selectUMC, input$opensci_absnum, color_palette))
     })
     
     ## TRN plot

@@ -72,12 +72,12 @@ plot_opensci_oa <- function (dataset, umc, absnum, color_palette) {
                 umc,      round(100*umc_gold/umc_denom), round(100*umc_green/umc_denom), round(100*umc_hybrid/umc_denom)
             )
 
+            plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
+
             upperlimit <- 100
             ylabel <- "Percentage of publications"
             
         }
-
-        plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
 
     } else {
 
@@ -201,13 +201,13 @@ plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
                 "All", round(100*all_numer/all_denom),
                 umc, round(100*umc_numer/umc_denom)
             )
+        
+            plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
 
             upperlimit <- 100
             ylabel <- "Percentage of publications"
 
         }
-        
-        plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
         
     } else { ## "All" is selected
 
@@ -263,7 +263,7 @@ plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
 }
 
 ## Open Code
-plot_opensci_oc <- function (dataset, umc, color_palette) {
+plot_opensci_oc <- function (dataset, umc, absnum, color_palette) {
 
     ## Remove non-analyzable and non-English data points
     plot_data <- dataset %>%
@@ -278,7 +278,7 @@ plot_opensci_oc <- function (dataset, umc, color_palette) {
     all_numer <- plot_data$is_open_code %>%
         sum()
 
-    if ( umc != "all" ) {
+    if ( umc != "All" ) {
         ## If the selected UMC is not "all," calculate
         ## the percentage
 
@@ -290,20 +290,53 @@ plot_opensci_oc <- function (dataset, umc, color_palette) {
             filter(city == umc, is_open_code == TRUE) %>%
             nrow()
 
-        plot_data <- tribble(
-            ~x_label, ~percentage,
-            "All", round(100*all_numer/all_denom),
-            capitalize(umc), round(100*umc_numer/umc_denom)
-        )
+        if (absnum) {
 
-        plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
+            plot_data <- tribble(
+                ~x_label, ~percentage,
+                umc, umc_numer
+            )
+
+            upperlimit <- umc_numer
+            ylabel <- "Number of publications"
+            
+        } else {
+
+            plot_data <- tribble(
+                ~x_label, ~percentage,
+                "All", round(100*all_numer/all_denom),
+                capitalize(umc), round(100*umc_numer/umc_denom)
+            )
+
+            plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
+
+            upperlimit <- 100
+            ylabel <- "Percentage of publications"
+        }
         
     } else {
 
-        plot_data <- tribble(
-            ~x_label, ~percentage,
-            "All", round(100*all_numer/all_denom)
-        )
+        if (absnum) {
+
+            plot_data <- tribble(
+                ~x_label, ~percentage,
+                "All", all_numer
+            )
+
+            upperlimit <- all_numer
+            ylabel <- "Number of publications"
+            
+        } else {
+            
+            plot_data <- tribble(
+                ~x_label, ~percentage,
+                "All", round(100*all_numer/all_denom)
+            )
+
+            upperlimit <- 100
+            ylabel <- "Percentage of publications"
+            
+        }
 
     }
 
@@ -325,8 +358,8 @@ plot_opensci_oc <- function (dataset, umc, color_palette) {
                 title = '<b>UMC</b>'
             ),
             yaxis = list(
-                title = '<b>Percentage of publications</b>',
-                range = c(0, 100)
+                title = paste('<b>', ylabel, '</b>'),
+                range = c(0, upperlimit)
             ),
             paper_bgcolor = color_palette[9],
             plot_bgcolor = color_palette[9]
@@ -335,7 +368,7 @@ plot_opensci_oc <- function (dataset, umc, color_palette) {
 }
 
 ## Green open access
-plot_opensci_green_oa <- function (dataset, umc, color_palette) {
+plot_opensci_green_oa <- function (dataset, umc, absnum, color_palette) {
 
     plot_data <- dataset %>%
         filter(
@@ -349,7 +382,7 @@ plot_opensci_green_oa <- function (dataset, umc, color_palette) {
     all_numer <- plot_data$permission_postprint %>%
         sum()
 
-    if ( umc != "all" ) {
+    if ( umc != "All" ) {
         ## If the selected UMC is not "all," calculate
         ## the percentage
 
@@ -361,20 +394,54 @@ plot_opensci_green_oa <- function (dataset, umc, color_palette) {
             filter(city == umc, permission_postprint == TRUE) %>%
             nrow()
 
-        plot_data <- tribble(
-            ~x_label, ~percentage,
-            "All", round(100*all_numer/all_denom),
-            capitalize(umc), round(100*umc_numer/umc_denom)
-        )
+        if (absnum) {
 
-        plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
+            plot_data <- tribble(
+                ~x_label, ~percentage,
+                umc, umc_numer
+            )
+
+            upperlimit <- umc_numer
+            ylabel <- "Number of publications"
+            
+        } else {
+
+            plot_data <- tribble(
+                ~x_label, ~percentage,
+                "All", round(100*all_numer/all_denom),
+                umc, round(100*umc_numer/umc_denom)
+            )
+
+            plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
+
+            upperlimit <- 100
+            ylabel <- "Percentage of publications"
+            
+        }
         
     } else {
 
-        plot_data <- tribble(
-            ~x_label, ~percentage,
-            "All", round(100*all_numer/all_denom)
-        )
+        if (absnum) {
+
+            plot_data <- tribble(
+                ~x_label, ~percentage,
+                "All", all_numer
+            )
+
+            upperlimit <- all_numer
+            ylabel <- "Number of publications"
+            
+        } else {
+
+            plot_data <- tribble(
+                ~x_label, ~percentage,
+                "All", round(100*all_numer/all_denom)
+            )
+
+            upperlimit <- 100
+            ylabel <- "Percentage of publications"
+            
+        }
 
     }
 
@@ -396,8 +463,8 @@ plot_opensci_green_oa <- function (dataset, umc, color_palette) {
                 title = '<b>UMC</b>'
             ),
             yaxis = list(
-                title = '<b>Percentage of publications</b>',
-                range = c(0, 100)
+                title = paste('<b>', ylabel, '</b>'),
+                range = c(0, upperlimit)
             ),
             paper_bgcolor = color_palette[9],
             plot_bgcolor = color_palette[9]
