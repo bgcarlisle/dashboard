@@ -767,7 +767,7 @@ server <- function (input, output, session) {
             style="padding-top: 0px; padding-bottom: 0px;",
             h2(strong("Open Science"), align = "left"),
             checkboxInput(
-                "opensci_absval",
+                "opensci_absnum",
                 strong("Show absolute numbers"),
                 value = FALSE
             ),
@@ -1165,12 +1165,12 @@ server <- function (input, output, session) {
     
     ## Open Access plot
     output$plot_opensci_oa <- renderPlotly({
-        return (plot_opensci_oa(rm_data, input$selectUMC, input$opensci_absval, color_palette))
+        return (plot_opensci_oa(rm_data, input$selectUMC, input$opensci_absnum, color_palette))
     })
     
     ## Open Data plot
     output$plot_opensci_od <- renderPlotly({
-        return (plot_opensci_od(rm_data, input$selectUMC, color_palette))
+        return (plot_opensci_od(rm_data, input$selectUMC, input$opensci_absnum, color_palette))
     })
     
     ## Open Code plot
