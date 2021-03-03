@@ -63,7 +63,9 @@ plot_opensci_oa <- function (dataset, umc, color_palette) {
             capitalize(umc), "Green", round(100*umc_green/umc_denom),
             capitalize(umc), "Hybrid", round(100*umc_hybrid/umc_denom)
         )
-        
+
+        plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
+
     } else {
 
         plot_data <- tribble(
@@ -140,6 +142,8 @@ plot_opensci_od <- function (dataset, umc, color_palette) {
             "All", round(100*all_numer/all_denom),
             capitalize(umc), round(100*umc_numer/umc_denom)
         )
+
+        plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
         
     } else {
 
@@ -210,6 +214,8 @@ plot_opensci_oc <- function (dataset, umc, color_palette) {
             "All", round(100*all_numer/all_denom),
             capitalize(umc), round(100*umc_numer/umc_denom)
         )
+
+        plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
         
     } else {
 
@@ -279,6 +285,8 @@ plot_opensci_green_oa <- function (dataset, umc, color_palette) {
             "All", round(100*all_numer/all_denom),
             capitalize(umc), round(100*umc_numer/umc_denom)
         )
+
+        plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
         
     } else {
 
@@ -365,6 +373,8 @@ plot_clinicaltrials_trn <- function (dataset, umc, color_palette) {
             capitalize(umc), "In abstract", round(100*umc_numer_abs/umc_denom),
             capitalize(umc), "Secondary information", round(100*umc_numer_si/umc_denom),
         )
+
+        plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
         
     } else {
 
@@ -445,6 +455,8 @@ plot_clinicaltrials_sumres <- function (dataset, umc, color_palette) {
             "All", round(100*all_numer/all_denom),
             capitalize(umc), round(100*umc_numer/umc_denom),
         )
+
+        plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
         
     } else {
 
@@ -862,6 +874,8 @@ plot_randomization <- function (dataset, umc, color_palette) {
             capitalize(umc), round(100*umc_numer/umc_denom),
             "All", round(100*all_numer/all_denom)
         )
+
+        plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
         
         ## message(umc)
     } else {
@@ -954,6 +968,8 @@ plot_blinding <- function (dataset, umc, color_palette) {
             capitalize(umc), round(100*umc_numer/umc_denom),
             "All", round(100*all_numer/all_denom)
         )
+
+        plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
         
         ## message(umc)
     } else {
@@ -1046,6 +1062,8 @@ plot_power <- function (dataset, umc, color_palette) {
             capitalize(umc), round(100*umc_numer/umc_denom),
             "All", round(100*all_numer/all_denom)
         )
+
+        plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
         
         ## message(umc)
     } else {
