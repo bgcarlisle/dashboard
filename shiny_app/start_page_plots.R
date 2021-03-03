@@ -55,47 +55,59 @@ plot_opensci_oa <- function (dataset, umc, color_palette) {
             nrow()     
 
         plot_data <- tribble(
-            ~x_label, ~colour, ~percentage,
-            "All", "Gold", round(100*all_gold/all_denom),
-            "All", "Green", round(100*all_green/all_denom),
-            "All", "Hybrid", round(100*all_hybrid/all_denom),
-            capitalize(umc), "Gold", round(100*umc_gold/umc_denom),
-            capitalize(umc), "Green", round(100*umc_green/umc_denom),
-            capitalize(umc), "Hybrid", round(100*umc_hybrid/umc_denom)
+            ~x_label,        ~gold,                         ~green,                         ~hybrid,
+            "All",           round(100*all_gold/all_denom), round(100*all_green/all_denom), round(100*all_hybrid/all_denom),
+            capitalize(umc), round(100*umc_gold/umc_denom), round(100*umc_green/umc_denom), round(100*umc_hybrid/umc_denom)
         )
 
         plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
 
     } else {
-
         plot_data <- tribble(
-            ~x_label, ~colour, ~percentage,
-            "All", "Gold", round(100*all_gold/all_denom),
-            "All", "Green", round(100*all_green/all_denom),
-            "All", "Hybrid", round(100*all_hybrid/all_denom)
+            ~x_label, ~gold,                         ~green,                         ~hybrid,
+            "All",    round(100*all_gold/all_denom), round(100*all_green/all_denom), round(100*all_hybrid/all_denom)
         )
-
+        
     }
     
     plot_ly(
         plot_data,
         x = ~x_label,
-        color = ~colour,
-        y = ~percentage,
+        y = ~gold,
+        name = "Gold",
         type = 'bar',
-        colors = c(
-            "#F1BA50",
-            "#007265",
-            "#634587"
-        ),
         marker = list(
+            color = color_palette[3],
             line = list(
                 color = 'rgb(0,0,0)',
                 width = 1.5
             )
         )
     ) %>%
+        add_trace(
+            y = ~green,
+            name = "Green",
+            marker = list(
+                color = color_palette[6],
+                line = list(
+                    color = 'rgb(0,0,0)',
+                    width = 1.5
+                )
+            )
+        ) %>%
+        add_trace(
+            y = ~hybrid,
+            name = "Hybrid",
+            marker = list(
+                color = color_palette[7],
+                line = list(
+                    color = 'rgb(0,0,0)',
+                    width = 1.5
+                )
+            )
+        )%>%
         layout(
+            barmode = 'stack',
             xaxis = list(
                 title = '<b>UMC</b>'
             ),
