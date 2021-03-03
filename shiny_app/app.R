@@ -787,6 +787,19 @@ server <- function (input, output, session) {
                 column(
                     col_width,
                     metric_box(
+                        title = "Potential Green OA",
+                        value = paste0(numer_greenoa, "/", denom_greenoa),
+                        value_text = "paywalled publications could be made openly accessible",
+                        plot = plotlyOutput('plot_opensci_green_oa', height="300px"),
+                        info_id = "infoGreenOA",
+                        info_title = "Potential Green Open Access",
+                        info_text = greenopenaccess_tooltip,
+                        "left"
+                    )
+                ),
+                column(
+                    col_width,
+                    metric_box(
                         title = "Any Open Data",
                         value = paste0(round(100*all_numer_od/all_denom_od), "%"),
                         value_text = "of 2018 analyzable publications mentioned sharing of data",
@@ -809,20 +822,8 @@ server <- function (input, output, session) {
                         info_text = opencode_tooltip,
                         "left"
                     )
-                ),
-                column(
-                    col_width,
-                    metric_box(
-                        title = "Green Open Access",
-                        value = paste0(numer_greenoa, "/", denom_greenoa),
-                        value_text = "publications currently behind a paywall could be made openly accessible by depositing the accepted version in a repository",
-                        plot = plotlyOutput('plot_opensci_green_oa', height="300px"),
-                        info_id = "infoGreenOA",
-                        info_title = "Green Open Access",
-                        info_text = greenopenaccess_tooltip,
-                        "left"
-                    )
                 )
+                
             )
         )
 

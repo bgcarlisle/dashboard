@@ -422,7 +422,7 @@ power_tooltip <- strwrap("This metric measures how many animal studies report a 
     
 paste(collapse = " ")
 
-greenopenaccess_tooltip <- strwrap("")
+greenopenaccess_tooltip <- strwrap("This is the number of publications currently behind a paywall that could be made openly accessible by depositing the accepted version in a repository.")
 
                                         # iacuc_tooltip <- strwrap("This metric measures how many animal studies report an Institutional animal care and
 #                          use committee statement.") %>%
