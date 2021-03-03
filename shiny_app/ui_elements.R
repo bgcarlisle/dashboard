@@ -48,7 +48,7 @@ overall_design_options <- tags$head(
 
 
 metric_box <- function(title, value, value_text, plot,
-                       info_id, info_title, info_text, info_alignment = "right")
+                       info_id, info_title, info_text)
 {
   wellPanel(style = "padding-top: 0px; padding-bottom: 0px; background-color:#DCE3E5",
             fluidRow(
@@ -56,7 +56,7 @@ metric_box <- function(title, value, value_text, plot,
               column(4, align="right",h4(actionButton(inputId = info_id, label = "", icon = icon("info-circle"),
                                      class = "btn-primary", style='padding:1px')),
                      bsPopover(info_id, info_title, info_text,
-                               info_alignment),
+                               "left"),
                      tags$style(".popover{width: 300px;}"))
               ),
             h1(style = "color: #aa1c7d;text-align:left;font-size:40px;", value),
