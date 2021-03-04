@@ -25,6 +25,18 @@ plot_opensci_oa <- function (dataset, umc, absnum, color_palette) {
         filter( color == "hybrid") %>%
         nrow()
 
+    all_na <- plot_data %>%
+        filter( is.na(color) ) %>%
+        nrow()
+
+    all_closed <- plot_data %>%
+        filter( color == "closed") %>%
+        nrow()
+
+    all_bronze <- plot_data %>%
+        filter( color == "bronze") %>%
+        nrow()
+
     if ( umc != "All" ) {
         ## If the selected UMC is not "all," calculate
         ## the percentage
@@ -54,14 +66,35 @@ plot_opensci_oa <- function (dataset, umc, absnum, color_palette) {
             ) %>%
             nrow()
 
+        umc_na <- plot_data %>%
+            filter(
+                is.na(color),
+                city == umc
+            ) %>%
+            nrow()
+
+        umc_closed <- plot_data %>%
+            filter(
+                color == "closed",
+                city == umc
+            ) %>%
+            nrow()
+
+        umc_bronze <- plot_data %>%
+            filter(
+                color == "bronze",
+                city == umc
+            ) %>%
+            nrow()
+
         if (absnum) {
 
             plot_data <- tribble(
-                ~x_label, ~gold,    ~green,    ~hybrid,
-                umc,      umc_gold, umc_green, umc_hybrid
+                ~x_label, ~gold,    ~green,    ~hybrid,    ~na,    ~closed,    ~bronze,
+                umc,      umc_gold, umc_green, umc_hybrid, umc_na, umc_closed, umc_bronze
             )
 
-            upperlimit <- sum(umc_gold, umc_green, umc_hybrid)
+            upperlimit <- sum(umc_gold, umc_green, umc_hybrid, umc_na, umc_closed, umc_bronze)
             ylabel <- "Number of publications"
             
         } else {
@@ -84,11 +117,11 @@ plot_opensci_oa <- function (dataset, umc, absnum, color_palette) {
         if (absnum) {
             
             plot_data <- tribble(
-                ~x_label, ~gold,    ~green,    ~hybrid,
-                "All",    all_gold, all_green, all_hybrid
+                ~x_label, ~gold,    ~green,    ~hybrid,    ~na,    ~closed,    ~bronze,
+                "All",    all_gold, all_green, all_hybrid, all_na, all_closed, all_bronze
             )
 
-            upperlimit <- sum(all_gold, all_green, all_hybrid)
+            upperlimit <- sum(all_gold, all_green, all_hybrid, all_na, all_closed, all_bronze)
             ylabel <- "Number of publications"
             
         } else {
@@ -104,55 +137,144 @@ plot_opensci_oa <- function (dataset, umc, absnum, color_palette) {
         }
         
     }
-    
-    plot_ly(
-        plot_data,
-        x = ~x_label,
-        y = ~gold,
-        name = "Gold",
-        type = 'bar',
-        marker = list(
-            color = color_palette[3],
-            line = list(
-                color = 'rgb(0,0,0)',
-                width = 1.5
-            )
-        )
-    ) %>%
-        add_trace(
-            y = ~green,
-            name = "Green",
+
+    if (absnum) {
+        
+        plot_ly(
+            plot_data,
+            x = ~x_label,
+            y = ~gold,
+            name = "Gold",
+            type = 'bar',
             marker = list(
-                color = color_palette[6],
+                color = color_palette[3],
                 line = list(
                     color = 'rgb(0,0,0)',
                     width = 1.5
                 )
             )
         ) %>%
-        add_trace(
-            y = ~hybrid,
-            name = "Hybrid",
+            add_trace(
+                y = ~green,
+                name = "Green",
+                marker = list(
+                    color = color_palette[6],
+                    line = list(
+                        color = 'rgb(0,0,0)',
+                        width = 1.5
+                    )
+                )
+            ) %>%
+            add_trace(
+                y = ~hybrid,
+                name = "Hybrid",
+                marker = list(
+                    color = color_palette[7],
+                    line = list(
+                        color = 'rgb(0,0,0)',
+                        width = 1.5
+                    )
+                )
+            ) %>%
+            add_trace(
+                y = ~bronze,
+                name = "Bronze",
+                marker = list(
+                    color = color_palette[12],
+                    line = list(
+                        color = 'rgb(0,0,0)',
+                        width = 1.5
+                    )
+                )
+            ) %>%
+            add_trace(
+                y = ~closed,
+                name = "Closed",
+                marker = list(
+                    color = color_palette[1],
+                    line = list(
+                        color = 'rgb(0,0,0)',
+                        width = 1.5
+                    )
+                )
+            ) %>%
+            add_trace(
+                y = ~na,
+                name = "Data not available",
+                marker = list(
+                    color = color_palette[10],
+                    line = list(
+                        color = 'rgb(0,0,0)',
+                        width = 1.5
+                    )
+                )
+            ) %>%
+            layout(
+                barmode = 'stack',
+                xaxis = list(
+                    title = '<b>UMC</b>'
+                ),
+                yaxis = list(
+                    title = paste('<b>', ylabel, '</b>'),
+                    range = c(0, upperlimit)
+                ),
+                paper_bgcolor = color_palette[9],
+                plot_bgcolor = color_palette[9]
+            )
+        
+    } else {
+        
+        plot_ly(
+            plot_data,
+            x = ~x_label,
+            y = ~gold,
+            name = "Gold",
+            type = 'bar',
             marker = list(
-                color = color_palette[7],
+                color = color_palette[3],
                 line = list(
                     color = 'rgb(0,0,0)',
                     width = 1.5
                 )
             )
-        )%>%
-        layout(
-            barmode = 'stack',
-            xaxis = list(
-                title = '<b>UMC</b>'
-            ),
-            yaxis = list(
-                title = paste('<b>', ylabel, '</b>'),
-                range = c(0, upperlimit)
-            ),
-            paper_bgcolor = color_palette[9],
-            plot_bgcolor = color_palette[9]
-        )
+        ) %>%
+            add_trace(
+                y = ~green,
+                name = "Green",
+                marker = list(
+                    color = color_palette[6],
+                    line = list(
+                        color = 'rgb(0,0,0)',
+                        width = 1.5
+                    )
+                )
+            ) %>%
+            add_trace(
+                y = ~hybrid,
+                name = "Hybrid",
+                marker = list(
+                    color = color_palette[7],
+                    line = list(
+                        color = 'rgb(0,0,0)',
+                        width = 1.5
+                    )
+                )
+            ) %>%
+            layout(
+                barmode = 'stack',
+                xaxis = list(
+                    title = '<b>UMC</b>'
+                ),
+                yaxis = list(
+                    title = paste('<b>', ylabel, '</b>'),
+                    range = c(0, upperlimit)
+                ),
+                paper_bgcolor = color_palette[9],
+                plot_bgcolor = color_palette[9]
+            )
+        
+    }
+    
 }
 
 ## Open Data
