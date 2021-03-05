@@ -1641,7 +1641,22 @@ plot_blinding <- function (dataset, umc, absnum, color_palette) {
         ) %>%
         nrow()
 
-    if ( umc != "all" ) {
+    all_nosciscore <- dataset %>%
+        filter(
+            is_animal == 1,
+            is.na(sciscore)
+        ) %>%
+        nrow()
+
+    all_noblind <- dataset %>%
+        filter(
+            is_animal == 1,
+            ! is.na(sciscore),
+            blinding == 0
+        ) %>%
+        nrow()
+
+    if ( umc != "All" ) {
 
         ## If the selected UMC is not "all," calculate
         ## the percentage 
@@ -1666,24 +1681,125 @@ plot_blinding <- function (dataset, umc, absnum, color_palette) {
             ) %>%
             nrow()
 
-        plot_data <- tribble(
-            ~x_label, ~percentage,
-            capitalize(umc), round(100*umc_numer/umc_denom),
-            "All", round(100*all_numer/all_denom)
-        )
+        umc_nosciscore <- dataset %>%
+            filter(
+                city == umc,
+                is_animal == 1,
+                is.na(sciscore)
+            ) %>%
+            nrow()
 
-        plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
+        umc_noblind <- dataset %>%
+            filter(
+                city == umc,
+                is_animal == 1,
+                ! is.na(sciscore),
+                blinding == 0
+            ) %>%
+            nrow()
+
+        if (absnum) {
+
+            plot_data <- tribble(
+                ~x_label, ~percentage, ~nosciscore,    ~noblind,
+                umc,      umc_numer,   umc_nosciscore, umc_noblind
+            )
+
+            upperlimit <- 1.1*sum(umc_numer, umc_nosciscore, umc_noblind)
+            ylabel <- "Number of publications"
+            
+        } else {
+
+            plot_data <- tribble(
+                ~x_label, ~percentage,
+                capitalize(umc), round(100*umc_numer/umc_denom),
+                "All", round(100*all_numer/all_denom)
+            )
+
+            plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
+            
+            upperlimit <- 100
+            ylabel <- "Percentage of publications"
+            
+        }
         
-        ## message(umc)
     } else {
 
-        plot_data <- tribble(
-            ~x_label, ~percentage,
-            "All", round(100*all_numer/all_denom)
-        )
-        
-        ## message("umc not set")
+        if (absnum) {
+
+            plot_data <- tribble(
+                ~x_label, ~percentage, ~nosciscore, ~noblind,
+                "All",    all_numer,   all_nosciscore, all_noblind
+            )
+
+            upperlimit <- 1.1*sum(all_numer, all_nosciscore, all_noblind)
+            ylabel <- "Number of publications"
+            
+        } else {
+
+            plot_data <- tribble(
+                ~x_label, ~percentage,
+                "All", round(100*all_numer/all_denom)
+            )
+            
+            upperlimit <- 100
+            ylabel <- "Percentage of publications"
+            
+        }
     }
+
+    if (absnum) {
+
+        plot_ly(
+            plot_data,
+            x = ~x_label,
+            y = ~percentage,
+            name = "Blinded",
+            type = 'bar',
+            marker = list(
+                color = color_palette[3],
+                line = list(
+                    color = 'rgb(0,0,0)',
+                    width = 1.5
+                )
+            )
+        ) %>%
+            add_trace(
+                y = ~noblind,
+                name = "Not blinded",
+                marker = list(
+                    color = color_palette[12],
+                    line = list(
+                        color = 'rgb(0,0,0)',
+                        width = 1.5
+                    )
+                )
+            ) %>%
+            add_trace(
+                y = ~nosciscore,
+                name = "No Sciscore data",
+                marker = list(
+                    color = color_palette[7],
+                    line = list(
+                        color = 'rgb(0,0,0)',
+                        width = 1.5
+                    )
+                )
+            ) %>%
+            layout(
+                barmode = 'stack',
+                xaxis = list(
+                    title = '<b>UMC</b>'
+                ),
+                yaxis = list(
+                    title = paste('<b>', ylabel, '</b>'),
+                    range = c(0, upperlimit)
+                ),
+                paper_bgcolor = color_palette[9],
+                plot_bgcolor = color_palette[9]
+            )
+        
+    } else {
 
     plot_ly(
         plot_data,
@@ -1703,13 +1819,13 @@ plot_blinding <- function (dataset, umc, absnum, color_palette) {
                 title = '<b>UMC</b>'
             ),
             yaxis = list(
-                title = '<b>Blinded (%)</b>',
-                range = c(0, 100)
+                title = paste('<b>', ylabel, '</b>'),
+                range = c(0, upperlimit)
             ),
             paper_bgcolor = color_palette[9],
             plot_bgcolor = color_palette[9]
         )
-
+    }
 }
 
 ## Power calc
@@ -1735,7 +1851,22 @@ plot_power <- function (dataset, umc, absnum, color_palette) {
         ) %>%
         nrow()
 
-    if ( umc != "all" ) {
+    all_nosciscore <- dataset %>%
+        filter(
+            is_animal == 1,
+            is.na(sciscore)
+        ) %>%
+        nrow()
+
+    all_nopower <- dataset %>%
+        filter(
+            is_animal == 1,
+            ! is.na(sciscore),
+            power == 0
+        ) %>%
+        nrow()
+
+    if ( umc != "All" ) {
 
         ## If the selected UMC is not "all," calculate
         ## the percentage 
@@ -1760,50 +1891,155 @@ plot_power <- function (dataset, umc, absnum, color_palette) {
             ) %>%
             nrow()
 
-        plot_data <- tribble(
-            ~x_label, ~percentage,
-            capitalize(umc), round(100*umc_numer/umc_denom),
-            "All", round(100*all_numer/all_denom)
-        )
+        umc_nosciscore <- dataset %>%
+            filter(
+                city == umc,
+                is_animal == 1,
+                is.na(sciscore)
+            ) %>%
+            nrow()
 
-        plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
+        umc_nopower <- dataset %>%
+            filter(
+                city == umc,
+                is_animal == 1,
+                ! is.na(sciscore),
+                power == 0
+            ) %>%
+            nrow()
+
+         if (absnum) {
+
+            plot_data <- tribble(
+                ~x_label, ~percentage, ~nosciscore,    ~nopower,
+                umc,      umc_numer,   umc_nosciscore, umc_nopower
+            )
+
+            upperlimit <- 1.1*sum(umc_numer, umc_nosciscore, umc_nopower)
+            ylabel <- "Number of publications"
+            
+         } else {
+
+             plot_data <- tribble(
+                 ~x_label, ~percentage,
+                 capitalize(umc), round(100*umc_numer/umc_denom),
+                 "All", round(100*all_numer/all_denom)
+             )
+
+             plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
+            
+            upperlimit <- 100
+            ylabel <- "Percentage of publications"
+             
+         }
         
-        ## message(umc)
     } else {
 
-        plot_data <- tribble(
-            ~x_label, ~percentage,
-            "All", round(100*all_numer/all_denom)
-        )
+        if (absnum) {
+
+            plot_data <- tribble(
+                ~x_label, ~percentage, ~nosciscore, ~nopower,
+                "All",    all_numer,   all_nosciscore, all_nopower
+            )
+
+            upperlimit <- 1.1*sum(all_numer, all_nosciscore, all_nopower)
+            ylabel <- "Number of publications"
+            
+        } else {
+
+            plot_data <- tribble(
+                ~x_label, ~percentage,
+                "All", round(100*all_numer/all_denom)
+            )
+            
+            upperlimit <- 100
+            ylabel <- "Percentage of publications"
+            
+        }
         
-        ## message("umc not set")
     }
 
-    plot_ly(
-        plot_data,
-        x = ~x_label,
-        y = ~percentage,
-        type = 'bar',
-        marker = list(
-            color = color_palette[3],
-            line = list(
-                color = 'rgb(0,0,0)',
-                width = 1.5
-            )
-        )
-    ) %>%
-        layout(
-            xaxis = list(
-                title = '<b>UMC</b>'
-            ),
-            yaxis = list(
-                title = '<b>Reporting a Power Calculation (%)</b>',
-                range = c(0, 100)
-            ),
-            paper_bgcolor = color_palette[9],
-            plot_bgcolor = color_palette[9]
-        )
+    if (absnum) {
 
+        plot_ly(
+            plot_data,
+            x = ~x_label,
+            y = ~percentage,
+            name = "Power calculation reported",
+            type = 'bar',
+            marker = list(
+                color = color_palette[3],
+                line = list(
+                    color = 'rgb(0,0,0)',
+                    width = 1.5
+                )
+            )
+        ) %>%
+            add_trace(
+                y = ~nopower,
+                name = "No power calculation",
+                marker = list(
+                    color = color_palette[12],
+                    line = list(
+                        color = 'rgb(0,0,0)',
+                        width = 1.5
+                    )
+                )
+            ) %>%
+            add_trace(
+                y = ~nosciscore,
+                name = "No Sciscore data",
+                marker = list(
+                    color = color_palette[7],
+                    line = list(
+                        color = 'rgb(0,0,0)',
+                        width = 1.5
+                    )
+                )
+            ) %>%
+            layout(
+                barmode = 'stack',
+                xaxis = list(
+                    title = '<b>UMC</b>'
+                ),
+                yaxis = list(
+                    title = paste('<b>', ylabel, '</b>'),
+                    range = c(0, upperlimit)
+                ),
+                paper_bgcolor = color_palette[9],
+                plot_bgcolor = color_palette[9]
+            )
+        
+    } else {
+
+        plot_ly(
+            plot_data,
+            x = ~x_label,
+            y = ~percentage,
+            type = 'bar',
+            marker = list(
+                color = color_palette[3],
+                line = list(
+                    color = 'rgb(0,0,0)',
+                    width = 1.5
+                )
+            )
+        ) %>%
+            layout(
+                xaxis = list(
+                    title = '<b>UMC</b>'
+                ),
+                yaxis = list(
+                    title = paste('<b>', ylabel, '</b>'),
+                    range = c(0, upperlimit)
+                ),
+                paper_bgcolor = color_palette[9],
+                plot_bgcolor = color_palette[9]
+            )
+
+    }
+
+    
 }
 
 ## IACUC
