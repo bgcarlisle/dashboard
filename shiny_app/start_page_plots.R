@@ -1406,7 +1406,8 @@ plot_clinicaltrials_timpub <- function (dataset, umc, color_palette) {
 ## Robustness plots
 
 ## Randomisation
-plot_randomization <- function (dataset, umc, color_palette) {
+
+plot_randomization <- function (dataset, umc, absnum, color_palette) {
 
     ## Calculate the numerator and denominator for the
     ## "all" bar
@@ -1428,7 +1429,22 @@ plot_randomization <- function (dataset, umc, color_palette) {
         ) %>%
         nrow()
 
-    if ( umc != "all" ) {
+    all_nosciscore <- dataset %>%
+        filter(
+            is_animal == 1,
+            is.na(sciscore)
+        ) %>%
+        nrow()
+
+    all_norando <- dataset %>%
+        filter(
+            is_animal == 1,
+            ! is.na(sciscore),
+            randomization == 0
+        ) %>%
+        nrow()
+
+    if ( umc != "All" ) {
 
         ## If the selected UMC is not "all," calculate
         ## the percentage 
@@ -1453,54 +1469,157 @@ plot_randomization <- function (dataset, umc, color_palette) {
             ) %>%
             nrow()
 
-        plot_data <- tribble(
-            ~x_label, ~percentage,
-            capitalize(umc), round(100*umc_numer/umc_denom),
-            "All", round(100*all_numer/all_denom)
-        )
+        umc_nosciscore <- dataset %>%
+            filter(
+                city == umc,
+                is_animal == 1,
+                is.na(sciscore)
+            ) %>%
+            nrow()
 
-        plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
+        umc_norando <- dataset %>%
+            filter(
+                city == umc,
+                is_animal == 1,
+                ! is.na(sciscore),
+                randomization == 0
+            ) %>%
+            nrow()
+
+        if (absnum) {
+
+            plot_data <- tribble(
+                ~x_label, ~percentage, ~nosciscore,    ~norando,
+                umc,      umc_numer,   umc_nosciscore, umc_norando
+            )
+
+            upperlimit <- 1.1*sum(umc_numer, umc_nosciscore, umc_norando)
+            ylabel <- "Number of publications"
+            
+        } else {
+
+            plot_data <- tribble(
+                ~x_label, ~percentage,
+                umc, round(100*umc_numer/umc_denom),
+                "All", round(100*all_numer/all_denom)
+            )
+
+            plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
+            
+            upperlimit <- 100
+            ylabel <- "Percentage of publications"
+            
+        }
         
-        ## message(umc)
     } else {
 
-        plot_data <- tribble(
-            ~x_label, ~percentage,
-            "All", round(100*all_numer/all_denom)
-        )
-        
-        ## message("umc not set")
+        if (absnum) {
+
+            plot_data <- tribble(
+                ~x_label, ~percentage, ~nosciscore, ~norando,
+                "All",    all_numer,   all_nosciscore, all_norando
+            )
+
+            upperlimit <- 1.1*sum(all_numer, all_nosciscore, all_norando)
+            ylabel <- "Number of publications"
+            
+        } else {
+
+            plot_data <- tribble(
+                ~x_label, ~percentage,
+                "All", round(100*all_numer/all_denom)
+            )
+            
+            upperlimit <- 100
+            ylabel <- "Percentage of publications"
+
+        }        
     }
 
-    plot_ly(
-        plot_data,
-        x = ~x_label,
-        y = ~percentage,
-        type = 'bar',
-        marker = list(
-            color = color_palette[3],
-            line = list(
-                color = 'rgb(0,0,0)',
-                width = 1.5
+    if (absnum) {
+
+        plot_ly(
+            plot_data,
+            x = ~x_label,
+            y = ~percentage,
+            name = "Randomized",
+            type = 'bar',
+            marker = list(
+                color = color_palette[3],
+                line = list(
+                    color = 'rgb(0,0,0)',
+                    width = 1.5
+                )
             )
-        )
-    ) %>%
-        layout(
-            xaxis = list(
-                title = '<b>UMC</b>'
-            ),
-            yaxis = list(
-                title = '<b>Randomized (%)</b>',
-                range = c(0, 100)
-            ),
-            paper_bgcolor = color_palette[9],
-            plot_bgcolor = color_palette[9]
-        )
+        ) %>%
+            add_trace(
+                y = ~norando,
+                name = "Not randomized",
+                marker = list(
+                    color = color_palette[12],
+                    line = list(
+                        color = 'rgb(0,0,0)',
+                        width = 1.5
+                    )
+                )
+            ) %>%
+            add_trace(
+                y = ~nosciscore,
+                name = "No Sciscore data",
+                marker = list(
+                    color = color_palette[7],
+                    line = list(
+                        color = 'rgb(0,0,0)',
+                        width = 1.5
+                    )
+                )
+            ) %>%
+            layout(
+                barmode = 'stack',
+                xaxis = list(
+                    title = '<b>UMC</b>'
+                ),
+                yaxis = list(
+                    title = paste('<b>', ylabel, '</b>'),
+                    range = c(0, upperlimit)
+                ),
+                paper_bgcolor = color_palette[9],
+                plot_bgcolor = color_palette[9]
+            )
+        
+    } else {
+
+        plot_ly(
+            plot_data,
+            x = ~x_label,
+            y = ~percentage,
+            type = 'bar',
+            marker = list(
+                color = color_palette[3],
+                line = list(
+                    color = 'rgb(0,0,0)',
+                    width = 1.5
+                )
+            )
+        ) %>%
+            layout(
+                xaxis = list(
+                    title = '<b>UMC</b>'
+                ),
+                yaxis = list(
+                    title = paste('<b>', ylabel, '</b>'),
+                    range = c(0, upperlimit)
+                ),
+                paper_bgcolor = color_palette[9],
+                plot_bgcolor = color_palette[9]
+            )
+
+    }
     
 }
 
 ## Blinding
-plot_blinding <- function (dataset, umc, color_palette) {
+plot_blinding <- function (dataset, umc, absnum, color_palette) {
 
     ## Calculate the numerator and denominator for the
     ## "all" bar
@@ -1594,7 +1713,7 @@ plot_blinding <- function (dataset, umc, color_palette) {
 }
 
 ## Power calc
-plot_power <- function (dataset, umc, color_palette) {
+plot_power <- function (dataset, umc, absnum, color_palette) {
 
     ## Calculate the numerator and denominator for the
     ## "all" bar

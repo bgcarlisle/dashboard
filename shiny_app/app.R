@@ -344,6 +344,11 @@ server <- function (input, output, session) {
         wellPanel(
             style = "padding-top: 0px; padding-bottom: 0px;",
             h2(strong("Robustness of Animal Studies"), align = "left"),
+            checkboxInput(
+                "animals_absnum",
+                strong("Show absolute numbers"),
+                value = FALSE
+            ),
             fluidRow(
                 column(
                     col_width,
@@ -1260,17 +1265,17 @@ server <- function (input, output, session) {
 
     ## Robustness plot
     output$plot_randomization <- renderPlotly({
-        return (plot_randomization(rm_data, input$selectUMC, color_palette))
+        return (plot_randomization(rm_data, input$selectUMC, input$animals_absnum, color_palette))
     })
 
     ## Blinding plot
     output$plot_blinding <- renderPlotly({
-        return(plot_blinding(rm_data, input$selectUMC, color_palette))
+        return(plot_blinding(rm_data, input$selectUMC, input$animals_absnum, color_palette))
     })
 
     ## Power calc plot
     output$plot_power <- renderPlotly({
-        return(plot_power(rm_data, input$selectUMC, color_palette))
+        return(plot_power(rm_data, input$selectUMC, input$animals_absnum, color_palette))
     })
 
     ## IACUC plot
