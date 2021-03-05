@@ -43,9 +43,9 @@ plot_allumc_openaccess <- function (dataset, color_palette) {
             bind_rows(
                 tribble(
                     ~x_label, ~colour, ~percentage, ~sum,
-                    capitalize(umc), "Gold", round(100*umc_gold/umc_denom), 100-round(100*umc_sum/umc_denom),
-                    capitalize(umc), "Green", round(100*umc_green/umc_denom), 100-round(100*umc_sum/umc_denom),
-                    capitalize(umc), "Hybrid", round(100*umc_hybrid/umc_denom), 100-round(100*umc_sum/umc_denom)
+                    umc, "Gold", round(100*umc_gold/umc_denom), 100-round(100*umc_sum/umc_denom),
+                    umc, "Green", round(100*umc_green/umc_denom), 100-round(100*umc_sum/umc_denom),
+                    umc, "Hybrid", round(100*umc_hybrid/umc_denom), 100-round(100*umc_sum/umc_denom)
                 )
             )
     
@@ -115,7 +115,7 @@ plot_allumc_opendata <- function (dataset, color_palette, color_palette_bars) {
             bind_rows(
                 tribble(
                     ~x_label, ~percentage,
-                    capitalize(umc), round(100*umc_numer/umc_denom)
+                    umc, round(100*umc_numer/umc_denom)
                 )
             )
     }
@@ -183,7 +183,7 @@ plot_allumc_opencode <- function (dataset, color_palette, color_palette_bars) {
             bind_rows(
                 tribble(
                     ~x_label, ~percentage,
-                    capitalize(umc), round(100*umc_numer/umc_denom, digits=2)
+                    umc, round(100*umc_numer/umc_denom, digits=2)
                 )
             )
     }
@@ -262,8 +262,8 @@ plot_allumc_clinicaltrials_trn <- function (dataset, color_palette) {
             bind_rows(
                 tribble(
                     ~x_label, ~colour, ~percentage, ~either,
-                    capitalize(umc), "In abstract", round(100*umc_numer_abs/umc_denom), 100-round(100*umc_numer_either/umc_denom),
-                    capitalize(umc), "Secondary information", round(100*umc_numer_si/umc_denom), 100-round(100*umc_numer_either/umc_denom)
+                    umc, "In abstract", round(100*umc_numer_abs/umc_denom), 100-round(100*umc_numer_either/umc_denom),
+                    umc, "Secondary information", round(100*umc_numer_si/umc_denom), 100-round(100*umc_numer_either/umc_denom)
                 )
             )
     }
@@ -329,7 +329,7 @@ plot_allumc_clinicaltrials_sumres <- function (dataset, color_palette, color_pal
             bind_rows(
                 tribble(
                     ~x_label, ~percentage,
-                    capitalize(umc), round(100*umc_numer/umc_denom),
+                    umc, round(100*umc_numer/umc_denom),
                 )
             )
     }
@@ -391,7 +391,7 @@ plot_allumc_clinicaltrials_prereg <- function (dataset, color_palette, color_pal
             bind_rows(
                 tribble(
                     ~x_label, ~percentage,
-                    capitalize(umc), round(100*umc_numer/umc_denom),
+                    umc, round(100*umc_numer/umc_denom),
                 )
             )
     }
@@ -453,7 +453,7 @@ plot_allumc_clinicaltrials_timpub <- function (dataset, color_palette, color_pal
             bind_rows(
                 tribble(
                     ~x_label, ~percentage,
-                    capitalize(umc), round(100*umc_numer/umc_denom),
+                    umc, round(100*umc_numer/umc_denom),
                 )
             )
     }
@@ -524,7 +524,7 @@ plot_allumc_animal_rando <- function (dataset, color_palette, color_palette_bars
             bind_rows(
                 tribble(
                     ~x_label, ~percentage,
-                    capitalize(umc), round(100*umc_numer/umc_denom)
+                    umc, round(100*umc_numer/umc_denom)
                 )
             )
     }
@@ -593,7 +593,7 @@ plot_allumc_animal_blind <- function (dataset, color_palette, color_palette_bars
             bind_rows(
                 tribble(
                     ~x_label, ~percentage,
-                    capitalize(umc), round(100*umc_numer/umc_denom)
+                    umc, round(100*umc_numer/umc_denom)
                 )
             )
     }
@@ -662,7 +662,7 @@ plot_allumc_animal_power <- function (dataset, color_palette, color_palette_bars
             bind_rows(
                 tribble(
                     ~x_label, ~percentage,
-                    capitalize(umc), round(100*umc_numer/umc_denom)
+                    umc, round(100*umc_numer/umc_denom)
                 )
             )
     }
@@ -732,7 +732,7 @@ plot_allumc_animal_iacuc <- function (dataset, color_palette, color_palette_bars
             bind_rows(
                 tribble(
                     ~x_label, ~percentage,
-                    capitalize(umc), round(100*umc_numer/umc_denom)
+                    umc, round(100*umc_numer/umc_denom)
                 )
             )
     }

@@ -8,7 +8,6 @@ library(shinythemes)
 library(shinyBS)
 library(shinyjs)
 library(DT)
-library(R.utils)
 
 ## Load data
 rm_data <- read_csv(

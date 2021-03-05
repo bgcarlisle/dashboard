@@ -590,7 +590,7 @@ plot_opensci_oc <- function (dataset, umc, absnum, color_palette) {
             plot_data <- tribble(
                 ~x_label, ~percentage,
                 "All", round(100*all_numer/all_denom),
-                capitalize(umc), round(100*umc_numer/umc_denom)
+                umc, round(100*umc_numer/umc_denom)
             )
 
             plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
@@ -954,8 +954,8 @@ plot_clinicaltrials_trn <- function (dataset, umc, color_palette) {
             ~x_label, ~colour, ~percentage,
             "All", "In abstract", round(100*all_numer_abs/all_denom),
             "All", "Secondary information", round(100*all_numer_si/all_denom),
-            capitalize(umc), "In abstract", round(100*umc_numer_abs/umc_denom),
-            capitalize(umc), "Secondary information", round(100*umc_numer_si/umc_denom),
+            umc, "In abstract", round(100*umc_numer_abs/umc_denom),
+            umc, "Secondary information", round(100*umc_numer_si/umc_denom),
         )
 
         plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
@@ -1037,7 +1037,7 @@ plot_clinicaltrials_sumres <- function (dataset, umc, color_palette) {
         plot_data <- tribble(
             ~x_label, ~percentage,
             "All", round(100*all_numer/all_denom),
-            capitalize(umc), round(100*umc_numer/umc_denom),
+            umc, round(100*umc_numer/umc_denom),
         )
 
         plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
@@ -1712,7 +1712,7 @@ plot_blinding <- function (dataset, umc, absnum, color_palette) {
 
             plot_data <- tribble(
                 ~x_label, ~percentage,
-                capitalize(umc), round(100*umc_numer/umc_denom),
+                umc, round(100*umc_numer/umc_denom),
                 "All", round(100*all_numer/all_denom)
             )
 
@@ -1922,7 +1922,7 @@ plot_power <- function (dataset, umc, absnum, color_palette) {
 
              plot_data <- tribble(
                  ~x_label, ~percentage,
-                 capitalize(umc), round(100*umc_numer/umc_denom),
+                 umc, round(100*umc_numer/umc_denom),
                  "All", round(100*all_numer/all_denom)
              )
 
@@ -2092,7 +2092,7 @@ plot_iacuc <- function (dataset, umc, color_palette) {
 
         plot_data <- tribble(
             ~x_label, ~percentage,
-            capitalize(umc), round(100*umc_numer/umc_denom),
+            umc, round(100*umc_numer/umc_denom),
             "All", round(100*all_numer/all_denom)
         )
         
