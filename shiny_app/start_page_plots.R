@@ -94,7 +94,7 @@ plot_opensci_oa <- function (dataset, umc, absnum, color_palette) {
                 umc,      umc_gold, umc_green, umc_hybrid, umc_na, umc_closed, umc_bronze
             )
 
-            upperlimit <- sum(umc_gold, umc_green, umc_hybrid, umc_na, umc_closed, umc_bronze)
+            upperlimit <- 1.1*sum(umc_gold, umc_green, umc_hybrid, umc_na, umc_closed, umc_bronze)
             ylabel <- "Number of publications"
             
         } else {
@@ -121,7 +121,7 @@ plot_opensci_oa <- function (dataset, umc, absnum, color_palette) {
                 "All",    all_gold, all_green, all_hybrid, all_na, all_closed, all_bronze
             )
 
-            upperlimit <- sum(all_gold, all_green, all_hybrid, all_na, all_closed, all_bronze)
+            upperlimit <- 1.1*sum(all_gold, all_green, all_hybrid, all_na, all_closed, all_bronze)
             ylabel <- "Number of publications"
             
         } else {
@@ -288,11 +288,35 @@ plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
             language == "English"
         )
 
-    all_denom <- plot_data %>%
+    all_denom <- dataset %>%
         nrow()
 
+    ## has data sharing
     all_numer <- plot_data$is_open_data %>%
         sum()
+
+    all_non_eng <- dataset %>%
+        filter(
+            ! is.na(is_open_data),
+            language != "English"
+        ) %>%
+        nrow()
+
+    ## no full text
+    all_no_ft <- dataset %>%
+        filter(
+            language == "English",
+            is.na(is_open_data)
+        ) %>%
+        nrow()
+
+    all_no_data_sharing <- dataset %>%
+        filter(
+            ! is.na(is_open_data),
+            language == "English",
+            ! is_open_data
+        ) %>%
+        nrow()
 
     if ( umc != "All" ) {
         ## If the selected UMC is not "all," calculate
@@ -306,14 +330,40 @@ plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
             filter(city == umc, is_open_data == TRUE) %>%
             nrow()
 
+        umc_non_eng <- dataset %>%
+            filter(
+                city == umc,
+                ! is.na(is_open_data),
+                language != "English"
+            ) %>%
+            nrow()
+
+        ## no full text
+        umc_no_ft <- dataset %>%
+            filter(
+                city == umc,
+                language == "English",
+                is.na(is_open_data)
+            ) %>%
+            nrow()
+
+        umc_no_data_sharing <- dataset %>%
+            filter(
+                city == umc,
+                ! is.na(is_open_data),
+                language == "English",
+                ! is_open_data
+            ) %>%
+            nrow()
+
         if (absnum) {
 
             plot_data <- tribble(
-                ~x_label, ~percentage,
-                umc, umc_numer
+                ~x_label, ~percentage, ~non_eng,    ~no_ft,    ~no_data_sharing,
+                umc,      umc_numer,   umc_non_eng, umc_no_ft, umc_no_data_sharing
             )
 
-            upperlimit <- umc_numer
+            upperlimit <- 1.1*sum(umc_numer,   umc_non_eng, umc_no_ft, umc_no_data_sharing)
             ylabel <- "Number of publications"
             
         } else {
@@ -336,11 +386,11 @@ plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
         if (absnum) {
 
             plot_data <- tribble(
-                ~x_label, ~percentage,
-                "All", all_numer
+                ~x_label, ~percentage, ~non_eng,    ~no_ft,    ~no_data_sharing,
+                "All",    all_numer,   all_non_eng, all_no_ft, all_no_data_sharing
             )
 
-            upperlimit <- all_numer
+            upperlimit <- 1.1*sum(all_numer,   all_non_eng, all_no_ft, all_no_data_sharing)
             ylabel <- "Number of publications"
             
         } else {
@@ -356,6 +406,70 @@ plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
         }
 
     }
+
+    if (absnum) {
+
+        plot_ly(
+            plot_data,
+            x = ~x_label,
+            y = ~percentage,
+            name = "Data sharing",
+            type = 'bar',
+            marker = list(
+                color = color_palette[3],
+                line = list(
+                    color = 'rgb(0,0,0)',
+                    width = 1.5
+                )
+            )
+        ) %>%
+            add_trace(
+                y = ~non_eng,
+                name = "Non-English publication",
+                marker = list(
+                    color = color_palette[6],
+                    line = list(
+                        color = 'rgb(0,0,0)',
+                        width = 1.5
+                    )
+                )
+            ) %>%
+            add_trace(
+                y = ~no_ft,
+                name = "No full text available",
+                marker = list(
+                    color = color_palette[7],
+                    line = list(
+                        color = 'rgb(0,0,0)',
+                        width = 1.5
+                    )
+                )
+            ) %>%
+            add_trace(
+                y = ~no_data_sharing,
+                name = "No data sharing",
+                marker = list(
+                    color = color_palette[12],
+                    line = list(
+                        color = 'rgb(0,0,0)',
+                        width = 1.5
+                    )
+                )
+            ) %>%
+            layout(
+                barmode = 'stack',
+                xaxis = list(
+                    title = '<b>UMC</b>'
+                ),
+                yaxis = list(
+                    title = paste('<b>', ylabel, '</b>'),
+                    range = c(0, upperlimit)
+                ),
+                paper_bgcolor = color_palette[9],
+                plot_bgcolor = color_palette[9]
+            )
+        
+    } else {
 
     plot_ly(
         plot_data,
@@ -381,6 +495,8 @@ plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
             paper_bgcolor = color_palette[9],
             plot_bgcolor = color_palette[9]
         )
+        
+    }
     
 }
 
@@ -400,6 +516,28 @@ plot_opensci_oc <- function (dataset, umc, absnum, color_palette) {
     all_numer <- plot_data$is_open_code %>%
         sum()
 
+    all_non_eng <- dataset %>%
+        filter(
+            language != "English",
+            ! is.na(is_open_code)
+        ) %>%
+        nrow()
+
+    all_no_ft <- dataset %>%
+        filter(
+            language == "English",
+            is.na(is_open_code)
+        ) %>%
+        nrow()
+
+    all_no_code_sharing <- dataset %>%
+        filter(
+            ! is.na(is_open_code),
+            language == "English",
+            ! is_open_code
+        ) %>%
+        nrow()
+
     if ( umc != "All" ) {
         ## If the selected UMC is not "all," calculate
         ## the percentage
@@ -412,14 +550,39 @@ plot_opensci_oc <- function (dataset, umc, absnum, color_palette) {
             filter(city == umc, is_open_code == TRUE) %>%
             nrow()
 
+        umc_non_eng <- dataset %>%
+            filter(
+                city == umc,
+                language != "English",
+                ! is.na(is_open_code)
+            ) %>%
+            nrow()
+
+        umc_no_ft <- dataset %>%
+            filter(
+                city == umc,
+                language == "English",
+                is.na(is_open_code)
+            ) %>%
+            nrow()
+
+        umc_no_code_sharing <- dataset %>%
+            filter(
+                city == umc,
+                ! is.na(is_open_code),
+                language == "English",
+                !is_open_code
+            ) %>%
+            nrow()
+
         if (absnum) {
 
             plot_data <- tribble(
-                ~x_label, ~percentage,
-                umc, umc_numer
+                ~x_label, ~percentage, ~non_eng,    ~no_ft,    ~no_code_sharing,
+                umc,      umc_numer,   umc_non_eng, umc_no_ft, umc_no_code_sharing
             )
 
-            upperlimit <- umc_numer
+            upperlimit <- 1.1*sum(umc_numer, umc_non_eng, umc_no_ft, umc_no_code_sharing)
             ylabel <- "Number of publications"
             
         } else {
@@ -441,11 +604,11 @@ plot_opensci_oc <- function (dataset, umc, absnum, color_palette) {
         if (absnum) {
 
             plot_data <- tribble(
-                ~x_label, ~percentage,
-                "All", all_numer
+                ~x_label, ~percentage, ~non_eng,    ~no_ft,    ~no_code_sharing,
+                "All", all_numer,   all_non_eng, all_no_ft, all_no_code_sharing
             )
 
-            upperlimit <- all_numer
+            upperlimit <- 1.1*sum(all_numer,   all_non_eng, all_no_ft, all_no_code_sharing)
             ylabel <- "Number of publications"
             
         } else {
@@ -462,31 +625,95 @@ plot_opensci_oc <- function (dataset, umc, absnum, color_palette) {
 
     }
 
-    plot_ly(
-        plot_data,
-        x = ~x_label,
-        y = ~percentage,
-        type = 'bar',
-        marker = list(
-            color = color_palette[3],
-            line = list(
-                color = 'rgb(0,0,0)',
-                width = 1.5
+    if (absnum) {
+
+        plot_ly(
+            plot_data,
+            x = ~x_label,
+            y = ~percentage,
+            name = "Code sharing",
+            type = 'bar',
+            marker = list(
+                color = color_palette[3],
+                line = list(
+                    color = 'rgb(0,0,0)',
+                    width = 1.5
+                )
             )
-        )
-    ) %>%
-        layout(
-            xaxis = list(
-                title = '<b>UMC</b>'
-            ),
-            yaxis = list(
-                title = paste('<b>', ylabel, '</b>'),
-                range = c(0, upperlimit)
-            ),
-            paper_bgcolor = color_palette[9],
-            plot_bgcolor = color_palette[9]
-        )
-    
+        ) %>%
+            add_trace(
+                y = ~non_eng,
+                name = "Non-English publication",
+                marker = list(
+                    color = color_palette[6],
+                    line = list(
+                        color = 'rgb(0,0,0)',
+                        width = 1.5
+                    )
+                )
+            ) %>%
+            add_trace(
+                y = ~no_ft,
+                name = "No full text available",
+                marker = list(
+                    color = color_palette[7],
+                    line = list(
+                        color = 'rgb(0,0,0)',
+                        width = 1.5
+                    )
+                )
+            ) %>%
+            add_trace(
+                y = ~no_code_sharing,
+                name = "No code sharing",
+                marker = list(
+                    color = color_palette[12],
+                    line = list(
+                        color = 'rgb(0,0,0)',
+                        width = 1.5
+                    )
+                )
+            ) %>%
+            layout(
+                barmode = 'stack',
+                xaxis = list(
+                    title = '<b>UMC</b>'
+                ),
+                yaxis = list(
+                    title = paste('<b>', ylabel, '</b>'),
+                    range = c(0, upperlimit)
+                ),
+                paper_bgcolor = color_palette[9],
+                plot_bgcolor = color_palette[9]
+            )
+        
+    } else {
+
+        plot_ly(
+            plot_data,
+            x = ~x_label,
+            y = ~percentage,
+            type = 'bar',
+            marker = list(
+                color = color_palette[3],
+                line = list(
+                    color = 'rgb(0,0,0)',
+                    width = 1.5
+                )
+            )
+        ) %>%
+            layout(
+                xaxis = list(
+                    title = '<b>UMC</b>'
+                ),
+                yaxis = list(
+                    title = paste('<b>', ylabel, '</b>'),
+                    range = c(0, upperlimit)
+                ),
+                paper_bgcolor = color_palette[9],
+                plot_bgcolor = color_palette[9]
+            )
+    }    
 }
 
 ## Green open access
@@ -504,6 +731,21 @@ plot_opensci_green_oa <- function (dataset, umc, absnum, color_palette) {
     all_numer <- plot_data$permission_postprint %>%
         sum()
 
+    all_cant_archive <- dataset %>%
+        filter(
+            ! is.na(permission_postprint),
+            color == "closed",
+            ! permission_postprint
+        ) %>%
+        nrow()
+
+    all_no_data <- dataset %>%
+        filter(
+            color == "closed",
+            is.na(permission_postprint)
+        ) %>%
+        nrow()
+
     if ( umc != "All" ) {
         ## If the selected UMC is not "all," calculate
         ## the percentage
@@ -516,14 +758,31 @@ plot_opensci_green_oa <- function (dataset, umc, absnum, color_palette) {
             filter(city == umc, permission_postprint == TRUE) %>%
             nrow()
 
+        umc_cant_archive <- dataset %>%
+            filter(
+                city == umc,
+                ! is.na(permission_postprint),
+                color == "closed",
+                ! permission_postprint
+            ) %>%
+            nrow()
+
+        umc_no_data <- dataset %>%
+            filter(
+                city == umc,
+                color == "closed",
+                is.na(permission_postprint)
+            ) %>%
+            nrow()
+
         if (absnum) {
 
             plot_data <- tribble(
-                ~x_label, ~percentage,
-                umc, umc_numer
+                ~x_label, ~percentage, ~cant_archive,    ~no_data,
+                umc,      umc_numer,   umc_cant_archive, umc_no_data
             )
 
-            upperlimit <- umc_numer
+            upperlimit <- 1.1 * sum(umc_numer, umc_cant_archive, umc_no_data)
             ylabel <- "Number of publications"
             
         } else {
@@ -546,11 +805,11 @@ plot_opensci_green_oa <- function (dataset, umc, absnum, color_palette) {
         if (absnum) {
 
             plot_data <- tribble(
-                ~x_label, ~percentage,
-                "All", all_numer
+                ~x_label, ~percentage, ~cant_archive,    ~no_data,
+                "All",    all_numer,   all_cant_archive, all_no_data
             )
 
-            upperlimit <- all_numer
+            upperlimit <- 1.1 * sum(all_numer, all_cant_archive, all_no_data)
             ylabel <- "Number of publications"
             
         } else {
@@ -567,30 +826,85 @@ plot_opensci_green_oa <- function (dataset, umc, absnum, color_palette) {
 
     }
 
-    plot_ly(
-        plot_data,
-        x = ~x_label,
-        y = ~percentage,
-        type = 'bar',
-        marker = list(
-            color = color_palette[3],
-            line = list(
-                color = 'rgb(0,0,0)',
-                width = 1.5
+    if (absnum) {
+
+        plot_ly(
+            plot_data,
+            x = ~x_label,
+            y = ~percentage,
+            name = "Can be archived",
+            type = 'bar',
+            marker = list(
+                color = color_palette[3],
+                line = list(
+                    color = 'rgb(0,0,0)',
+                    width = 1.5
+                )
             )
-        )
-    ) %>%
-        layout(
-            xaxis = list(
-                title = '<b>UMC</b>'
-            ),
-            yaxis = list(
-                title = paste('<b>', ylabel, '</b>'),
-                range = c(0, upperlimit)
-            ),
-            paper_bgcolor = color_palette[9],
-            plot_bgcolor = color_palette[9]
-        )
+        ) %>%
+            add_trace(
+                y = ~cant_archive,
+                name = "Cannot be archived",
+                marker = list(
+                    color = color_palette[12],
+                    line = list(
+                        color = 'rgb(0,0,0)',
+                        width = 1.5
+                    )
+                )
+            ) %>%
+            add_trace(
+                y = ~cant_archive,
+                name = "No data available",
+                marker = list(
+                    color = color_palette[9],
+                    line = list(
+                        color = 'rgb(0,0,0)',
+                        width = 1.5
+                    )
+                )
+            ) %>%
+            layout(
+                barmode = 'stack',
+                xaxis = list(
+                    title = '<b>UMC</b>'
+                ),
+                yaxis = list(
+                    title = paste('<b>', ylabel, '</b>'),
+                    range = c(0, upperlimit)
+                ),
+                paper_bgcolor = color_palette[9],
+                plot_bgcolor = color_palette[9]
+            )
+        
+    } else {
+
+        plot_ly(
+            plot_data,
+            x = ~x_label,
+            y = ~percentage,
+            type = 'bar',
+            marker = list(
+                color = color_palette[3],
+                line = list(
+                    color = 'rgb(0,0,0)',
+                    width = 1.5
+                )
+            )
+        ) %>%
+            layout(
+                xaxis = list(
+                    title = '<b>UMC</b>'
+                ),
+                yaxis = list(
+                    title = paste('<b>', ylabel, '</b>'),
+                    range = c(0, upperlimit)
+                ),
+                paper_bgcolor = color_palette[9],
+                plot_bgcolor = color_palette[9]
+            )
+        
+    }
     
 }
 
