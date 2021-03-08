@@ -1552,7 +1552,7 @@ plot_randomization <- function (dataset, umc, absnum, color_palette) {
             plot_data,
             x = ~x_label,
             y = ~percentage,
-            name = "Randomized",
+            name = "Reported",
             type = 'bar',
             marker = list(
                 color = color_palette[3],
@@ -1564,7 +1564,7 @@ plot_randomization <- function (dataset, umc, absnum, color_palette) {
         ) %>%
             add_trace(
                 y = ~norando,
-                name = "Not randomized",
+                name = "Not reported",
                 marker = list(
                     color = color_palette[12],
                     line = list(
@@ -1575,7 +1575,7 @@ plot_randomization <- function (dataset, umc, absnum, color_palette) {
             ) %>%
             add_trace(
                 y = ~nosciscore,
-                name = "No Sciscore data",
+                name = "No data available",
                 marker = list(
                     color = color_palette[7],
                     line = list(
