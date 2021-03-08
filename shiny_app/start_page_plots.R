@@ -25,7 +25,7 @@ plot_opensci_oa <- function (dataset, umc, absnum, color_palette) {
         filter( color == "hybrid") %>%
         nrow()
 
-    all_na <- plot_data %>%
+    all_na <- dataset %>%
         filter( is.na(color) ) %>%
         nrow()
 
@@ -66,7 +66,7 @@ plot_opensci_oa <- function (dataset, umc, absnum, color_palette) {
             ) %>%
             nrow()
 
-        umc_na <- plot_data %>%
+        umc_na <- dataset %>%
             filter(
                 is.na(color),
                 city == umc
