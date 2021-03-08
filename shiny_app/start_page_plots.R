@@ -1660,8 +1660,9 @@ plot_blinding <- function (dataset, umc, absnum, color_palette) {
     all_numer <- dataset %>%
         filter(
             is_animal == 1,
+            language == "English",
             ! is.na(sciscore),
-            type == "Article"
+            type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
         ) %>%
         select(blinding) %>%
         sum(na.rm=TRUE)
@@ -1669,14 +1670,17 @@ plot_blinding <- function (dataset, umc, absnum, color_palette) {
     all_denom <- dataset %>%
         filter(
             is_animal == 1,
+            language == "English",
             ! is.na(sciscore),
-            type == "Article"
+            type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
         ) %>%
         nrow()
 
     all_nosciscore <- dataset %>%
         filter(
             is_animal == 1,
+            language == "English",
+            type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper",
             is.na(sciscore)
         ) %>%
         nrow()
@@ -1684,6 +1688,8 @@ plot_blinding <- function (dataset, umc, absnum, color_palette) {
     all_noblind <- dataset %>%
         filter(
             is_animal == 1,
+            language == "English",
+            type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper",
             ! is.na(sciscore),
             blinding == 0
         ) %>%
@@ -1706,8 +1712,9 @@ plot_blinding <- function (dataset, umc, absnum, color_palette) {
             filter(
                 city == umc,
                 is_animal == 1,
-                ! is.na(sciscore),
-                type == "Article"
+                language == "English",
+                type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper",
+                ! is.na(sciscore)
             )
 
         umc_numer <- umc_numerator$blinding %>%
@@ -1717,8 +1724,9 @@ plot_blinding <- function (dataset, umc, absnum, color_palette) {
             filter(
                 city == umc,
                 is_animal == 1,
-                ! is.na(sciscore),
-                type == "Article"
+                language == "English",
+                type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper",
+                ! is.na(sciscore)
             ) %>%
             nrow()
 
@@ -1726,6 +1734,8 @@ plot_blinding <- function (dataset, umc, absnum, color_palette) {
             filter(
                 city == umc,
                 is_animal == 1,
+                language == "English",
+                type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper",
                 is.na(sciscore)
             ) %>%
             nrow()
@@ -1734,6 +1744,8 @@ plot_blinding <- function (dataset, umc, absnum, color_palette) {
             filter(
                 city == umc,
                 is_animal == 1,
+                language == "English",
+                type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper",
                 ! is.na(sciscore),
                 blinding == 0
             ) %>%
