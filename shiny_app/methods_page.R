@@ -80,7 +80,7 @@ methods_page <- tabPanel(
                         that repository versions are often made available with a delay, such that the OA
                         percentage for a given year typically rises retrospectively. Thus, the point in time
                         at which the OA status is retrieved is important for the OA percentage. The current
-                        OA data was retrieved on: 26/01/2021.'),
+                        OA data was retrieved on: 28/02/2021.'),
                              
                              "Unpaywall only stores information for publications which have a DOI assigned by
                         Crossref. Articles without a Crossref DOI have to be excluded from the OA analysis."),
@@ -154,8 +154,7 @@ methods_page <- tabPanel(
                              database being up to date. The date at which a publication can be made openly
                              accessible via self-archiving depends on the publication date and the length of
                              the embargo (if any). Therefore, the number of potential green OA research articles
-                             will change over time. The Shareyourpaper permissions API was queried on
-                             [enter date]")),
+                             will change over time. The Shareyourpaper permissions API was queried on 28/02/2021")),
     
     hr(),
     h2("Clinical trials"),
