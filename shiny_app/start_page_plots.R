@@ -312,7 +312,6 @@ plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
 
     all_no_data_sharing <- dataset %>%
         filter(
-            ! is.na(is_open_data),
             language == "English",
             ! is_open_data
         ) %>%
@@ -349,7 +348,6 @@ plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
         umc_no_data_sharing <- dataset %>%
             filter(
                 city == umc,
-                ! is.na(is_open_data),
                 language == "English",
                 ! is_open_data
             ) %>%
