@@ -515,8 +515,7 @@ plot_opensci_oc <- function (dataset, umc, absnum, color_palette) {
 
     all_non_eng <- dataset %>%
         filter(
-            language != "English",
-            ! is.na(is_open_code)
+            language != "English" | is.na(language)
         ) %>%
         nrow()
 
@@ -550,8 +549,7 @@ plot_opensci_oc <- function (dataset, umc, absnum, color_palette) {
         umc_non_eng <- dataset %>%
             filter(
                 city == umc,
-                language != "English",
-                ! is.na(is_open_code)
+                language != "English" | is.na(language)
             ) %>%
             nrow()
 
