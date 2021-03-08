@@ -295,10 +295,10 @@ plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
     all_numer <- plot_data$is_open_data %>%
         sum()
 
+    ## non-English publication or no language information
     all_non_eng <- dataset %>%
         filter(
-            ! is.na(is_open_data),
-            language != "English"
+            language != "English" | is.na(language)
         ) %>%
         nrow()
 
@@ -333,8 +333,7 @@ plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
         umc_non_eng <- dataset %>%
             filter(
                 city == umc,
-                ! is.na(is_open_data),
-                language != "English"
+                language != "English" | is.na(language)
             ) %>%
             nrow()
 
@@ -425,7 +424,7 @@ plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
         ) %>%
             add_trace(
                 y = ~non_eng,
-                name = "Non-English publication",
+                name = "Non-English/no language info",
                 marker = list(
                     color = color_palette[6],
                     line = list(
