@@ -528,7 +528,6 @@ plot_opensci_oc <- function (dataset, umc, absnum, color_palette) {
 
     all_no_code_sharing <- dataset %>%
         filter(
-            ! is.na(is_open_code),
             language == "English",
             ! is_open_code
         ) %>%
@@ -564,7 +563,6 @@ plot_opensci_oc <- function (dataset, umc, absnum, color_palette) {
         umc_no_code_sharing <- dataset %>%
             filter(
                 city == umc,
-                ! is.na(is_open_code),
                 language == "English",
                 !is_open_code
             ) %>%
