@@ -433,7 +433,7 @@ plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
             ) %>%
             add_trace(
                 y = ~no_ft,
-                name = "No full text available",
+                name = "English but full text unavailable",
                 marker = list(
                     color = color_palette[7],
                     line = list(
@@ -647,7 +647,7 @@ plot_opensci_oc <- function (dataset, umc, absnum, color_palette) {
             ) %>%
             add_trace(
                 y = ~no_ft,
-                name = "No full text available",
+                name = "English but full text unavailable",
                 marker = list(
                     color = color_palette[7],
                     line = list(
