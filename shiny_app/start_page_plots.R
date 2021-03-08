@@ -1804,7 +1804,7 @@ plot_blinding <- function (dataset, umc, absnum, color_palette) {
             plot_data,
             x = ~x_label,
             y = ~percentage,
-            name = "Blinded",
+            name = "Reported",
             type = 'bar',
             marker = list(
                 color = color_palette[3],
@@ -1816,7 +1816,7 @@ plot_blinding <- function (dataset, umc, absnum, color_palette) {
         ) %>%
             add_trace(
                 y = ~noblind,
-                name = "Not blinded",
+                name = "Not reported",
                 marker = list(
                     color = color_palette[12],
                     line = list(
@@ -1827,7 +1827,7 @@ plot_blinding <- function (dataset, umc, absnum, color_palette) {
             ) %>%
             add_trace(
                 y = ~nosciscore,
-                name = "No Sciscore data",
+                name = "No data available",
                 marker = list(
                     color = color_palette[7],
                     line = list(
