@@ -2,6 +2,8 @@
 
 ## Open Access
 
+## TODO Open Access: reviews not currently in pop dataset, but Open Access should include both articles and reviews.
+
 plot_opensci_oa <- function (dataset, umc, absnum, color_palette) {
 
     ## Calculate the numerators and the denominator for the
@@ -279,6 +281,8 @@ plot_opensci_oa <- function (dataset, umc, absnum, color_palette) {
 
 ## Open Data
 
+## TODO: add filter for Articles if the pop dataset contains Articles and Reviews
+
 plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
 
     ## Remove non-analyzable and non-English data points
@@ -498,6 +502,9 @@ plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
 }
 
 ## Open Code
+
+## TODO: add filter for Articles if the pop dataset contains Articles and Reviews
+
 plot_opensci_oc <- function (dataset, umc, absnum, color_palette) {
 
     ## Remove non-analyzable and non-English data points
