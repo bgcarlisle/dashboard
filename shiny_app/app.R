@@ -162,7 +162,7 @@ server <- function (input, output, session) {
                        publication-based metrics are based on publications published in 2018. For more detailed
                        information on the methods used to calculate those metrics, click one of the following buttons."),
                     h4(style = "margin-left:0cm",
-                       "This dashboard is a pilot that is still under development, and should not be used to compare UMC's or inform policy. More metrics may be added in the future."),
+                       "This dashboard is a pilot that is still under development, and should not be used to compare UMCs or inform policy. More metrics may be added in the future."),
                     br()
                 ),
                 column(
@@ -173,7 +173,7 @@ server <- function (input, output, session) {
                     actionButton(
                         style = "color: white; background-color: #aa1c7d;",
                         'buttonAllUMCs',
-                        'See all UMC\'s'
+                        'See all UMCs'
                     ),
                     actionButton(
                         style = "color: white; background-color: #aa1c7d;",
