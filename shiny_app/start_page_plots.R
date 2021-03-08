@@ -1938,6 +1938,14 @@ plot_power <- function (dataset, umc, absnum, color_palette) {
             power == 0
         ) %>%
         nrow()
+    
+    all_non_eng <- dataset %>%
+        filter(
+            is_animal == 1,
+            type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper",
+            language != "English" | is.na(language)
+        ) %>%
+        nrow()
 
     if ( umc != "All" ) {
 
@@ -1980,15 +1988,24 @@ plot_power <- function (dataset, umc, absnum, color_palette) {
                 power == 0
             ) %>%
             nrow()
+        
+        umc_non_eng <- dataset %>%
+            filter(
+                city == umc,
+                is_animal == 1,
+                type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper",
+                language != "English" | is.na(language)
+            ) %>%
+            nrow()
 
          if (absnum) {
 
             plot_data <- tribble(
-                ~x_label, ~percentage, ~nosciscore,    ~nopower,
-                umc,      umc_numer,   umc_nosciscore, umc_nopower
+                ~x_label, ~percentage, ~nosciscore,    ~nopower,    ~non_eng,
+                umc,      umc_numer,   umc_nosciscore, umc_nopower, umc_non_eng
             )
 
-            upperlimit <- 1.1*sum(umc_numer, umc_nosciscore, umc_nopower)
+            upperlimit <- 1.1*sum(umc_numer, umc_nosciscore, umc_nopower, umc_non_eng)
             ylabel <- "Number of publications"
             
          } else {
@@ -2011,11 +2028,11 @@ plot_power <- function (dataset, umc, absnum, color_palette) {
         if (absnum) {
 
             plot_data <- tribble(
-                ~x_label, ~percentage, ~nosciscore, ~nopower,
-                "All",    all_numer,   all_nosciscore, all_nopower
+                ~x_label, ~percentage, ~nosciscore, ~nopower,    ~non_eng,
+                "All",    all_numer,   all_nosciscore, all_nopower, all_non_eng
             )
 
-            upperlimit <- 1.1*sum(all_numer, all_nosciscore, all_nopower)
+            upperlimit <- 1.1*sum(all_numer, all_nosciscore, all_nopower, all_non_eng)
             ylabel <- "Number of publications"
             
         } else {
@@ -2064,6 +2081,17 @@ plot_power <- function (dataset, umc, absnum, color_palette) {
                 name = "No Sciscore data",
                 marker = list(
                     color = color_palette[7],
+                    line = list(
+                        color = 'rgb(0,0,0)',
+                        width = 1.5
+                    )
+                )
+            ) %>%
+            add_trace(
+                y = ~non_eng,
+                name = "Non-English/no language info",
+                marker = list(
+                    color = color_palette[6],
                     line = list(
                         color = 'rgb(0,0,0)',
                         width = 1.5
