@@ -288,7 +288,7 @@ plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
             language == "English"
         )
 
-    all_denom <- dataset %>%
+    all_denom <- plot_data %>%
         nrow()
 
     ## has data sharing
