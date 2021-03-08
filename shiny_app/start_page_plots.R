@@ -2055,7 +2055,7 @@ plot_power <- function (dataset, umc, absnum, color_palette) {
             plot_data,
             x = ~x_label,
             y = ~percentage,
-            name = "Power calculation reported",
+            name = "Reported",
             type = 'bar',
             marker = list(
                 color = color_palette[3],
@@ -2067,7 +2067,7 @@ plot_power <- function (dataset, umc, absnum, color_palette) {
         ) %>%
             add_trace(
                 y = ~nopower,
-                name = "No power calculation",
+                name = "Not reported",
                 marker = list(
                     color = color_palette[12],
                     line = list(
@@ -2078,7 +2078,7 @@ plot_power <- function (dataset, umc, absnum, color_palette) {
             ) %>%
             add_trace(
                 y = ~nosciscore,
-                name = "No Sciscore data",
+                name = "No data available",
                 marker = list(
                     color = color_palette[7],
                     line = list(
