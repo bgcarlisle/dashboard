@@ -635,8 +635,8 @@ plot_opensci_oc <- function (dataset, umc, absnum, color_palette) {
             )
         ) %>%
             add_trace(
-                y = ~non_eng,
-                name = "Non-English publication",
+                y = ~no_code_sharing,
+                name = "No code sharing",
                 marker = list(
                     color = color_palette[6],
                     line = list(
@@ -657,8 +657,8 @@ plot_opensci_oc <- function (dataset, umc, absnum, color_palette) {
                 )
             ) %>%
             add_trace(
-                y = ~no_code_sharing,
-                name = "No code sharing",
+                y = ~non_eng,
+                name = "Non-English/no language info",
                 marker = list(
                     color = color_palette[12],
                     line = list(
