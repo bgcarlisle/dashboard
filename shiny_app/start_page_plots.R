@@ -1408,8 +1408,9 @@ plot_randomization <- function (dataset, umc, absnum, color_palette) {
     all_numer <- dataset %>%
         filter(
             is_animal == 1,
+            language == "English",
             ! is.na(sciscore),
-            type == "Article"
+            type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
         ) %>%
         select(randomization) %>%
         sum(na.rm=TRUE)
@@ -1417,14 +1418,17 @@ plot_randomization <- function (dataset, umc, absnum, color_palette) {
     all_denom <- dataset %>%
         filter(
             is_animal == 1,
+            language == "English",
             ! is.na(sciscore),
-            type == "Article"
+            type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
         ) %>%
         nrow()
 
     all_nosciscore <- dataset %>%
         filter(
             is_animal == 1,
+            language == "English",
+            type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper",
             is.na(sciscore)
         ) %>%
         nrow()
@@ -1432,7 +1436,9 @@ plot_randomization <- function (dataset, umc, absnum, color_palette) {
     all_norando <- dataset %>%
         filter(
             is_animal == 1,
+            language == "English",
             ! is.na(sciscore),
+            type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper",
             randomization == 0
         ) %>%
         nrow()
@@ -1454,8 +1460,9 @@ plot_randomization <- function (dataset, umc, absnum, color_palette) {
             filter(
                 city == umc,
                 is_animal == 1,
+                language == "English",
                 ! is.na(sciscore),
-                type == "Article"
+                type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
             )
 
         umc_numer <- umc_numerator$randomization %>%
@@ -1465,8 +1472,9 @@ plot_randomization <- function (dataset, umc, absnum, color_palette) {
             filter(
                 city == umc,
                 is_animal == 1,
+                language == "English",
                 ! is.na(sciscore),
-                type == "Article"
+                type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
             ) %>%
             nrow()
 
@@ -1474,6 +1482,8 @@ plot_randomization <- function (dataset, umc, absnum, color_palette) {
             filter(
                 city == umc,
                 is_animal == 1,
+                language == "English",
+                type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper",
                 is.na(sciscore)
             ) %>%
             nrow()
@@ -1482,6 +1492,8 @@ plot_randomization <- function (dataset, umc, absnum, color_palette) {
             filter(
                 city == umc,
                 is_animal == 1,
+                language == "English",
+                type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper",
                 ! is.na(sciscore),
                 randomization == 0
             ) %>%
