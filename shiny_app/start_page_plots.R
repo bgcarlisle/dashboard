@@ -1910,8 +1910,9 @@ plot_power <- function (dataset, umc, absnum, color_palette) {
     all_numer <- dataset %>%
         filter(
             is_animal == 1,
+            language == "English",
             ! is.na(sciscore),
-            type == "Article"
+            type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
         ) %>%
         select(power) %>%
         sum(na.rm=TRUE)
@@ -1919,14 +1920,17 @@ plot_power <- function (dataset, umc, absnum, color_palette) {
     all_denom <- dataset %>%
         filter(
             is_animal == 1,
+            language == "English",
             ! is.na(sciscore),
-            type == "Article"
+            type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
         ) %>%
         nrow()
 
     all_nosciscore <- dataset %>%
         filter(
             is_animal == 1,
+            language == "English",
+            type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper",
             is.na(sciscore)
         ) %>%
         nrow()
@@ -1934,6 +1938,8 @@ plot_power <- function (dataset, umc, absnum, color_palette) {
     all_nopower <- dataset %>%
         filter(
             is_animal == 1,
+            language == "English",
+            type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper",
             ! is.na(sciscore),
             power == 0
         ) %>%
@@ -1956,8 +1962,9 @@ plot_power <- function (dataset, umc, absnum, color_palette) {
             filter(
                 city == umc,
                 is_animal == 1,
+                language == "English",
                 ! is.na(sciscore),
-                type == "Article"
+                type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
             )
 
         umc_numer <- umc_numerator$power %>%
@@ -1967,8 +1974,9 @@ plot_power <- function (dataset, umc, absnum, color_palette) {
             filter(
                 city == umc,
                 is_animal == 1,
+                language == "English",
                 ! is.na(sciscore),
-                type == "Article"
+                type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
             ) %>%
             nrow()
 
@@ -1976,6 +1984,8 @@ plot_power <- function (dataset, umc, absnum, color_palette) {
             filter(
                 city == umc,
                 is_animal == 1,
+                language == "English",
+                type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper",
                 is.na(sciscore)
             ) %>%
             nrow()
@@ -1984,6 +1994,8 @@ plot_power <- function (dataset, umc, absnum, color_palette) {
             filter(
                 city == umc,
                 is_animal == 1,
+                language == "English",
+                type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper",
                 ! is.na(sciscore),
                 power == 0
             ) %>%
