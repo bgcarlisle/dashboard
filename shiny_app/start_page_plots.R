@@ -160,7 +160,7 @@ plot_opensci_oa <- function (dataset, umc, absnum, color_palette) {
                 y = ~green,
                 name = "Green",
                 marker = list(
-                    color = color_palette[6],
+                    color = color_palette[8],
                     line = list(
                         color = 'rgb(0,0,0)',
                         width = 1.5
@@ -171,7 +171,7 @@ plot_opensci_oa <- function (dataset, umc, absnum, color_palette) {
                 y = ~hybrid,
                 name = "Hybrid",
                 marker = list(
-                    color = color_palette[7],
+                    color = color_palette[10],
                     line = list(
                         color = 'rgb(0,0,0)',
                         width = 1.5
@@ -182,7 +182,7 @@ plot_opensci_oa <- function (dataset, umc, absnum, color_palette) {
                 y = ~bronze,
                 name = "Bronze",
                 marker = list(
-                    color = color_palette[12],
+                    color = color_palette[4],
                     line = list(
                         color = 'rgb(0,0,0)',
                         width = 1.5
@@ -204,7 +204,7 @@ plot_opensci_oa <- function (dataset, umc, absnum, color_palette) {
                 y = ~na,
                 name = "Data not available",
                 marker = list(
-                    color = color_palette[10],
+                    color = color_palette[11],
                     line = list(
                         color = 'rgb(0,0,0)',
                         width = 1.5
@@ -244,7 +244,7 @@ plot_opensci_oa <- function (dataset, umc, absnum, color_palette) {
                 y = ~green,
                 name = "Green",
                 marker = list(
-                    color = color_palette[6],
+                    color = color_palette[8],
                     line = list(
                         color = 'rgb(0,0,0)',
                         width = 1.5
@@ -255,7 +255,7 @@ plot_opensci_oa <- function (dataset, umc, absnum, color_palette) {
                 y = ~hybrid,
                 name = "Hybrid",
                 marker = list(
-                    color = color_palette[7],
+                    color = color_palette[10],
                     line = list(
                         color = 'rgb(0,0,0)',
                         width = 1.5
@@ -428,7 +428,7 @@ plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
                 y = ~no_data_sharing,
                 name = "No data sharing",
                 marker = list(
-                    color = color_palette[6],
+                    color = color_palette[12],
                     line = list(
                         color = 'rgb(0,0,0)',
                         width = 1.5
@@ -450,7 +450,7 @@ plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
                 y = ~non_eng,
                 name = "Non-English/no language info",
                 marker = list(
-                    color = color_palette[12],
+                    color = color_palette[6],
                     line = list(
                         color = 'rgb(0,0,0)',
                         width = 1.5
@@ -645,7 +645,7 @@ plot_opensci_oc <- function (dataset, umc, absnum, color_palette) {
                 y = ~no_code_sharing,
                 name = "No code sharing",
                 marker = list(
-                    color = color_palette[6],
+                    color = color_palette[12],
                     line = list(
                         color = 'rgb(0,0,0)',
                         width = 1.5
@@ -667,7 +667,7 @@ plot_opensci_oc <- function (dataset, umc, absnum, color_palette) {
                 y = ~non_eng,
                 name = "Non-English/no language info",
                 marker = list(
-                    color = color_palette[12],
+                    color = color_palette[6],
                     line = list(
                         color = 'rgb(0,0,0)',
                         width = 1.5
@@ -857,7 +857,7 @@ plot_opensci_green_oa <- function (dataset, umc, absnum, color_palette) {
                 y = ~no_data,
                 name = "No data available",
                 marker = list(
-                    color = color_palette[9],
+                    color = color_palette[7],
                     line = list(
                         color = 'rgb(0,0,0)',
                         width = 1.5

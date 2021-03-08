@@ -1228,22 +1228,22 @@ server <- function (input, output, session) {
     
     ## Open Access plot
     output$plot_opensci_oa <- renderPlotly({
-        return (plot_opensci_oa(rm_data, input$selectUMC, input$opensci_absnum, color_palette))
+        return (plot_opensci_oa(rm_data, input$selectUMC, input$opensci_absnum, color_palette_delwen))
     })
     
     ## Open Data plot
     output$plot_opensci_od <- renderPlotly({
-        return (plot_opensci_od(rm_data, input$selectUMC, input$opensci_absnum, color_palette))
+        return (plot_opensci_od(rm_data, input$selectUMC, input$opensci_absnum, color_palette_delwen))
     })
     
     ## Open Code plot
     output$plot_opensci_oc <- renderPlotly({
-        return (plot_opensci_oc(rm_data, input$selectUMC, input$opensci_absnum, color_palette))
+        return (plot_opensci_oc(rm_data, input$selectUMC, input$opensci_absnum, color_palette_delwen))
     })
     
     ## Green Open Access plot
     output$plot_opensci_green_oa <- renderPlotly({
-        return (plot_opensci_green_oa(rm_data, input$selectUMC, input$opensci_absnum, color_palette))
+        return (plot_opensci_green_oa(rm_data, input$selectUMC, input$opensci_absnum, color_palette_delwen))
     })
     
     ## TRN plot
@@ -1268,17 +1268,17 @@ server <- function (input, output, session) {
 
     ## Robustness plot
     output$plot_randomization <- renderPlotly({
-        return (plot_randomization(rm_data, input$selectUMC, input$animals_absnum, color_palette))
+        return (plot_randomization(rm_data, input$selectUMC, input$animals_absnum, color_palette_delwen))
     })
 
     ## Blinding plot
     output$plot_blinding <- renderPlotly({
-        return(plot_blinding(rm_data, input$selectUMC, input$animals_absnum, color_palette))
+        return(plot_blinding(rm_data, input$selectUMC, input$animals_absnum, color_palette_delwen))
     })
 
     ## Power calc plot
     output$plot_power <- renderPlotly({
-        return(plot_power(rm_data, input$selectUMC, input$animals_absnum, color_palette))
+        return(plot_power(rm_data, input$selectUMC, input$animals_absnum, color_palette_delwen))
     })
 
     ## IACUC plot
