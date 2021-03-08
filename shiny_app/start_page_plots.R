@@ -1594,7 +1594,7 @@ plot_randomization <- function (dataset, umc, absnum, color_palette) {
             ) %>%
             add_trace(
                 y = ~nosciscore,
-                name = "No data available",
+                name = "English but no data available",
                 marker = list(
                     color = color_palette[7],
                     line = list(
@@ -1846,7 +1846,7 @@ plot_blinding <- function (dataset, umc, absnum, color_palette) {
             ) %>%
             add_trace(
                 y = ~nosciscore,
-                name = "No data available",
+                name = "English but no data available",
                 marker = list(
                     color = color_palette[7],
                     line = list(
@@ -2097,7 +2097,7 @@ plot_power <- function (dataset, umc, absnum, color_palette) {
             ) %>%
             add_trace(
                 y = ~nosciscore,
-                name = "No data available",
+                name = "English but no data available",
                 marker = list(
                     color = color_palette[7],
                     line = list(
