@@ -1436,6 +1436,14 @@ plot_randomization <- function (dataset, umc, absnum, color_palette) {
             randomization == 0
         ) %>%
         nrow()
+    
+    all_non_eng <- dataset %>%
+        filter(
+            is_animal == 1,
+            type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper",
+            language != "English" | is.na(language)
+        ) %>%
+        nrow()
 
     if ( umc != "All" ) {
 
@@ -1478,15 +1486,24 @@ plot_randomization <- function (dataset, umc, absnum, color_palette) {
                 randomization == 0
             ) %>%
             nrow()
+        
+        umc_non_eng <- dataset %>%
+            filter(
+                city == umc,
+                is_animal == 1,
+                type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper",
+                language != "English" | is.na(language)
+            ) %>%
+            nrow()
 
         if (absnum) {
 
             plot_data <- tribble(
-                ~x_label, ~percentage, ~nosciscore,    ~norando,
-                umc,      umc_numer,   umc_nosciscore, umc_norando
+                ~x_label, ~percentage, ~nosciscore,    ~norando,   ~non_eng,
+                umc,      umc_numer,   umc_nosciscore, umc_norando, umc_non_eng
             )
 
-            upperlimit <- 1.1*sum(umc_numer, umc_nosciscore, umc_norando)
+            upperlimit <- 1.1*sum(umc_numer, umc_nosciscore, umc_norando, umc_non_eng)
             ylabel <- "Number of publications"
             
         } else {
@@ -1509,11 +1526,11 @@ plot_randomization <- function (dataset, umc, absnum, color_palette) {
         if (absnum) {
 
             plot_data <- tribble(
-                ~x_label, ~percentage, ~nosciscore, ~norando,
-                "All",    all_numer,   all_nosciscore, all_norando
+                ~x_label, ~percentage, ~nosciscore, ~norando,   ~non_eng,
+                "All",    all_numer,   all_nosciscore, all_norando, all_non_eng
             )
 
-            upperlimit <- 1.1*sum(all_numer, all_nosciscore, all_norando)
+            upperlimit <- 1.1*sum(all_numer, all_nosciscore, all_norando, all_non_eng)
             ylabel <- "Number of publications"
             
         } else {
@@ -1561,6 +1578,17 @@ plot_randomization <- function (dataset, umc, absnum, color_palette) {
                 name = "No Sciscore data",
                 marker = list(
                     color = color_palette[7],
+                    line = list(
+                        color = 'rgb(0,0,0)',
+                        width = 1.5
+                    )
+                )
+            ) %>%
+            add_trace(
+                y = ~non_eng,
+                name = "Non-English/no language info",
+                marker = list(
+                    color = color_palette[6],
                     line = list(
                         color = 'rgb(0,0,0)',
                         width = 1.5
