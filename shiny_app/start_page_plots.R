@@ -847,7 +847,7 @@ plot_opensci_green_oa <- function (dataset, umc, absnum, color_palette) {
                 )
             ) %>%
             add_trace(
-                y = ~cant_archive,
+                y = ~no_data,
                 name = "No data available",
                 marker = list(
                     color = color_palette[9],
