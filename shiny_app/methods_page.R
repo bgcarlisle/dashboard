@@ -391,8 +391,8 @@ randomization_tooltip <- strwrap("This metric measures how many animal studies r
                             randomization of subjects into groups. Animal studies were identified using a
                             previously published PubMed search filter. Reporting of randomization was evaluated
                             with SciScore, an automated tool which evaluates research articles based on their
-                            adherence to rigour and reproducibility criteria. Only publications in the
-                            PubMed Central corpus and which could be analyzed by SciScore are were included
+                            adherence to rigour and reproducibility criteria. Only animal studies in English in the
+                            PubMed Central corpus for which we have SciScore data are were included
                             in this analysis.") %>%
     
 paste(collapse = " ")
@@ -402,9 +402,9 @@ blinding_tooltip <- strwrap("This metric measures how many animal studies report
                             investigators were blinded to group assignment and/or outcome assessment. Animal
                             studies were identified using a previously published PubMed search filter. Reporting
                             of blinding was evaluated with SciScore, an automated tool which evaluates research
-                            articles based on their adherence to rigour and reproducibility criteria. Only
-                            publications in the PubMed Central corpus and which could be analyzed by SciScore
-                            are were included in this analysis.") %>%
+                            articles based on their adherence to rigour and reproducibility criteria. Only animal
+                            studies in English in the PubMed Central corpus for which we have SciScore data are were
+                            included in this analysis.") %>%
 
 paste(collapse = " ")
 
@@ -413,8 +413,9 @@ power_tooltip <- strwrap("This metric measures how many animal studies report a 
                          calculation. Animal studies were identified using a previously published PubMed search
                          filter. Reporting of sample size calculation was evaluated with SciScore, an automated
                          tool which evaluates research articles based on their adherence to rigour and
-                         reproducibility criteria. Only publications in the PubMed Central corpus and which
-                         could be analyzed by SciScore are were included in this analysis.") %>%
+                         reproducibility criteria. Only animal studies in English in the
+                            PubMed Central corpus for which we have SciScore data are were included
+                            in this analysis.") %>%
     
 paste(collapse = " ")
 
