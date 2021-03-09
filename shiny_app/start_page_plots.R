@@ -365,7 +365,7 @@ plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
             )
 
             upperlimit <- 1.1*sum(umc_numer,   umc_non_eng, umc_no_ft, umc_no_data_sharing)
-            ylabel <- "Number of publications"
+            ylabel <- "Number of articles"
             
         } else {
 
@@ -378,7 +378,7 @@ plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
             plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
 
             upperlimit <- 100
-            ylabel <- "Percentage of publications"
+            ylabel <- "Percentage of articles"
 
         }
         
@@ -392,7 +392,7 @@ plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
             )
 
             upperlimit <- 1.1*sum(all_numer,   all_non_eng, all_no_ft, all_no_data_sharing)
-            ylabel <- "Number of publications"
+            ylabel <- "Number of articles"
             
         } else {
 
@@ -402,7 +402,7 @@ plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
             )
 
             upperlimit <- 100
-            ylabel <- "Percentage of publications"
+            ylabel <- "Percentage of articles"
             
         }
 
@@ -583,7 +583,7 @@ plot_opensci_oc <- function (dataset, umc, absnum, color_palette) {
             )
 
             upperlimit <- 1.1*sum(umc_numer, umc_non_eng, umc_no_ft, umc_no_code_sharing)
-            ylabel <- "Number of publications"
+            ylabel <- "Number of articles"
             
         } else {
 
@@ -596,7 +596,7 @@ plot_opensci_oc <- function (dataset, umc, absnum, color_palette) {
             plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
 
             upperlimit <- 100
-            ylabel <- "Percentage of publications"
+            ylabel <- "Percentage of articles"
         }
         
     } else {
@@ -609,7 +609,7 @@ plot_opensci_oc <- function (dataset, umc, absnum, color_palette) {
             )
 
             upperlimit <- 1.1*sum(all_numer,   all_non_eng, all_no_ft, all_no_code_sharing)
-            ylabel <- "Number of publications"
+            ylabel <- "Number of articles"
             
         } else {
             
@@ -619,7 +619,7 @@ plot_opensci_oc <- function (dataset, umc, absnum, color_palette) {
             )
 
             upperlimit <- 100
-            ylabel <- "Percentage of publications"
+            ylabel <- "Percentage of articles"
             
         }
 
@@ -1523,7 +1523,7 @@ plot_randomization <- function (dataset, umc, absnum, color_palette) {
             )
 
             upperlimit <- 1.1*sum(umc_numer, umc_nosciscore, umc_norando, umc_non_eng)
-            ylabel <- "Number of publications"
+            ylabel <- "Number of animal studies"
             
         } else {
 
@@ -1536,7 +1536,7 @@ plot_randomization <- function (dataset, umc, absnum, color_palette) {
             plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
             
             upperlimit <- 100
-            ylabel <- "Percentage of publications"
+            ylabel <- "Percentage of animal studies"
             
         }
         
@@ -1550,7 +1550,7 @@ plot_randomization <- function (dataset, umc, absnum, color_palette) {
             )
 
             upperlimit <- 1.1*sum(all_numer, all_nosciscore, all_norando, all_non_eng)
-            ylabel <- "Number of publications"
+            ylabel <- "Number of animal studies"
             
         } else {
 
@@ -1560,7 +1560,7 @@ plot_randomization <- function (dataset, umc, absnum, color_palette) {
             )
             
             upperlimit <- 100
-            ylabel <- "Percentage of publications"
+            ylabel <- "Percentage of animal studies"
 
         }        
     }
@@ -1775,7 +1775,7 @@ plot_blinding <- function (dataset, umc, absnum, color_palette) {
             )
 
             upperlimit <- 1.1*sum(umc_numer, umc_nosciscore, umc_noblind, umc_non_eng)
-            ylabel <- "Number of publications"
+            ylabel <- "Number of animal studies"
             
         } else {
 
@@ -1788,7 +1788,7 @@ plot_blinding <- function (dataset, umc, absnum, color_palette) {
             plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
             
             upperlimit <- 100
-            ylabel <- "Percentage of publications"
+            ylabel <- "Percentage of animal studies"
             
         }
         
@@ -1802,7 +1802,7 @@ plot_blinding <- function (dataset, umc, absnum, color_palette) {
             )
 
             upperlimit <- 1.1*sum(all_numer, all_nosciscore, all_noblind, all_non_eng)
-            ylabel <- "Number of publications"
+            ylabel <- "Number of animal studies"
             
         } else {
 
@@ -1812,7 +1812,7 @@ plot_blinding <- function (dataset, umc, absnum, color_palette) {
             )
             
             upperlimit <- 100
-            ylabel <- "Percentage of publications"
+            ylabel <- "Percentage of animal studies"
             
         }
     }
@@ -2025,7 +2025,7 @@ plot_power <- function (dataset, umc, absnum, color_palette) {
             )
 
             upperlimit <- 1.1*sum(umc_numer, umc_nosciscore, umc_nopower, umc_non_eng)
-            ylabel <- "Number of publications"
+            ylabel <- "Number of animal studies"
             
          } else {
 
@@ -2038,7 +2038,7 @@ plot_power <- function (dataset, umc, absnum, color_palette) {
              plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
             
             upperlimit <- 100
-            ylabel <- "Percentage of publications"
+            ylabel <- "Percentage of animal studies"
              
          }
         
@@ -2052,7 +2052,7 @@ plot_power <- function (dataset, umc, absnum, color_palette) {
             )
 
             upperlimit <- 1.1*sum(all_numer, all_nosciscore, all_nopower, all_non_eng)
-            ylabel <- "Number of publications"
+            ylabel <- "Number of animal studies"
             
         } else {
 
@@ -2062,7 +2062,7 @@ plot_power <- function (dataset, umc, absnum, color_palette) {
             )
             
             upperlimit <- 100
-            ylabel <- "Percentage of publications"
+            ylabel <- "Percentage of animal studies"
             
         }
         
