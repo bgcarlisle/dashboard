@@ -103,7 +103,7 @@ plot_opensci_oa <- function (dataset, umc, absnum, color_palette) {
 
             plot_data <- tribble(
                 ~x_label, ~gold,                         ~green,                         ~hybrid,
-                "All",    round(100*all_gold/all_denom), round(100*all_green/all_denom), round(100*all_hybrid/all_denom),
+                ## "All",    round(100*all_gold/all_denom), round(100*all_green/all_denom), round(100*all_hybrid/all_denom),
                 umc,      round(100*umc_gold/umc_denom), round(100*umc_green/umc_denom), round(100*umc_hybrid/umc_denom)
             )
 
@@ -120,7 +120,7 @@ plot_opensci_oa <- function (dataset, umc, absnum, color_palette) {
             
             plot_data <- tribble(
                 ~x_label, ~gold,    ~green,    ~hybrid,    ~na,    ~closed,    ~bronze,
-                "All",    all_gold, all_green, all_hybrid, all_na, all_closed, all_bronze
+                ## "All",    all_gold, all_green, all_hybrid, all_na, all_closed, all_bronze
             )
 
             upperlimit <- 1.1*sum(all_gold, all_green, all_hybrid, all_na, all_closed, all_bronze)
@@ -130,7 +130,7 @@ plot_opensci_oa <- function (dataset, umc, absnum, color_palette) {
             
             plot_data <- tribble(
                 ~x_label, ~gold,                         ~green,                         ~hybrid,
-                "All",    round(100*all_gold/all_denom), round(100*all_green/all_denom), round(100*all_hybrid/all_denom)
+                ## "All",    round(100*all_gold/all_denom), round(100*all_green/all_denom), round(100*all_hybrid/all_denom)
             )
 
             upperlimit <- 100
@@ -371,7 +371,7 @@ plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
 
             plot_data <- tribble(
                 ~x_label, ~percentage,
-                "All", round(100*all_numer/all_denom),
+                ## "All", round(100*all_numer/all_denom),
                 umc, round(100*umc_numer/umc_denom)
             )
         
@@ -589,7 +589,7 @@ plot_opensci_oc <- function (dataset, umc, absnum, color_palette) {
 
             plot_data <- tribble(
                 ~x_label, ~percentage,
-                "All", round(100*all_numer/all_denom),
+                ## "All", round(100*all_numer/all_denom),
                 umc, round(100*umc_numer/umc_denom)
             )
 
@@ -789,7 +789,7 @@ plot_opensci_green_oa <- function (dataset, umc, absnum, color_palette) {
 
             plot_data <- tribble(
                 ~x_label, ~percentage,
-                "All", round(100*all_numer/all_denom),
+                ## "All", round(100*all_numer/all_denom),
                 umc, round(100*umc_numer/umc_denom)
             )
 
@@ -952,8 +952,8 @@ plot_clinicaltrials_trn <- function (dataset, umc, color_palette) {
 
         plot_data <- tribble(
             ~x_label, ~colour, ~percentage,
-            "All", "In abstract", round(100*all_numer_abs/all_denom),
-            "All", "Secondary information", round(100*all_numer_si/all_denom),
+            ## "All", "In abstract", round(100*all_numer_abs/all_denom),
+            ## "All", "Secondary information", round(100*all_numer_si/all_denom),
             umc, "In abstract", round(100*umc_numer_abs/umc_denom),
             umc, "Secondary information", round(100*umc_numer_si/umc_denom),
         )
@@ -1036,7 +1036,7 @@ plot_clinicaltrials_sumres <- function (dataset, umc, color_palette) {
 
         plot_data <- tribble(
             ~x_label, ~percentage,
-            "All", round(100*all_numer/all_denom),
+            ## "All", round(100*all_numer/all_denom),
             umc, round(100*umc_numer/umc_denom),
         )
 
@@ -1153,11 +1153,11 @@ plot_clinicaltrials_prereg <- function (dataset, umc, color_palette) {
                 )
             )
         ) %>%
-            add_trace(
-                y=~all_percentage,
-                name='All',
-                marker = list(color = color_palette[2])
-                ) %>%
+            ## add_trace(
+            ##     y=~all_percentage,
+            ##     name='All',
+            ##     marker = list(color = color_palette[2])
+            ##     ) %>%
                     layout(
                         xaxis = list(
                             title = '<b>Year</b>',
@@ -1319,11 +1319,11 @@ plot_clinicaltrials_timpub <- function (dataset, umc, color_palette) {
                 )
             )
         ) %>%
-            add_trace(
-                y=~all_percentage,
-                name='All',
-                marker = list(color = color_palette[2])
-            ) %>%
+            ## add_trace(
+            ##     y=~all_percentage,
+            ##     name='All',
+            ##     marker = list(color = color_palette[2])
+            ## ) %>%
             layout(
                 xaxis = list(
                     title = '<b>Year</b>',
@@ -1530,7 +1530,7 @@ plot_randomization <- function (dataset, umc, absnum, color_palette) {
             plot_data <- tribble(
                 ~x_label, ~percentage,
                 umc, round(100*umc_numer/umc_denom),
-                "All", round(100*all_numer/all_denom)
+                ## "All", round(100*all_numer/all_denom)
             )
 
             plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
@@ -1782,7 +1782,7 @@ plot_blinding <- function (dataset, umc, absnum, color_palette) {
             plot_data <- tribble(
                 ~x_label, ~percentage,
                 umc, round(100*umc_numer/umc_denom),
-                "All", round(100*all_numer/all_denom)
+                ## "All", round(100*all_numer/all_denom)
             )
 
             plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
@@ -2032,7 +2032,7 @@ plot_power <- function (dataset, umc, absnum, color_palette) {
              plot_data <- tribble(
                  ~x_label, ~percentage,
                  umc, round(100*umc_numer/umc_denom),
-                 "All", round(100*all_numer/all_denom)
+                 ## "All", round(100*all_numer/all_denom)
              )
 
              plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
@@ -2213,7 +2213,7 @@ plot_iacuc <- function (dataset, umc, color_palette) {
         plot_data <- tribble(
             ~x_label, ~percentage,
             umc, round(100*umc_numer/umc_denom),
-            "All", round(100*all_numer/all_denom)
+            ## "All", round(100*all_numer/all_denom)
         )
         
         ## message(umc)
