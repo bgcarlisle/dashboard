@@ -85,6 +85,27 @@ methods_page <- tabPanel(
                              "Unpaywall only stores information for publications which have a DOI assigned by
                         Crossref. Articles without a Crossref DOI have to be excluded from the OA analysis."),
                
+               methods_panel("Potential Green Open Access (OA)",
+                             
+                             "This metric measures how many publications currently hidden behind a paywall
+                             could be made openly accessible by depositing the accepted version in a repository.
+                             In many cases, journal or publisher self-archiving policies allow researchers to
+                             make the accepted version of their publication openly accessible in a repository
+                             6 to 12 months after publication.",
+                             
+                             HTML('In a first step, we filtered our dataset for publications which are currently
+                             behind a paywall ("closed"). Then, we queried the
+                             <a href="https://shareyourpaper.org/permissions/about#api">
+                             Shareyourpaper.org permissions API</a> (Open Access button) to obtain article-level
+                             self-archiving permissions and identify publications which could be made openly
+                             accessible by depositing the accepted version in an institutional or generalist repository.'),
+                             
+                             "The method relies on the Shareyourpaper.org permissions database being up-to-date. We
+                             only included publications which have an authoritative permission in the Shareyourpaper.org
+                             database. The date at which a publication can be made openly accessible via self-archiving
+                             depends on the publication date and the length of the embargo (if any). Therefore, the
+                             number of potential green OA research articles will change over time. The Shareyourpaper
+                             permissions API was queried on 28/02/2021."),
                
                methods_panel("Open Data and Open Code",
                              
@@ -132,29 +153,7 @@ methods_page <- tabPanel(
                         We considered all publications which had at least one author affiliated to one of the
                         included UMCs. Depending on an author's contribution to a project, he/she/they may have
                         differing influence on the decision whether to make data or code available alongside
-                        a publication."),
-               
-               
-               methods_panel("Potential Green Open Access (OA)",
-                             
-                             "This metric measures how many publications currently hidden behind a paywall
-                             could be made openly accessible in a repository based on journal self-archiving
-                             policies.In most cases, journal self-archiving policies allow researchers to
-                             make the accepted version (and in some cases the published version) of their
-                             publication openly accessible in a repository 6 to 12 months after publication.",
-                             
-                             HTML('In a first step, we filtered our dataset for publications which are currently
-                             not OA (this includes bronze Open Access). Then, we queried the
-                             <a href="https://shareyourpaper.org/permissions/about#api">
-                             Shareyourpaper.org permissions API</a> (Open Access button) to identify
-                                  publications which can be made openly accessible in an institutional
-                                  or generalist repository based on article-level self-archiving permissions.'),
-                             
-                             "The method relies on the Shareyourpaper.org (Open Access Button) permissions
-                             database being up to date. The date at which a publication can be made openly
-                             accessible via self-archiving depends on the publication date and the length of
-                             the embargo (if any). Therefore, the number of potential green OA research articles
-                             will change over time. The Shareyourpaper permissions API was queried on 28/02/2021")),
+                        a publication.")),
     
     hr(),
     h2("Clinical trials"),
