@@ -810,7 +810,7 @@ server <- function (input, output, session) {
                     col_width,
                     metric_box(
                         title = "Potential Green OA",
-                        value = paste0(numer_greenoa, "/", denom_greenoa),
+                        value = paste0(round(100*numer_greenoa/denom_greenoa), "%"),
                         value_text = "paywalled publications could be made openly accessible",
                         plot = plotlyOutput('plot_opensci_green_oa', height="300px"),
                         info_id = "infoGreenOA",
