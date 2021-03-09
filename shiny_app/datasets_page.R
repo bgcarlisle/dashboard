@@ -24,8 +24,8 @@ make_datatable <- function(dataset) {
 }
 
 datasets_page <- tabPanel(
-    "Data sets", value = "tabDatasets",
-    h3("Data sets"),
+    "Datasets", value = "tabDatasets",
+    h3("Datasets"),
     bsCollapse(
         id="datasetPanels_rm_data",
         bsCollapsePanel(

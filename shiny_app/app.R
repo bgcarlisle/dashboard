@@ -183,7 +183,7 @@ server <- function (input, output, session) {
                     actionButton(
                         style = "color: white; background-color: #aa1c7d;",
                         'buttonDatasets',
-                        'See data sets'
+                        'See datasets'
                     ),
                     br()
                 )
