@@ -437,7 +437,7 @@ plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
             ) %>%
             add_trace(
                 y = ~no_ft,
-                name = "English but full text unavailable",
+                name = "No full text",
                 marker = list(
                     color = color_palette[7],
                     line = list(
@@ -448,7 +448,7 @@ plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
             ) %>%
             add_trace(
                 y = ~non_eng,
-                name = "Non-English/no language info",
+                name = "Non-English/NA",
                 marker = list(
                     color = color_palette[6],
                     line = list(
@@ -654,7 +654,7 @@ plot_opensci_oc <- function (dataset, umc, absnum, color_palette) {
             ) %>%
             add_trace(
                 y = ~no_ft,
-                name = "English but full text unavailable",
+                name = "No full text",
                 marker = list(
                     color = color_palette[7],
                     line = list(
@@ -665,7 +665,7 @@ plot_opensci_oc <- function (dataset, umc, absnum, color_palette) {
             ) %>%
             add_trace(
                 y = ~non_eng,
-                name = "Non-English/no language info",
+                name = "Non-English/NA",
                 marker = list(
                     color = color_palette[6],
                     line = list(
@@ -855,7 +855,7 @@ plot_opensci_green_oa <- function (dataset, umc, absnum, color_palette) {
             ) %>%
             add_trace(
                 y = ~no_data,
-                name = "No data available",
+                name = "Data not available",
                 marker = list(
                     color = color_palette[7],
                     line = list(
@@ -1594,7 +1594,7 @@ plot_randomization <- function (dataset, umc, absnum, color_palette) {
             ) %>%
             add_trace(
                 y = ~nosciscore,
-                name = "English but no data available",
+                name = "Data not available",
                 marker = list(
                     color = color_palette[7],
                     line = list(
@@ -1605,7 +1605,7 @@ plot_randomization <- function (dataset, umc, absnum, color_palette) {
             ) %>%
             add_trace(
                 y = ~non_eng,
-                name = "Non-English/no language info",
+                name = "Non-English/NA",
                 marker = list(
                     color = color_palette[6],
                     line = list(
@@ -1846,7 +1846,7 @@ plot_blinding <- function (dataset, umc, absnum, color_palette) {
             ) %>%
             add_trace(
                 y = ~nosciscore,
-                name = "English but no data available",
+                name = "Data not available",
                 marker = list(
                     color = color_palette[7],
                     line = list(
@@ -1857,7 +1857,7 @@ plot_blinding <- function (dataset, umc, absnum, color_palette) {
             ) %>%
             add_trace(
                 y = ~non_eng,
-                name = "Non-English/no language info",
+                name = "Non-English/NA",
                 marker = list(
                     color = color_palette[6],
                     line = list(
@@ -2097,7 +2097,7 @@ plot_power <- function (dataset, umc, absnum, color_palette) {
             ) %>%
             add_trace(
                 y = ~nosciscore,
-                name = "English but no data available",
+                name = "Data not available",
                 marker = list(
                     color = color_palette[7],
                     line = list(
@@ -2108,7 +2108,7 @@ plot_power <- function (dataset, umc, absnum, color_palette) {
             ) %>%
             add_trace(
                 y = ~non_eng,
-                name = "Non-English/no language info",
+                name = "Non-English/NA",
                 marker = list(
                     color = color_palette[6],
                     line = list(
