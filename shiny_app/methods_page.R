@@ -418,7 +418,8 @@ power_tooltip <- strwrap("This metric measures how many animal studies report a 
     
 paste(collapse = " ")
 
-greenopenaccess_tooltip <- strwrap("This is the number of publications currently behind a paywall that could be made openly accessible by depositing the accepted version in a repository.")
+greenopenaccess_tooltip <- strwrap("This is the number of publications currently behind a paywall that could be
+                                   made openly accessible by depositing the accepted version in a repository.")
 
                                         # iacuc_tooltip <- strwrap("This metric measures how many animal studies report an Institutional animal care and
 #                          use committee statement.") %>%
@@ -433,8 +434,8 @@ lim_prereg_tooltip <- strwrap("Like in the case of the summary results metric, w
 lim_timpub_tooltip <- strwrap("Some detected publications might be missed in the manual search procedure as we only searched a limited number of scientific databases and did not contact the responsible parties. Furthermore, we did not include observational clinical studies in our sample. Additionally, we might overestimate the time to publication for some studies as we stopped the manual search after the first detected publication.")
 lim_trn_tooltip <- strwrap("We identified human clinical trials based on the following search term in PubMed: 'clinical trial'[pt] NOT (animals [mh] NOT humans [mh]). However, we have not tested (1) the sensitivity of this PubMed search term (i.e., what proportion of true clinical trial publications are detected?); (2) the specificity of this search term (i.e, what proportion of detected publications are not true clinical trials publications?). Furthermore, our algorithm does not distinguish true TRNs that do not resolve to a registration. Finally, the algorithm does not determine whether the TRN is reported as a registration for the publication's study (i.e., clinical trial result) or is otherwise mentioned (i.e., in a review, reference to other clinical trials, etc.)")
 
-lim_openaccess_tooltip <- strwrap("Unpaywall only stores information for publications which have a DOI assigned by Crossref. Articles without a Crossref DOI have to be excluded from the OA analysis.")
-lim_greenopenaccess_tooltip <- strwrap("The method relies on the Shareyourpaper.org (Open Access Button) permissions database being up to date. The date at which a publication can be made openly accessible via self-archiving depends on the publication date and the length of the embargo (if any). Therefore, the number of potential green OA research articles will change over time. The Shareyourpaper permissions API was queried on [enter date]")
+lim_openaccess_tooltip <- strwrap("Unpaywall only stores information for publications which have a DOI assigned by Crossref. Articles without a Crossref DOI have to be excluded from the OA analysis. The OA percentage is not a fixed number, but changes over time as some publications become accessible with a delay. The current data was retrieved on: 28/02/2021.")
+lim_greenopenaccess_tooltip <- strwrap("The method relies on the Shareyourpaper.org (Open Access Button) permissions database being up to date. The date at which a publication can be made openly accessible via self-archiving depends on the publication date and the length of the embargo (if any). Therefore, the number of potential green OA research articles will change over time. The Shareyourpaper permissions API was queried on 28/02/2021.")
 lim_opendata_tooltip <- strwrap("Open Data is not relevant for all publications, so we would not expect 100% of the publications to contain Open Data, not even in an ideal case.")
 lim_opencode_tooltip <- strwrap("Depending on author contributions to a project, they may have differing influence on the decision whether to make data or code available alongside a publication.")
 lim_allumc_openaccess_tooltip <- strwrap("Unpaywall only stores information for publications which have a DOI assigned by Crossref. Articles without a Crossref DOI have to be excluded from the OA analysis.")
