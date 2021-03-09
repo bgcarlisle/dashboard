@@ -43,7 +43,7 @@ if (sum(substr(ddumcs$city, 1, 4) == "UMC ") == nrow(ddumcs)) {
 }
 
 umclist <- c(
-    "All",
+    ## "All",
     ddumcs$city %>% unique()
 )
 
@@ -94,9 +94,9 @@ ui <- tagList(
     navbarPage(
         "Responsible Metrics Dashboard", theme = shinytheme("flatly"), id = "navbarTabs",
         start_page,
-        all_umcs_page,
+        ## all_umcs_page,
         methods_page,
-        datasets_page,
+        ## datasets_page,
         about_rm_page,
         tags$head
         (
@@ -153,7 +153,7 @@ server <- function (input, output, session) {
             br(),
             fluidRow(
                 column(
-                    8,
+                    12,
                     h1(style = "margin-left:0cm", strong("Proof-of-principle Responsible Metrics Dashboard (2018)"), align = "left"),
                     h4(style = "margin-left:0cm",
                        "This dashboard is a proof-of-principle overview of several metrics of open and robust
@@ -168,30 +168,7 @@ server <- function (input, output, session) {
                        given metric; 2) the absolute number of eligible publications which display the given
                        metric. For each metric, you can find an overview of the methods and limitations by clicking
                        on the relevant symbols. For more detailed information on the methods and underlying datasets
-                       used to calculate those metrics, visit the Methods or Datasets pages."),
-                    br()
-                ),
-                column(
-                    4,
-                    hr(),
-                    br(),
-                    br(),
-                    actionButton(
-                        style = "color: white; background-color: #aa1c7d;",
-                        'buttonAllUMCs',
-                        'See all UMCs'
-                    ),
-                    actionButton(
-                        style = "color: white; background-color: #aa1c7d;",
-                        'buttonMethods',
-                        'See methods'
-                    ),
-                    actionButton(
-                        style = "color: white; background-color: #aa1c7d;",
-                        'buttonDatasets',
-                        'See datasets'
-                    ),
-                    br()
+                       used to calculate those metrics, visit the Methods or Datasets pages.")
                 )
             ),
             fluidRow(
