@@ -158,6 +158,75 @@ methods_page <- tabPanel(
     hr(),
     h2("Clinical trials"),
     bsCollapse(id = "methodsPanels_ClinicalTrials",
+               methods_panel("Summary results reporting",
+                             
+                             "This metric measures how many clinical trials registered in the
+                        EU Clinical Trials Register that are due to report their results have already
+                        done so. A trial is due to report its results 12 month after trial completion.
+                        Clinical trials are expensive and have often many contributing patients.
+                        A fast dissemination of the trial results is crucial to make the evidence gained
+                        in those trials available. The World Health organization recommends publishing
+                        clinical trial results within one year after the end of a study.",
+                             
+                             HTML('The data were retrieved for all UMCs included in this proof-of-principle
+                             dataset from the
+                        <a href="https://eu.trialstracker.net">EU Trials Tracker</a> by the EBM DataLab.'),
+                             
+                             "While the EU Clinical Trials Register is one of the most important
+                        European trial registries, it is not the only available registry. There are other
+                        registries such as ClinicalTrials.gov. or the German Clinical Trials Registry,
+                        which are not considered here. Additionally, the EU Trials Tracker does not
+                        measure for how long the trials have been due. Finally, we only considered the
+                             latest data available in the EU Trials Tracker. We plan to include historic
+                             data in the future."),
+               
+               methods_panel("Prospective registration",
+                             
+                             "This metric measures if the clinical trials are registered before the
+                        start date of the study, according to the information given on ClinicalTrials.gov.
+                        The idea of prospective registration of studies is to make the trial specifications,
+                        including primary and secondary outcomes, publicly available before study start.
+                        Prospective registration adds transparency, helps protect against outcome switching.",
+                             
+                             "We used the same methods as for the timely reporting metric to identify trials
+                             from UMCs. To assess if a study has been prospectively registered, we compare
+                        the date the study was first submitted to the registry with the
+                        start date given in the registry. As some of the earlier dates in the database
+                        only stated the month but not the exact day and to account for other possible delays
+                        we chose a conservative estimate of prospective registration and allow for a delay
+                        between start and registration date of up to 60 days.",
+                             
+                             "Like in the case of the summary results metric, we only focused on the
+                        ClinicalTrials.gov while there are other available registries as well.
+                        Also, we rely on the information on ClinicalTrials.gov being accurate."),
+               
+               methods_panel("Timely publication of results",
+                             
+                             "This metric measures how many clinical trials registered on ClinicalTrials.gov
+                        reported their results either as a journal publication or as summary
+                        results on the trials registry within 2 or 5 years after completion. Trials
+                        completed between 2009 and 2013 were considered.
+                        A fast dissemination of the trial results is crucial to make the evidence gained
+                        in those trials available. The World Health organization recommends publishing
+                        clinical trial results within one year after the end of a study.",
+                             
+                             HTML('The registry ClinicalTrials.gov was searched for studies with one of the UMCs
+                             as the responsible party/sponsor or with a principle investigator from one of the
+                             UMCs. A manual search for published results was done, searching the
+                        registry, PubMed and Google. When calculating the time to publication, we only
+                        considered trials where we could track the full timeframe since completion.
+                        As not all trials could be tracked for 5 years since completion at
+                        the time when this study was carried out, we have less trials where we can
+                        report the publications 5 years after completion. The results were previously
+                        published as part of the <a href="https://s-quest.bihealth.org/intovalue/">IntoValue study</a>.
+                        Detailed methods can be found under
+                        <a href="https://doi.org/10.1101/467746">https://doi.org/10.1101/467746</a>.'),
+                             "Some detected publications might be missed in the manual search
+                        procedure as we only searched a limited number of scientific databases and did not
+                        contact the responsible parties. Furthermore, we did not include observational clinical
+                        studies in our sample. Additionally, we might overestimate the time to publication
+                        for some studies as we stopped the manual search after the first detected publication."),
+               
                methods_panel("Reporting of Trial Registration Number (TRN)",
                              
                              HTML("Reporting of clinical trial registration numbers in related publications
@@ -189,79 +258,8 @@ methods_page <- tabPanel(
                                   distinguish true TRNs that do not resolve to a registration. Finally, the
                                   algorithm does not determine whether the TRN is reported as a registration
                                   for the publication&#39s study (i.e., clinical trial result) or is otherwise
-                                  mentioned (i.e., in a review, reference to other clinical trials, etc.)")),
+                                  mentioned (i.e., in a review, reference to other clinical trials, etc.)"))),
                
-               methods_panel("Summary results reporting",
-                             
-                             "This metric measures how many clinical trials registered in the
-                        EU Clinical Trials Register that are due to report their results have already
-                        done so. A trial is due to report its results 12 month after trial completion.
-                        Clinical trials are expensive and have often many contributing patients.
-                        A fast dissemination of the trial results is crucial to make the evidence gained
-                        in those trials available. The World Health organization recommends publishing
-                        clinical trial results within one year after the end of a study.",
-                             
-                             HTML('The data were retrieved for all UMCs included in this proof-of-principle
-                             dataset from the
-                        <a href="https://eu.trialstracker.net">EU Trials Tracker</a> by the EBM DataLab.'),
-                             
-                             "While the EU Clinical Trials Register is one of the most important
-                        European trial registries, it is not the only available registry. There are other
-                        registries such as ClinicalTrials.gov. or the German Clinical Trials Registry,
-                        which are not considered here. Additionally, the EU Trials Tracker does not
-                        measure for how long the trials have been due. Finally, we only considered the
-                             latest data available in the EU Trials Tracker. We plan to include historic
-                             data in the future."),
-               
-               methods_panel("Timely publication of results",
-                             
-                             "This metric measures how many clinical trials registered on ClinicalTrials.gov
-                        reported their results either as a journal publication or as summary
-                        results on the trials registry within 2 or 5 years after completion. Trials
-                        completed between 2009 and 2013 were considered.
-                        A fast dissemination of the trial results is crucial to make the evidence gained
-                        in those trials available. The World Health organization recommends publishing
-                        clinical trial results within one year after the end of a study.",
-                             
-                             HTML('The registry ClinicalTrials.gov was searched for studies with one of the UMCs
-                             as the responsible party/sponsor or with a principle investigator from one of the
-                             UMCs. A manual search for published results was done, searching the
-                        registry, PubMed and Google. When calculating the time to publication, we only
-                        considered trials where we could track the full timeframe since completion.
-                        As not all trials could be tracked for 5 years since completion at
-                        the time when this study was carried out, we have less trials where we can
-                        report the publications 5 years after completion. The results were previously
-                        published as part of the <a href="https://s-quest.bihealth.org/intovalue/">IntoValue study</a>.
-                        Detailed methods can be found under
-                        <a href="https://doi.org/10.1101/467746">https://doi.org/10.1101/467746</a>.'),
-                             "Some detected publications might be missed in the manual search
-                        procedure as we only searched a limited number of scientific databases and did not
-                        contact the responsible parties. Furthermore, we did not include observational clinical
-                        studies in our sample. Additionally, we might overestimate the time to publication
-                        for some studies as we stopped the manual search after the first detected publication."),
-               
-               
-               
-               methods_panel("Prospective registration",
-                             
-                             "This metric measures if the clinical trials are registered before the
-                        start date of the study, according to the information given on ClinicalTrials.gov.
-                        The idea of prospective registration of studies is to make the trial specifications,
-                        including primary and secondary outcomes, publicly available before study start.
-                        Prospective registration adds transparency, helps protect against outcome switching.",
-                             
-                             "We used the same methods as for the timely reporting metric to identify trials
-                             from UMCs. To assess if a study has been prospectively registered, we compare
-                        the date the study was first submitted to the registry with the
-                        start date given in the registry. As some of the earlier dates in the database
-                        only stated the month but not the exact day and to account for other possible delays
-                        we chose a conservative estimate of prospective registration and allow for a delay
-                        between start and registration date of up to 60 days.",
-                             
-                             "Like in the case of the summary results metric, we only focused on the
-                        ClinicalTrials.gov while there are other available registries as well.
-                        Also, we rely on the information on ClinicalTrials.gov being accurate.")),
-    
     hr(),
     h2("Robustness"),
     bsCollapse(id = "methodsPanels_Robustness",
