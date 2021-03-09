@@ -2,6 +2,8 @@
 
 ## Open Access
 
+## TODO Open Access: reviews not currently in pop dataset, but Open Access should include both articles and reviews.
+
 plot_opensci_oa <- function (dataset, umc, absnum, color_palette) {
 
     ## Calculate the numerators and the denominator for the
@@ -25,7 +27,7 @@ plot_opensci_oa <- function (dataset, umc, absnum, color_palette) {
         filter( color == "hybrid") %>%
         nrow()
 
-    all_na <- plot_data %>%
+    all_na <- dataset %>%
         filter( is.na(color) ) %>%
         nrow()
 
@@ -66,7 +68,7 @@ plot_opensci_oa <- function (dataset, umc, absnum, color_palette) {
             ) %>%
             nrow()
 
-        umc_na <- plot_data %>%
+        umc_na <- dataset %>%
             filter(
                 is.na(color),
                 city == umc
@@ -158,7 +160,7 @@ plot_opensci_oa <- function (dataset, umc, absnum, color_palette) {
                 y = ~green,
                 name = "Green",
                 marker = list(
-                    color = color_palette[6],
+                    color = color_palette[8],
                     line = list(
                         color = 'rgb(0,0,0)',
                         width = 1.5
@@ -169,7 +171,7 @@ plot_opensci_oa <- function (dataset, umc, absnum, color_palette) {
                 y = ~hybrid,
                 name = "Hybrid",
                 marker = list(
-                    color = color_palette[7],
+                    color = color_palette[10],
                     line = list(
                         color = 'rgb(0,0,0)',
                         width = 1.5
@@ -180,7 +182,7 @@ plot_opensci_oa <- function (dataset, umc, absnum, color_palette) {
                 y = ~bronze,
                 name = "Bronze",
                 marker = list(
-                    color = color_palette[12],
+                    color = color_palette[4],
                     line = list(
                         color = 'rgb(0,0,0)',
                         width = 1.5
@@ -202,7 +204,7 @@ plot_opensci_oa <- function (dataset, umc, absnum, color_palette) {
                 y = ~na,
                 name = "Data not available",
                 marker = list(
-                    color = color_palette[10],
+                    color = color_palette[11],
                     line = list(
                         color = 'rgb(0,0,0)',
                         width = 1.5
@@ -242,7 +244,7 @@ plot_opensci_oa <- function (dataset, umc, absnum, color_palette) {
                 y = ~green,
                 name = "Green",
                 marker = list(
-                    color = color_palette[6],
+                    color = color_palette[8],
                     line = list(
                         color = 'rgb(0,0,0)',
                         width = 1.5
@@ -253,7 +255,7 @@ plot_opensci_oa <- function (dataset, umc, absnum, color_palette) {
                 y = ~hybrid,
                 name = "Hybrid",
                 marker = list(
-                    color = color_palette[7],
+                    color = color_palette[10],
                     line = list(
                         color = 'rgb(0,0,0)',
                         width = 1.5
@@ -279,6 +281,8 @@ plot_opensci_oa <- function (dataset, umc, absnum, color_palette) {
 
 ## Open Data
 
+## TODO: add filter for Articles if the pop dataset contains Articles and Reviews
+
 plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
 
     ## Remove non-analyzable and non-English data points
@@ -288,17 +292,17 @@ plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
             language == "English"
         )
 
-    all_denom <- dataset %>%
+    all_denom <- plot_data %>%
         nrow()
 
     ## has data sharing
     all_numer <- plot_data$is_open_data %>%
         sum()
 
+    ## non-English publication or no language information
     all_non_eng <- dataset %>%
         filter(
-            ! is.na(is_open_data),
-            language != "English"
+            language != "English" | is.na(language)
         ) %>%
         nrow()
 
@@ -312,7 +316,6 @@ plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
 
     all_no_data_sharing <- dataset %>%
         filter(
-            ! is.na(is_open_data),
             language == "English",
             ! is_open_data
         ) %>%
@@ -333,8 +336,7 @@ plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
         umc_non_eng <- dataset %>%
             filter(
                 city == umc,
-                ! is.na(is_open_data),
-                language != "English"
+                language != "English" | is.na(language)
             ) %>%
             nrow()
 
@@ -350,7 +352,6 @@ plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
         umc_no_data_sharing <- dataset %>%
             filter(
                 city == umc,
-                ! is.na(is_open_data),
                 language == "English",
                 ! is_open_data
             ) %>%
@@ -364,7 +365,7 @@ plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
             )
 
             upperlimit <- 1.1*sum(umc_numer,   umc_non_eng, umc_no_ft, umc_no_data_sharing)
-            ylabel <- "Number of publications"
+            ylabel <- "Number of articles"
             
         } else {
 
@@ -377,7 +378,7 @@ plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
             plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
 
             upperlimit <- 100
-            ylabel <- "Percentage of publications"
+            ylabel <- "Percentage of articles"
 
         }
         
@@ -391,7 +392,7 @@ plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
             )
 
             upperlimit <- 1.1*sum(all_numer,   all_non_eng, all_no_ft, all_no_data_sharing)
-            ylabel <- "Number of publications"
+            ylabel <- "Number of articles"
             
         } else {
 
@@ -401,7 +402,7 @@ plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
             )
 
             upperlimit <- 100
-            ylabel <- "Percentage of publications"
+            ylabel <- "Percentage of articles"
             
         }
 
@@ -424,10 +425,10 @@ plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
             )
         ) %>%
             add_trace(
-                y = ~non_eng,
-                name = "Non-English publication",
+                y = ~no_data_sharing,
+                name = "No data sharing",
                 marker = list(
-                    color = color_palette[6],
+                    color = color_palette[12],
                     line = list(
                         color = 'rgb(0,0,0)',
                         width = 1.5
@@ -436,7 +437,7 @@ plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
             ) %>%
             add_trace(
                 y = ~no_ft,
-                name = "No full text available",
+                name = "English but full text unavailable",
                 marker = list(
                     color = color_palette[7],
                     line = list(
@@ -446,10 +447,10 @@ plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
                 )
             ) %>%
             add_trace(
-                y = ~no_data_sharing,
-                name = "No data sharing",
+                y = ~non_eng,
+                name = "Non-English/no language info",
                 marker = list(
-                    color = color_palette[12],
+                    color = color_palette[6],
                     line = list(
                         color = 'rgb(0,0,0)',
                         width = 1.5
@@ -501,6 +502,9 @@ plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
 }
 
 ## Open Code
+
+## TODO: add filter for Articles if the pop dataset contains Articles and Reviews
+
 plot_opensci_oc <- function (dataset, umc, absnum, color_palette) {
 
     ## Remove non-analyzable and non-English data points
@@ -518,8 +522,7 @@ plot_opensci_oc <- function (dataset, umc, absnum, color_palette) {
 
     all_non_eng <- dataset %>%
         filter(
-            language != "English",
-            ! is.na(is_open_code)
+            language != "English" | is.na(language)
         ) %>%
         nrow()
 
@@ -532,7 +535,6 @@ plot_opensci_oc <- function (dataset, umc, absnum, color_palette) {
 
     all_no_code_sharing <- dataset %>%
         filter(
-            ! is.na(is_open_code),
             language == "English",
             ! is_open_code
         ) %>%
@@ -553,8 +555,7 @@ plot_opensci_oc <- function (dataset, umc, absnum, color_palette) {
         umc_non_eng <- dataset %>%
             filter(
                 city == umc,
-                language != "English",
-                ! is.na(is_open_code)
+                language != "English" | is.na(language)
             ) %>%
             nrow()
 
@@ -569,7 +570,6 @@ plot_opensci_oc <- function (dataset, umc, absnum, color_palette) {
         umc_no_code_sharing <- dataset %>%
             filter(
                 city == umc,
-                ! is.na(is_open_code),
                 language == "English",
                 !is_open_code
             ) %>%
@@ -583,7 +583,7 @@ plot_opensci_oc <- function (dataset, umc, absnum, color_palette) {
             )
 
             upperlimit <- 1.1*sum(umc_numer, umc_non_eng, umc_no_ft, umc_no_code_sharing)
-            ylabel <- "Number of publications"
+            ylabel <- "Number of articles"
             
         } else {
 
@@ -596,7 +596,7 @@ plot_opensci_oc <- function (dataset, umc, absnum, color_palette) {
             plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
 
             upperlimit <- 100
-            ylabel <- "Percentage of publications"
+            ylabel <- "Percentage of articles"
         }
         
     } else {
@@ -609,7 +609,7 @@ plot_opensci_oc <- function (dataset, umc, absnum, color_palette) {
             )
 
             upperlimit <- 1.1*sum(all_numer,   all_non_eng, all_no_ft, all_no_code_sharing)
-            ylabel <- "Number of publications"
+            ylabel <- "Number of articles"
             
         } else {
             
@@ -619,7 +619,7 @@ plot_opensci_oc <- function (dataset, umc, absnum, color_palette) {
             )
 
             upperlimit <- 100
-            ylabel <- "Percentage of publications"
+            ylabel <- "Percentage of articles"
             
         }
 
@@ -642,10 +642,10 @@ plot_opensci_oc <- function (dataset, umc, absnum, color_palette) {
             )
         ) %>%
             add_trace(
-                y = ~non_eng,
-                name = "Non-English publication",
+                y = ~no_code_sharing,
+                name = "No code sharing",
                 marker = list(
-                    color = color_palette[6],
+                    color = color_palette[12],
                     line = list(
                         color = 'rgb(0,0,0)',
                         width = 1.5
@@ -654,7 +654,7 @@ plot_opensci_oc <- function (dataset, umc, absnum, color_palette) {
             ) %>%
             add_trace(
                 y = ~no_ft,
-                name = "No full text available",
+                name = "English but full text unavailable",
                 marker = list(
                     color = color_palette[7],
                     line = list(
@@ -664,10 +664,10 @@ plot_opensci_oc <- function (dataset, umc, absnum, color_palette) {
                 )
             ) %>%
             add_trace(
-                y = ~no_code_sharing,
-                name = "No code sharing",
+                y = ~non_eng,
+                name = "Non-English/no language info",
                 marker = list(
-                    color = color_palette[12],
+                    color = color_palette[6],
                     line = list(
                         color = 'rgb(0,0,0)',
                         width = 1.5
@@ -854,10 +854,10 @@ plot_opensci_green_oa <- function (dataset, umc, absnum, color_palette) {
                 )
             ) %>%
             add_trace(
-                y = ~cant_archive,
+                y = ~no_data,
                 name = "No data available",
                 marker = list(
-                    color = color_palette[9],
+                    color = color_palette[7],
                     line = list(
                         color = 'rgb(0,0,0)',
                         width = 1.5
@@ -1415,8 +1415,9 @@ plot_randomization <- function (dataset, umc, absnum, color_palette) {
     all_numer <- dataset %>%
         filter(
             is_animal == 1,
+            language == "English",
             ! is.na(sciscore),
-            type == "Article"
+            type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
         ) %>%
         select(randomization) %>%
         sum(na.rm=TRUE)
@@ -1424,14 +1425,17 @@ plot_randomization <- function (dataset, umc, absnum, color_palette) {
     all_denom <- dataset %>%
         filter(
             is_animal == 1,
+            language == "English",
             ! is.na(sciscore),
-            type == "Article"
+            type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
         ) %>%
         nrow()
 
     all_nosciscore <- dataset %>%
         filter(
             is_animal == 1,
+            language == "English",
+            type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper",
             is.na(sciscore)
         ) %>%
         nrow()
@@ -1439,8 +1443,18 @@ plot_randomization <- function (dataset, umc, absnum, color_palette) {
     all_norando <- dataset %>%
         filter(
             is_animal == 1,
+            language == "English",
             ! is.na(sciscore),
+            type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper",
             randomization == 0
+        ) %>%
+        nrow()
+    
+    all_non_eng <- dataset %>%
+        filter(
+            is_animal == 1,
+            type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper",
+            language != "English" | is.na(language)
         ) %>%
         nrow()
 
@@ -1453,8 +1467,9 @@ plot_randomization <- function (dataset, umc, absnum, color_palette) {
             filter(
                 city == umc,
                 is_animal == 1,
+                language == "English",
                 ! is.na(sciscore),
-                type == "Article"
+                type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
             )
 
         umc_numer <- umc_numerator$randomization %>%
@@ -1464,8 +1479,9 @@ plot_randomization <- function (dataset, umc, absnum, color_palette) {
             filter(
                 city == umc,
                 is_animal == 1,
+                language == "English",
                 ! is.na(sciscore),
-                type == "Article"
+                type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
             ) %>%
             nrow()
 
@@ -1473,6 +1489,8 @@ plot_randomization <- function (dataset, umc, absnum, color_palette) {
             filter(
                 city == umc,
                 is_animal == 1,
+                language == "English",
+                type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper",
                 is.na(sciscore)
             ) %>%
             nrow()
@@ -1481,20 +1499,31 @@ plot_randomization <- function (dataset, umc, absnum, color_palette) {
             filter(
                 city == umc,
                 is_animal == 1,
+                language == "English",
+                type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper",
                 ! is.na(sciscore),
                 randomization == 0
+            ) %>%
+            nrow()
+        
+        umc_non_eng <- dataset %>%
+            filter(
+                city == umc,
+                is_animal == 1,
+                type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper",
+                language != "English" | is.na(language)
             ) %>%
             nrow()
 
         if (absnum) {
 
             plot_data <- tribble(
-                ~x_label, ~percentage, ~nosciscore,    ~norando,
-                umc,      umc_numer,   umc_nosciscore, umc_norando
+                ~x_label, ~percentage, ~nosciscore,    ~norando,   ~non_eng,
+                umc,      umc_numer,   umc_nosciscore, umc_norando, umc_non_eng
             )
 
-            upperlimit <- 1.1*sum(umc_numer, umc_nosciscore, umc_norando)
-            ylabel <- "Number of publications"
+            upperlimit <- 1.1*sum(umc_numer, umc_nosciscore, umc_norando, umc_non_eng)
+            ylabel <- "Number of animal studies"
             
         } else {
 
@@ -1507,7 +1536,7 @@ plot_randomization <- function (dataset, umc, absnum, color_palette) {
             plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
             
             upperlimit <- 100
-            ylabel <- "Percentage of publications"
+            ylabel <- "Percentage of animal studies"
             
         }
         
@@ -1516,12 +1545,12 @@ plot_randomization <- function (dataset, umc, absnum, color_palette) {
         if (absnum) {
 
             plot_data <- tribble(
-                ~x_label, ~percentage, ~nosciscore, ~norando,
-                "All",    all_numer,   all_nosciscore, all_norando
+                ~x_label, ~percentage, ~nosciscore, ~norando,   ~non_eng,
+                "All",    all_numer,   all_nosciscore, all_norando, all_non_eng
             )
 
-            upperlimit <- 1.1*sum(all_numer, all_nosciscore, all_norando)
-            ylabel <- "Number of publications"
+            upperlimit <- 1.1*sum(all_numer, all_nosciscore, all_norando, all_non_eng)
+            ylabel <- "Number of animal studies"
             
         } else {
 
@@ -1531,7 +1560,7 @@ plot_randomization <- function (dataset, umc, absnum, color_palette) {
             )
             
             upperlimit <- 100
-            ylabel <- "Percentage of publications"
+            ylabel <- "Percentage of animal studies"
 
         }        
     }
@@ -1542,7 +1571,7 @@ plot_randomization <- function (dataset, umc, absnum, color_palette) {
             plot_data,
             x = ~x_label,
             y = ~percentage,
-            name = "Randomized",
+            name = "Reported",
             type = 'bar',
             marker = list(
                 color = color_palette[3],
@@ -1554,7 +1583,7 @@ plot_randomization <- function (dataset, umc, absnum, color_palette) {
         ) %>%
             add_trace(
                 y = ~norando,
-                name = "Not randomized",
+                name = "Not reported",
                 marker = list(
                     color = color_palette[12],
                     line = list(
@@ -1565,9 +1594,20 @@ plot_randomization <- function (dataset, umc, absnum, color_palette) {
             ) %>%
             add_trace(
                 y = ~nosciscore,
-                name = "No Sciscore data",
+                name = "English but no data available",
                 marker = list(
                     color = color_palette[7],
+                    line = list(
+                        color = 'rgb(0,0,0)',
+                        width = 1.5
+                    )
+                )
+            ) %>%
+            add_trace(
+                y = ~non_eng,
+                name = "Non-English/no language info",
+                marker = list(
+                    color = color_palette[6],
                     line = list(
                         color = 'rgb(0,0,0)',
                         width = 1.5
@@ -1627,8 +1667,9 @@ plot_blinding <- function (dataset, umc, absnum, color_palette) {
     all_numer <- dataset %>%
         filter(
             is_animal == 1,
+            language == "English",
             ! is.na(sciscore),
-            type == "Article"
+            type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
         ) %>%
         select(blinding) %>%
         sum(na.rm=TRUE)
@@ -1636,14 +1677,17 @@ plot_blinding <- function (dataset, umc, absnum, color_palette) {
     all_denom <- dataset %>%
         filter(
             is_animal == 1,
+            language == "English",
             ! is.na(sciscore),
-            type == "Article"
+            type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
         ) %>%
         nrow()
 
     all_nosciscore <- dataset %>%
         filter(
             is_animal == 1,
+            language == "English",
+            type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper",
             is.na(sciscore)
         ) %>%
         nrow()
@@ -1651,8 +1695,18 @@ plot_blinding <- function (dataset, umc, absnum, color_palette) {
     all_noblind <- dataset %>%
         filter(
             is_animal == 1,
+            language == "English",
+            type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper",
             ! is.na(sciscore),
             blinding == 0
+        ) %>%
+        nrow()
+    
+    all_non_eng <- dataset %>%
+        filter(
+            is_animal == 1,
+            type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper",
+            language != "English" | is.na(language)
         ) %>%
         nrow()
 
@@ -1665,8 +1719,9 @@ plot_blinding <- function (dataset, umc, absnum, color_palette) {
             filter(
                 city == umc,
                 is_animal == 1,
-                ! is.na(sciscore),
-                type == "Article"
+                language == "English",
+                type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper",
+                ! is.na(sciscore)
             )
 
         umc_numer <- umc_numerator$blinding %>%
@@ -1676,8 +1731,9 @@ plot_blinding <- function (dataset, umc, absnum, color_palette) {
             filter(
                 city == umc,
                 is_animal == 1,
-                ! is.na(sciscore),
-                type == "Article"
+                language == "English",
+                type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper",
+                ! is.na(sciscore)
             ) %>%
             nrow()
 
@@ -1685,6 +1741,8 @@ plot_blinding <- function (dataset, umc, absnum, color_palette) {
             filter(
                 city == umc,
                 is_animal == 1,
+                language == "English",
+                type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper",
                 is.na(sciscore)
             ) %>%
             nrow()
@@ -1693,20 +1751,31 @@ plot_blinding <- function (dataset, umc, absnum, color_palette) {
             filter(
                 city == umc,
                 is_animal == 1,
+                language == "English",
+                type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper",
                 ! is.na(sciscore),
                 blinding == 0
+            ) %>%
+            nrow()
+        
+        umc_non_eng <- dataset %>%
+            filter(
+                city == umc,
+                is_animal == 1,
+                type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper",
+                language != "English" | is.na(language)
             ) %>%
             nrow()
 
         if (absnum) {
 
             plot_data <- tribble(
-                ~x_label, ~percentage, ~nosciscore,    ~noblind,
-                umc,      umc_numer,   umc_nosciscore, umc_noblind
+                ~x_label, ~percentage, ~nosciscore,    ~noblind,   ~non_eng,
+                umc,      umc_numer,   umc_nosciscore, umc_noblind, umc_non_eng
             )
 
-            upperlimit <- 1.1*sum(umc_numer, umc_nosciscore, umc_noblind)
-            ylabel <- "Number of publications"
+            upperlimit <- 1.1*sum(umc_numer, umc_nosciscore, umc_noblind, umc_non_eng)
+            ylabel <- "Number of animal studies"
             
         } else {
 
@@ -1719,7 +1788,7 @@ plot_blinding <- function (dataset, umc, absnum, color_palette) {
             plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
             
             upperlimit <- 100
-            ylabel <- "Percentage of publications"
+            ylabel <- "Percentage of animal studies"
             
         }
         
@@ -1728,12 +1797,12 @@ plot_blinding <- function (dataset, umc, absnum, color_palette) {
         if (absnum) {
 
             plot_data <- tribble(
-                ~x_label, ~percentage, ~nosciscore, ~noblind,
-                "All",    all_numer,   all_nosciscore, all_noblind
+                ~x_label, ~percentage, ~nosciscore, ~noblind,     ~non_eng,
+                "All",    all_numer,   all_nosciscore, all_noblind, all_non_eng
             )
 
-            upperlimit <- 1.1*sum(all_numer, all_nosciscore, all_noblind)
-            ylabel <- "Number of publications"
+            upperlimit <- 1.1*sum(all_numer, all_nosciscore, all_noblind, all_non_eng)
+            ylabel <- "Number of animal studies"
             
         } else {
 
@@ -1743,7 +1812,7 @@ plot_blinding <- function (dataset, umc, absnum, color_palette) {
             )
             
             upperlimit <- 100
-            ylabel <- "Percentage of publications"
+            ylabel <- "Percentage of animal studies"
             
         }
     }
@@ -1754,7 +1823,7 @@ plot_blinding <- function (dataset, umc, absnum, color_palette) {
             plot_data,
             x = ~x_label,
             y = ~percentage,
-            name = "Blinded",
+            name = "Reported",
             type = 'bar',
             marker = list(
                 color = color_palette[3],
@@ -1766,7 +1835,7 @@ plot_blinding <- function (dataset, umc, absnum, color_palette) {
         ) %>%
             add_trace(
                 y = ~noblind,
-                name = "Not blinded",
+                name = "Not reported",
                 marker = list(
                     color = color_palette[12],
                     line = list(
@@ -1777,9 +1846,20 @@ plot_blinding <- function (dataset, umc, absnum, color_palette) {
             ) %>%
             add_trace(
                 y = ~nosciscore,
-                name = "No Sciscore data",
+                name = "English but no data available",
                 marker = list(
                     color = color_palette[7],
+                    line = list(
+                        color = 'rgb(0,0,0)',
+                        width = 1.5
+                    )
+                )
+            ) %>%
+            add_trace(
+                y = ~non_eng,
+                name = "Non-English/no language info",
+                marker = list(
+                    color = color_palette[6],
                     line = list(
                         color = 'rgb(0,0,0)',
                         width = 1.5
@@ -1837,8 +1917,9 @@ plot_power <- function (dataset, umc, absnum, color_palette) {
     all_numer <- dataset %>%
         filter(
             is_animal == 1,
+            language == "English",
             ! is.na(sciscore),
-            type == "Article"
+            type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
         ) %>%
         select(power) %>%
         sum(na.rm=TRUE)
@@ -1846,14 +1927,17 @@ plot_power <- function (dataset, umc, absnum, color_palette) {
     all_denom <- dataset %>%
         filter(
             is_animal == 1,
+            language == "English",
             ! is.na(sciscore),
-            type == "Article"
+            type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
         ) %>%
         nrow()
 
     all_nosciscore <- dataset %>%
         filter(
             is_animal == 1,
+            language == "English",
+            type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper",
             is.na(sciscore)
         ) %>%
         nrow()
@@ -1861,8 +1945,18 @@ plot_power <- function (dataset, umc, absnum, color_palette) {
     all_nopower <- dataset %>%
         filter(
             is_animal == 1,
+            language == "English",
+            type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper",
             ! is.na(sciscore),
             power == 0
+        ) %>%
+        nrow()
+    
+    all_non_eng <- dataset %>%
+        filter(
+            is_animal == 1,
+            type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper",
+            language != "English" | is.na(language)
         ) %>%
         nrow()
 
@@ -1875,8 +1969,9 @@ plot_power <- function (dataset, umc, absnum, color_palette) {
             filter(
                 city == umc,
                 is_animal == 1,
+                language == "English",
                 ! is.na(sciscore),
-                type == "Article"
+                type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
             )
 
         umc_numer <- umc_numerator$power %>%
@@ -1886,8 +1981,9 @@ plot_power <- function (dataset, umc, absnum, color_palette) {
             filter(
                 city == umc,
                 is_animal == 1,
+                language == "English",
                 ! is.na(sciscore),
-                type == "Article"
+                type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
             ) %>%
             nrow()
 
@@ -1895,6 +1991,8 @@ plot_power <- function (dataset, umc, absnum, color_palette) {
             filter(
                 city == umc,
                 is_animal == 1,
+                language == "English",
+                type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper",
                 is.na(sciscore)
             ) %>%
             nrow()
@@ -1903,20 +2001,31 @@ plot_power <- function (dataset, umc, absnum, color_palette) {
             filter(
                 city == umc,
                 is_animal == 1,
+                language == "English",
+                type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper",
                 ! is.na(sciscore),
                 power == 0
+            ) %>%
+            nrow()
+        
+        umc_non_eng <- dataset %>%
+            filter(
+                city == umc,
+                is_animal == 1,
+                type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper",
+                language != "English" | is.na(language)
             ) %>%
             nrow()
 
          if (absnum) {
 
             plot_data <- tribble(
-                ~x_label, ~percentage, ~nosciscore,    ~nopower,
-                umc,      umc_numer,   umc_nosciscore, umc_nopower
+                ~x_label, ~percentage, ~nosciscore,    ~nopower,    ~non_eng,
+                umc,      umc_numer,   umc_nosciscore, umc_nopower, umc_non_eng
             )
 
-            upperlimit <- 1.1*sum(umc_numer, umc_nosciscore, umc_nopower)
-            ylabel <- "Number of publications"
+            upperlimit <- 1.1*sum(umc_numer, umc_nosciscore, umc_nopower, umc_non_eng)
+            ylabel <- "Number of animal studies"
             
          } else {
 
@@ -1929,7 +2038,7 @@ plot_power <- function (dataset, umc, absnum, color_palette) {
              plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
             
             upperlimit <- 100
-            ylabel <- "Percentage of publications"
+            ylabel <- "Percentage of animal studies"
              
          }
         
@@ -1938,12 +2047,12 @@ plot_power <- function (dataset, umc, absnum, color_palette) {
         if (absnum) {
 
             plot_data <- tribble(
-                ~x_label, ~percentage, ~nosciscore, ~nopower,
-                "All",    all_numer,   all_nosciscore, all_nopower
+                ~x_label, ~percentage, ~nosciscore, ~nopower,    ~non_eng,
+                "All",    all_numer,   all_nosciscore, all_nopower, all_non_eng
             )
 
-            upperlimit <- 1.1*sum(all_numer, all_nosciscore, all_nopower)
-            ylabel <- "Number of publications"
+            upperlimit <- 1.1*sum(all_numer, all_nosciscore, all_nopower, all_non_eng)
+            ylabel <- "Number of animal studies"
             
         } else {
 
@@ -1953,7 +2062,7 @@ plot_power <- function (dataset, umc, absnum, color_palette) {
             )
             
             upperlimit <- 100
-            ylabel <- "Percentage of publications"
+            ylabel <- "Percentage of animal studies"
             
         }
         
@@ -1965,7 +2074,7 @@ plot_power <- function (dataset, umc, absnum, color_palette) {
             plot_data,
             x = ~x_label,
             y = ~percentage,
-            name = "Power calculation reported",
+            name = "Reported",
             type = 'bar',
             marker = list(
                 color = color_palette[3],
@@ -1977,7 +2086,7 @@ plot_power <- function (dataset, umc, absnum, color_palette) {
         ) %>%
             add_trace(
                 y = ~nopower,
-                name = "No power calculation",
+                name = "Not reported",
                 marker = list(
                     color = color_palette[12],
                     line = list(
@@ -1988,9 +2097,20 @@ plot_power <- function (dataset, umc, absnum, color_palette) {
             ) %>%
             add_trace(
                 y = ~nosciscore,
-                name = "No Sciscore data",
+                name = "English but no data available",
                 marker = list(
                     color = color_palette[7],
+                    line = list(
+                        color = 'rgb(0,0,0)',
+                        width = 1.5
+                    )
+                )
+            ) %>%
+            add_trace(
+                y = ~non_eng,
+                name = "Non-English/no language info",
+                marker = list(
+                    color = color_palette[6],
                     line = list(
                         color = 'rgb(0,0,0)',
                         width = 1.5

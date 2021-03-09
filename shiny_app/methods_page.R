@@ -80,11 +80,32 @@ methods_page <- tabPanel(
                         that repository versions are often made available with a delay, such that the OA
                         percentage for a given year typically rises retrospectively. Thus, the point in time
                         at which the OA status is retrieved is important for the OA percentage. The current
-                        OA data was retrieved on: 26/01/2021.'),
+                        OA data was retrieved on: 28/02/2021.'),
                              
                              "Unpaywall only stores information for publications which have a DOI assigned by
                         Crossref. Articles without a Crossref DOI have to be excluded from the OA analysis."),
                
+               methods_panel("Potential Green Open Access (OA)",
+                             
+                             "This metric measures how many publications currently hidden behind a paywall
+                             could be made openly accessible by depositing the accepted version in a repository.
+                             In many cases, journal or publisher self-archiving policies allow researchers to
+                             make the accepted version of their publication openly accessible in a repository
+                             6 to 12 months after publication.",
+                             
+                             HTML('In a first step, we filtered our dataset for publications which are currently
+                             behind a paywall ("closed"). Then, we queried the
+                             <a href="https://shareyourpaper.org/permissions/about#api">
+                             Shareyourpaper.org permissions API</a> (Open Access button) to obtain article-level
+                             self-archiving permissions and identify publications which could be made openly
+                             accessible by depositing the accepted version in an institutional or generalist repository.'),
+                             
+                             "The method relies on the Shareyourpaper.org permissions database being up-to-date. We
+                             only included publications which have an authoritative permission in the Shareyourpaper.org
+                             database. The date at which a publication can be made openly accessible via self-archiving
+                             depends on the publication date and the length of the embargo (if any). Therefore, the
+                             number of potential green OA research articles will change over time. The Shareyourpaper
+                             permissions API was queried on 28/02/2021."),
                
                methods_panel("Open Data and Open Code",
                              
@@ -132,34 +153,80 @@ methods_page <- tabPanel(
                         We considered all publications which had at least one author affiliated to one of the
                         included UMCs. Depending on an author's contribution to a project, he/she/they may have
                         differing influence on the decision whether to make data or code available alongside
-                        a publication."),
-               
-               
-               methods_panel("Potential Green Open Access (OA)",
-                             
-                             "This metric measures how many publications currently hidden behind a paywall
-                             could be made openly accessible in a repository based on journal self-archiving
-                             policies.In most cases, journal self-archiving policies allow researchers to
-                             make the accepted version (and in some cases the published version) of their
-                             publication openly accessible in a repository 6 to 12 months after publication.",
-                             
-                             HTML('In a first step, we filtered our dataset for publications which are currently
-                             not OA (this includes bronze Open Access). Then, we queried the
-                             <a href="https://shareyourpaper.org/permissions/about#api">
-                             Shareyourpaper.org permissions API</a> (Open Access button) to identify
-                                  publications which can be made openly accessible in an institutional
-                                  or generalist repository based on article-level self-archiving permissions.'),
-                             
-                             "The method relies on the Shareyourpaper.org (Open Access Button) permissions
-                             database being up to date. The date at which a publication can be made openly
-                             accessible via self-archiving depends on the publication date and the length of
-                             the embargo (if any). Therefore, the number of potential green OA research articles
-                             will change over time. The Shareyourpaper permissions API was queried on
-                             [enter date]")),
+                        a publication.")),
     
     hr(),
     h2("Clinical trials"),
     bsCollapse(id = "methodsPanels_ClinicalTrials",
+               methods_panel("Summary results reporting",
+                             
+                             "This metric measures how many clinical trials registered in the
+                        EU Clinical Trials Register that are due to report their results have already
+                        done so. A trial is due to report its results 12 month after trial completion.
+                        Clinical trials are expensive and have often many contributing patients.
+                        A fast dissemination of the trial results is crucial to make the evidence gained
+                        in those trials available. The World Health organization recommends publishing
+                        clinical trial results within one year after the end of a study.",
+                             
+                             HTML('The data were retrieved for all UMCs included in this proof-of-principle
+                             dataset from the
+                        <a href="https://eu.trialstracker.net">EU Trials Tracker</a> by the EBM DataLab.'),
+                             
+                             "While the EU Clinical Trials Register is one of the most important
+                        European trial registries, it is not the only available registry. There are other
+                        registries such as ClinicalTrials.gov. or the German Clinical Trials Registry,
+                        which are not considered here. Additionally, the EU Trials Tracker does not
+                        measure for how long the trials have been due. Finally, we only considered the
+                             latest data available in the EU Trials Tracker. We plan to include historic
+                             data in the future."),
+               
+               methods_panel("Prospective registration",
+                             
+                             "This metric measures if the clinical trials are registered before the
+                        start date of the study, according to the information given on ClinicalTrials.gov.
+                        The idea of prospective registration of studies is to make the trial specifications,
+                        including primary and secondary outcomes, publicly available before study start.
+                        Prospective registration adds transparency, helps protect against outcome switching.",
+                             
+                             "We used the same methods as for the timely reporting metric to identify trials
+                             from UMCs. To assess if a study has been prospectively registered, we compare
+                        the date the study was first submitted to the registry with the
+                        start date given in the registry. As some of the earlier dates in the database
+                        only stated the month but not the exact day and to account for other possible delays
+                        we chose a conservative estimate of prospective registration and allow for a delay
+                        between start and registration date of up to 60 days.",
+                             
+                             "Like in the case of the summary results metric, we only focused on the
+                        ClinicalTrials.gov while there are other available registries as well.
+                        Also, we rely on the information on ClinicalTrials.gov being accurate."),
+               
+               methods_panel("Timely publication of results",
+                             
+                             "This metric measures how many clinical trials registered on ClinicalTrials.gov
+                        reported their results either as a journal publication or as summary
+                        results on the trials registry within 2 or 5 years after completion. Trials
+                        completed between 2009 and 2013 were considered.
+                        A fast dissemination of the trial results is crucial to make the evidence gained
+                        in those trials available. The World Health organization recommends publishing
+                        clinical trial results within one year after the end of a study.",
+                             
+                             HTML('The registry ClinicalTrials.gov was searched for studies with one of the UMCs
+                             as the responsible party/sponsor or with a principle investigator from one of the
+                             UMCs. A manual search for published results was done, searching the
+                        registry, PubMed and Google. When calculating the time to publication, we only
+                        considered trials where we could track the full timeframe since completion.
+                        As not all trials could be tracked for 5 years since completion at
+                        the time when this study was carried out, we have less trials where we can
+                        report the publications 5 years after completion. The results were previously
+                        published as part of the <a href="https://s-quest.bihealth.org/intovalue/">IntoValue study</a>.
+                        Detailed methods can be found under
+                        <a href="https://doi.org/10.1101/467746">https://doi.org/10.1101/467746</a>.'),
+                             "Some detected publications might be missed in the manual search
+                        procedure as we only searched a limited number of scientific databases and did not
+                        contact the responsible parties. Furthermore, we did not include observational clinical
+                        studies in our sample. Additionally, we might overestimate the time to publication
+                        for some studies as we stopped the manual search after the first detected publication."),
+               
                methods_panel("Reporting of Trial Registration Number (TRN)",
                              
                              HTML("Reporting of clinical trial registration numbers in related publications
@@ -191,79 +258,8 @@ methods_page <- tabPanel(
                                   distinguish true TRNs that do not resolve to a registration. Finally, the
                                   algorithm does not determine whether the TRN is reported as a registration
                                   for the publication&#39s study (i.e., clinical trial result) or is otherwise
-                                  mentioned (i.e., in a review, reference to other clinical trials, etc.)")),
+                                  mentioned (i.e., in a review, reference to other clinical trials, etc.)"))),
                
-               methods_panel("Summary results reporting",
-                             
-                             "This metric measures how many clinical trials registered in the
-                        EU Clinical Trials Register that are due to report their results have already
-                        done so. A trial is due to report its results 12 month after trial completion.
-                        Clinical trials are expensive and have often many contributing patients.
-                        A fast dissemination of the trial results is crucial to make the evidence gained
-                        in those trials available. The World Health organization recommends publishing
-                        clinical trial results within one year after the end of a study.",
-                             
-                             HTML('The data were retrieved for all UMCs included in this proof-of-principle
-                             dataset from the
-                        <a href="https://eu.trialstracker.net">EU Trials Tracker</a> by the EBM DataLab.'),
-                             
-                             "While the EU Clinical Trials Register is one of the most important
-                        European trial registries, it is not the only available registry. There are other
-                        registries such as ClinicalTrials.gov. or the German Clinical Trials Registry,
-                        which are not considered here. Additionally, the EU Trials Tracker does not
-                        measure for how long the trials have been due. Finally, we only considered the
-                             latest data available in the EU Trials Tracker. We plan to include historic
-                             data in the future."),
-               
-               methods_panel("Timely publication of results",
-                             
-                             "This metric measures how many clinical trials registered on ClinicalTrials.gov
-                        reported their results either as a journal publication or as summary
-                        results on the trials registry within 2 or 5 years after completion. Trials
-                        completed between 2009 and 2013 were considered.
-                        A fast dissemination of the trial results is crucial to make the evidence gained
-                        in those trials available. The World Health organization recommends publishing
-                        clinical trial results within one year after the end of a study.",
-                             
-                             HTML('The registry ClinicalTrials.gov was searched for studies with one of the UMCs
-                             as the responsible party/sponsor or with a principle investigator from one of the
-                             UMCs. A manual search for published results was done, searching the
-                        registry, PubMed and Google. When calculating the time to publication, we only
-                        considered trials where we could track the full timeframe since completion.
-                        As not all trials could be tracked for 5 years since completion at
-                        the time when this study was carried out, we have less trials where we can
-                        report the publications 5 years after completion. The results were previously
-                        published as part of the <a href="https://s-quest.bihealth.org/intovalue/">IntoValue study</a>.
-                        Detailed methods can be found under
-                        <a href="https://doi.org/10.1101/467746">https://doi.org/10.1101/467746</a>.'),
-                             "Some detected publications might be missed in the manual search
-                        procedure as we only searched a limited number of scientific databases and did not
-                        contact the responsible parties. Furthermore, we did not include observational clinical
-                        studies in our sample. Additionally, we might overestimate the time to publication
-                        for some studies as we stopped the manual search after the first detected publication."),
-               
-               
-               
-               methods_panel("Prospective registration",
-                             
-                             "This metric measures if the clinical trials are registered before the
-                        start date of the study, according to the information given on ClinicalTrials.gov.
-                        The idea of prospective registration of studies is to make the trial specifications,
-                        including primary and secondary outcomes, publicly available before study start.
-                        Prospective registration adds transparency, helps protect against outcome switching.",
-                             
-                             "We used the same methods as for the timely reporting metric to identify trials
-                             from UMCs. To assess if a study has been prospectively registered, we compare
-                        the date the study was first submitted to the registry with the
-                        start date given in the registry. As some of the earlier dates in the database
-                        only stated the month but not the exact day and to account for other possible delays
-                        we chose a conservative estimate of prospective registration and allow for a delay
-                        between start and registration date of up to 60 days.",
-                             
-                             "Like in the case of the summary results metric, we only focused on the
-                        ClinicalTrials.gov while there are other available registries as well.
-                        Also, we rely on the information on ClinicalTrials.gov being accurate.")),
-    
     hr(),
     h2("Robustness"),
     bsCollapse(id = "methodsPanels_Robustness",
@@ -395,8 +391,8 @@ randomization_tooltip <- strwrap("This metric measures how many animal studies r
                             randomization of subjects into groups. Animal studies were identified using a
                             previously published PubMed search filter. Reporting of randomization was evaluated
                             with SciScore, an automated tool which evaluates research articles based on their
-                            adherence to rigour and reproducibility criteria. Only publications in the
-                            PubMed Central corpus and which could be analyzed by SciScore are were included
+                            adherence to rigour and reproducibility criteria. Only animal studies in English in the
+                            PubMed Central corpus for which we have SciScore data are were included
                             in this analysis.") %>%
     
 paste(collapse = " ")
@@ -406,9 +402,9 @@ blinding_tooltip <- strwrap("This metric measures how many animal studies report
                             investigators were blinded to group assignment and/or outcome assessment. Animal
                             studies were identified using a previously published PubMed search filter. Reporting
                             of blinding was evaluated with SciScore, an automated tool which evaluates research
-                            articles based on their adherence to rigour and reproducibility criteria. Only
-                            publications in the PubMed Central corpus and which could be analyzed by SciScore
-                            are were included in this analysis.") %>%
+                            articles based on their adherence to rigour and reproducibility criteria. Only animal
+                            studies in English in the PubMed Central corpus for which we have SciScore data are were
+                            included in this analysis.") %>%
 
 paste(collapse = " ")
 
@@ -417,38 +413,40 @@ power_tooltip <- strwrap("This metric measures how many animal studies report a 
                          calculation. Animal studies were identified using a previously published PubMed search
                          filter. Reporting of sample size calculation was evaluated with SciScore, an automated
                          tool which evaluates research articles based on their adherence to rigour and
-                         reproducibility criteria. Only publications in the PubMed Central corpus and which
-                         could be analyzed by SciScore are were included in this analysis.") %>%
+                         reproducibility criteria. Only animal studies in English in the
+                            PubMed Central corpus for which we have SciScore data are were included
+                            in this analysis.") %>%
     
 paste(collapse = " ")
 
-greenopenaccess_tooltip <- strwrap("This is the number of publications currently behind a paywall that could be made openly accessible by depositing the accepted version in a repository.")
+greenopenaccess_tooltip <- strwrap("This is the number of publications currently behind a paywall that could be
+                                   made openly accessible by depositing the accepted version in a repository.")
 
                                         # iacuc_tooltip <- strwrap("This metric measures how many animal studies report an Institutional animal care and
 #                          use committee statement.") %>%
 #     
 # paste(collapse = " ")
 
-lim_randomization_tooltip <- strwrap("Randomization, blinding, and sample size estimation may not always apply, especially in early-stage exploratory research (hypothesis-generating experiments). At present, we do not have a way of distinguishing these studies from confirmatory, hypothesis-testing experiments.")
-lim_blinding_tooltip <- strwrap("Randomization, blinding, and sample size estimation may not always apply, especially in early-stage exploratory research (hypothesis-generating experiments). At present, we do not have a way of distinguishing these studies from confirmatory, hypothesis-testing experiments.")
-lim_power_tooltip <- strwrap("Randomization, blinding, and sample size estimation may not always apply, especially in early-stage exploratory research (hypothesis-generating experiments). At present, we do not have a way of distinguishing these studies from confirmatory, hypothesis-testing experiments.")
+lim_randomization_tooltip <- strwrap("We did not test the sensitivity and specificity of the approach used to identify animal studies in our dataset, nor the data obtained from SciScore. Moreover, we do not have SciScore data for all studies in our publication set. Finally, randomization may not always apply, especially in early-stage exploratory research (hypothesis-generating experiments).")
+lim_blinding_tooltip <- strwrap("We did not test the sensitivity and specificity of the approach used to identify animal studies in our dataset, nor the data obtained from SciScore. Moreover, we do not have SciScore data for all studies in our publication set. Finally, blinding may not always apply, especially in early-stage exploratory research (hypothesis-generating experiments).")
+lim_power_tooltip <- strwrap("We did not test the sensitivity and specificity of the approach used to identify animal studies in our dataset, nor the data obtained from SciScore. Moreover, we do not have SciScore data for all studies in our publication set. Finally, sample size calculation may not always apply, especially in early-stage exploratory research (hypothesis-generating experiments).")
 lim_sumres_tooltip <- strwrap("While the EU Clinical Trials Register is one of the most important European trial registries, it is not the only available registry. There are other registries such as ClinicalTrials.gov. or the German Clinical Trials Registry, which are not considered here. Additionally, the EU Trials Tracker does not measure for how long the trials have been due. Finally, we only considered the latest data available in the EU Trials Tracker. We plan to include historic data in the future.")
 lim_prereg_tooltip <- strwrap("Like in the case of the summary results metric, we only focused on the ClinicalTrials.gov while there are other available registries as well. Also, we rely on the information on ClinicalTrials.gov being accurate.")
 lim_timpub_tooltip <- strwrap("Some detected publications might be missed in the manual search procedure as we only searched a limited number of scientific databases and did not contact the responsible parties. Furthermore, we did not include observational clinical studies in our sample. Additionally, we might overestimate the time to publication for some studies as we stopped the manual search after the first detected publication.")
 lim_trn_tooltip <- strwrap("We identified human clinical trials based on the following search term in PubMed: 'clinical trial'[pt] NOT (animals [mh] NOT humans [mh]). However, we have not tested (1) the sensitivity of this PubMed search term (i.e., what proportion of true clinical trial publications are detected?); (2) the specificity of this search term (i.e, what proportion of detected publications are not true clinical trials publications?). Furthermore, our algorithm does not distinguish true TRNs that do not resolve to a registration. Finally, the algorithm does not determine whether the TRN is reported as a registration for the publication's study (i.e., clinical trial result) or is otherwise mentioned (i.e., in a review, reference to other clinical trials, etc.)")
 
-lim_openaccess_tooltip <- strwrap("Unpaywall only stores information for publications which have a DOI assigned by Crossref. Articles without a Crossref DOI have to be excluded from the OA analysis.")
-lim_greenopenaccess_tooltip <- strwrap("The method relies on the Shareyourpaper.org (Open Access Button) permissions database being up to date. The date at which a publication can be made openly accessible via self-archiving depends on the publication date and the length of the embargo (if any). Therefore, the number of potential green OA research articles will change over time. The Shareyourpaper permissions API was queried on [enter date]")
-lim_opendata_tooltip <- strwrap("Open Data is not relevant for all publications, so we would not expect 100% of the publications to contain Open Data, not even in an ideal case.")
-lim_opencode_tooltip <- strwrap("Depending on author contributions to a project, they may have differing influence on the decision whether to make data or code available alongside a publication.")
-lim_allumc_openaccess_tooltip <- strwrap("Unpaywall only stores information for publications which have a DOI assigned by Crossref. Articles without a Crossref DOI have to be excluded from the OA analysis.")
-lim_allumc_opendata_tooltip <- strwrap("Open Data is not relevant for all publications, so we would not expect 100% of the publications to contain Open Data, not even in an ideal case.")
-lim_allumc_opencode_tooltip <- strwrap("Depending on an author's contribution to a project, he/she/they may have differing influence on the decision whether to make data or code available alongside a publication.")
+lim_openaccess_tooltip <- strwrap("Unpaywall only stores information for publications which have a DOI assigned by Crossref. Articles without a Crossref DOI have to be excluded from the OA analysis. The OA percentage is not a fixed number, but changes over time as some publications become accessible with a delay. The current data was retrieved on: 28/02/2021.")
+lim_greenopenaccess_tooltip <- strwrap("The method relies on the Shareyourpaper.org (Open Access Button) permissions database being up to date. The date at which a publication can be made openly accessible via self-archiving depends on the publication date and the length of the embargo (if any). Therefore, the number of potential green OA research articles will change over time. The Shareyourpaper permissions API was queried on 28/02/2021.")
+lim_opendata_tooltip <- strwrap("This analysis could only be performed on articles for which we could access the full text. ODDPub only finds ~75% of all Open Data publications and finds false positive cases (no manual check of the results). ODDPub also does not verify that the dataset is available and whether it fulfills our definition of Open Data. Finally, Open Data is not relevant for all publications.")
+lim_opencode_tooltip <- strwrap("This analysis could only be performed on articles for which we could access the full text. ODDPub only finds ~75% of all publications with Open Code and finds false positive cases (no manual check of the results). ODDPub also does not verify that the code is available and whether it fulfills our definition of Open Code Finally, Open Code is not relevant for all publications.")
+lim_allumc_openaccess_tooltip <- strwrap("Unpaywall only stores information for publications which have a DOI assigned by Crossref. Articles without a Crossref DOI have to be excluded from the OA analysis. The OA percentage is not a fixed number, but changes over time as some publications become accessible with a delay. The current data was retrieved on: 28/02/2021.")
+lim_allumc_opendata_tooltip <- strwrap("This analysis could only be performed on articles for which we could access the full text. ODDPub only finds ~75% of all Open Data publications and finds false positive cases (no manual check of the results). ODDPub also does not verify that the dataset is available and whether it fulfills our definition of Open Data. Finally, Open Data is not relevant for all publications.")
+lim_allumc_opencode_tooltip <- strwrap("This analysis could only be performed on articles for which we could access the full text. ODDPub only finds ~75% of all publications with Open Code and finds false positive cases (no manual check of the results). ODDPub also does not verify that the code is available and whether it fulfills our definition of Open Code Finally, Open Code is not relevant for all publications.")
 
 lim_allumc_clinicaltrials_trn_tooltip <- strwrap("We identified human clinical trials based on the following search term in PubMed: 'clinical trial'[pt] NOT (animals [mh] NOT humans [mh]). However, we have not tested (1) the sensitivity of this PubMed search term (i.e., what proportion of true clinical trial publications are detected?); (2) the specificity of this search term (i.e, what proportion of detected publications are not true clinical trials publications?). Furthermore, our algorithm does not distinguish true TRNs that do not resolve to a registration. Finally, the algorithm does not determine whether the TRN is reported as a registration for the publication's study (i.e., clinical trial result) or is otherwise mentioned (i.e., in a review, reference to other clinical trials, etc.)")
 lim_allumc_clinicaltrials_sumres_tooltip <- strwrap("While the EU Clinical Trials Register is one of the most important European trial registries, it is not the only available registry. There are other registries such as ClinicalTrials.gov. or the German Clinical Trials Registry, which are not considered here. Additionally, the EU Trials Tracker does not measure for how long the trials have been due. Finally, we only considered the latest data available in the EU Trials Tracker. We plan to include historic data in the future.")
 lim_allumc_clinicaltrials_prereg_tooltip <- strwrap("Like in the case of the summary results metric, we only focused on the ClinicalTrials.gov while there are other available registries as well. Also, we rely on the information on ClinicalTrials.gov being accurate.")
 lim_allumc_clinicaltrials_timpub_tooltip <- strwrap("Some detected publications might be missed in the manual search procedure as we only searched a limited number of scientific databases and did not contact the responsible parties. Furthermore, we did not include observational clinical studies in our sample. Additionally, we might overestimate the time to publication for some studies as we stopped the manual search after the first detected publication.")
-lim_allumc_animal_rando_tooltip <- strwrap("Randomization, blinding, and sample size estimation may not always apply, especially in early-stage exploratory research (hypothesis-generating experiments). At present, we do not have a way of distinguishing these studies from confirmatory, hypothesis-testing experiments.")
-lim_allumc_animal_blind_tooltip <- strwrap("Randomization, blinding, and sample size estimation may not always apply, especially in early-stage exploratory research (hypothesis-generating experiments). At present, we do not have a way of distinguishing these studies from confirmatory, hypothesis-testing experiments.")
-lim_allumc_animal_power_tooltip <- strwrap("Randomization, blinding, and sample size estimation may not always apply, especially in early-stage exploratory research (hypothesis-generating experiments). At present, we do not have a way of distinguishing these studies from confirmatory, hypothesis-testing experiments.")
+lim_allumc_animal_rando_tooltip <- strwrap("We did not test the sensitivity and specificity of the approach used to identify animal studies in our dataset, nor the data obtained from SciScore. Moreover, we do not have SciScore data for all studies in our publication set. Finally, randomization may not always apply, especially in early-stage exploratory research (hypothesis-generating experiments).")
+lim_allumc_animal_blind_tooltip <- strwrap("We did not test the sensitivity and specificity of the approach used to identify animal studies in our dataset, nor the data obtained from SciScore. Moreover, we do not have SciScore data for all studies in our publication set. Finally, blinding may not always apply, especially in early-stage exploratory research (hypothesis-generating experiments).")
+lim_allumc_animal_power_tooltip <- strwrap("We did not test the sensitivity and specificity of the approach used to identify animal studies in our dataset, nor the data obtained from SciScore. Moreover, we do not have SciScore data for all studies in our publication set. Finally, sample size calculation may not always apply, especially in early-stage exploratory research (hypothesis-generating experiments).")

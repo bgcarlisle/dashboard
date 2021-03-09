@@ -157,12 +157,18 @@ server <- function (input, output, session) {
                     h1(style = "margin-left:0cm", strong("Proof-of-principle Responsible Metrics Dashboard (2018)"), align = "left"),
                     h4(style = "margin-left:0cm",
                        "This dashboard is a proof-of-principle overview of several metrics of open and robust
-                       research for several German University Medical Centres (UMCs). Besides the metrics
-                       Summary Results Reporting, Prospective Registration, and Timely Publication, all other
-                       publication-based metrics are based on publications published in 2018. For more detailed
-                       information on the methods used to calculate those metrics, click one of the following buttons."),
+                       research for several German University Medical Centres (UMCs). This dashboard is a pilot
+                       that is still under development, and should not be used to compare UMCs or inform policy.
+                       More metrics may be added in the future."),
                     h4(style = "margin-left:0cm",
-                       "This dashboard is a pilot that is still under development, and should not be used to compare UMC's or inform policy. More metrics may be added in the future."),
+                       "Besides the metrics
+                       Summary Results Reporting, Prospective Registration, and Timely Publication, all other
+                       metrics are based on publications from 2018. For the Open Science and Robustness metrics,
+                       the data can be viewed as 1) the percentage of analyzable publications which display the
+                       given metric; 2) the absolute number of eligible publications which display the given
+                       metric. For each metric, you can find an overview of the methods and limitations by clicking
+                       on the relevant symbols. For more detailed information on the methods and underlying datasets
+                       used to calculate those metrics, visit the Methods or Datasets pages."),
                     br()
                 ),
                 column(
@@ -173,7 +179,7 @@ server <- function (input, output, session) {
                     actionButton(
                         style = "color: white; background-color: #aa1c7d;",
                         'buttonAllUMCs',
-                        'See all UMC\'s'
+                        'See all UMCs'
                     ),
                     actionButton(
                         style = "color: white; background-color: #aa1c7d;",
@@ -183,7 +189,7 @@ server <- function (input, output, session) {
                     actionButton(
                         style = "color: white; background-color: #aa1c7d;",
                         'buttonDatasets',
-                        'See data sets'
+                        'See datasets'
                     ),
                     br()
                 )
@@ -810,7 +816,7 @@ server <- function (input, output, session) {
                     col_width,
                     metric_box(
                         title = "Potential Green OA",
-                        value = paste0(numer_greenoa, "/", denom_greenoa),
+                        value = paste0(round(100*numer_greenoa/denom_greenoa), "%"),
                         value_text = "paywalled publications could be made openly accessible",
                         plot = plotlyOutput('plot_opensci_green_oa', height="300px"),
                         info_id = "infoGreenOA",
@@ -1217,6 +1223,10 @@ server <- function (input, output, session) {
     color_palette <- c("#B6B6B6", "#879C9D", "#F1BA50", "#AA493A",
                      "#303A3E", "#007265", "#634587", "#000000",   #363457 #533A71 #011638 #634587
                      "#DCE3E5")
+    
+    color_palette_delwen <- c("#B6B6B6", "#879C9D", "#F1BA50", "#cf9188",  
+                              "#303A3E", "#2f4858", "#158376", "#007265", 
+                              "#DCE3E5", "#634587", "#000000", "#539d66")
 
     color_palette_bars <- c("#AA1C7D", "#879C9D", "#F1BA50", "#AA493A", "#303A3E", "#007265", "#634587", "#AA1C7D", "#879C9D", "#F1BA50", "#AA493A", "#303A3E", "#007265", "#634587")
 
@@ -1224,22 +1234,22 @@ server <- function (input, output, session) {
     
     ## Open Access plot
     output$plot_opensci_oa <- renderPlotly({
-        return (plot_opensci_oa(rm_data, input$selectUMC, input$opensci_absnum, color_palette))
+        return (plot_opensci_oa(rm_data, input$selectUMC, input$opensci_absnum, color_palette_delwen))
     })
     
     ## Open Data plot
     output$plot_opensci_od <- renderPlotly({
-        return (plot_opensci_od(rm_data, input$selectUMC, input$opensci_absnum, color_palette))
+        return (plot_opensci_od(rm_data, input$selectUMC, input$opensci_absnum, color_palette_delwen))
     })
     
     ## Open Code plot
     output$plot_opensci_oc <- renderPlotly({
-        return (plot_opensci_oc(rm_data, input$selectUMC, input$opensci_absnum, color_palette))
+        return (plot_opensci_oc(rm_data, input$selectUMC, input$opensci_absnum, color_palette_delwen))
     })
     
     ## Green Open Access plot
     output$plot_opensci_green_oa <- renderPlotly({
-        return (plot_opensci_green_oa(rm_data, input$selectUMC, input$opensci_absnum, color_palette))
+        return (plot_opensci_green_oa(rm_data, input$selectUMC, input$opensci_absnum, color_palette_delwen))
     })
     
     ## TRN plot
@@ -1264,17 +1274,17 @@ server <- function (input, output, session) {
 
     ## Robustness plot
     output$plot_randomization <- renderPlotly({
-        return (plot_randomization(rm_data, input$selectUMC, input$animals_absnum, color_palette))
+        return (plot_randomization(rm_data, input$selectUMC, input$animals_absnum, color_palette_delwen))
     })
 
     ## Blinding plot
     output$plot_blinding <- renderPlotly({
-        return(plot_blinding(rm_data, input$selectUMC, input$animals_absnum, color_palette))
+        return(plot_blinding(rm_data, input$selectUMC, input$animals_absnum, color_palette_delwen))
     })
 
     ## Power calc plot
     output$plot_power <- renderPlotly({
-        return(plot_power(rm_data, input$selectUMC, input$animals_absnum, color_palette))
+        return(plot_power(rm_data, input$selectUMC, input$animals_absnum, color_palette_delwen))
     })
 
     ## IACUC plot
