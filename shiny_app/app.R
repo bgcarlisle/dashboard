@@ -157,12 +157,18 @@ server <- function (input, output, session) {
                     h1(style = "margin-left:0cm", strong("Proof-of-principle Responsible Metrics Dashboard (2018)"), align = "left"),
                     h4(style = "margin-left:0cm",
                        "This dashboard is a proof-of-principle overview of several metrics of open and robust
-                       research for several German University Medical Centres (UMCs). Besides the metrics
-                       Summary Results Reporting, Prospective Registration, and Timely Publication, all other
-                       publication-based metrics are based on publications published in 2018. For more detailed
-                       information on the methods used to calculate those metrics, click one of the following buttons."),
+                       research for several German University Medical Centres (UMCs). This dashboard is a pilot
+                       that is still under development, and should not be used to compare UMCs or inform policy.
+                       More metrics may be added in the future."),
                     h4(style = "margin-left:0cm",
-                       "This dashboard is a pilot that is still under development, and should not be used to compare UMCs or inform policy. More metrics may be added in the future."),
+                       "Besides the metrics
+                       Summary Results Reporting, Prospective Registration, and Timely Publication, all other
+                       metrics are based on publications from 2018. For the Open Science and Robustness metrics,
+                       the data can be viewed as 1) the percentage of analyzable publications which display the
+                       given metric; 2) the absolute number of eligible publications which display the given
+                       metric. For each metric, you can find an overview of the methods and limitations by clicking
+                       on the relevant symbols. For more detailed information on the methods and underlying datasets
+                       used to calculate those metrics, visit the Methods or Datasets pages."),
                     br()
                 ),
                 column(
