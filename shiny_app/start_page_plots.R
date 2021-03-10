@@ -202,7 +202,7 @@ plot_opensci_oa <- function (dataset, umc, absnum, color_palette) {
             ) %>%
             add_trace(
                 y = ~na,
-                name = "Data not available",
+                name = "No data",
                 marker = list(
                     color = color_palette[11],
                     line = list(
@@ -414,7 +414,7 @@ plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
             plot_data,
             x = ~x_label,
             y = ~percentage,
-            name = "Data sharing",
+            name = "Any Open Data",
             type = 'bar',
             marker = list(
                 color = color_palette[3],
@@ -426,7 +426,7 @@ plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
         ) %>%
             add_trace(
                 y = ~no_data_sharing,
-                name = "No data sharing",
+                name = "No Open Data",
                 marker = list(
                     color = color_palette[12],
                     line = list(
@@ -631,7 +631,7 @@ plot_opensci_oc <- function (dataset, umc, absnum, color_palette) {
             plot_data,
             x = ~x_label,
             y = ~percentage,
-            name = "Code sharing",
+            name = "Any Open Code",
             type = 'bar',
             marker = list(
                 color = color_palette[3],
@@ -643,7 +643,7 @@ plot_opensci_oc <- function (dataset, umc, absnum, color_palette) {
         ) %>%
             add_trace(
                 y = ~no_code_sharing,
-                name = "No code sharing",
+                name = "No Open Code",
                 marker = list(
                     color = color_palette[12],
                     line = list(
@@ -832,7 +832,7 @@ plot_opensci_green_oa <- function (dataset, umc, absnum, color_palette) {
             plot_data,
             x = ~x_label,
             y = ~percentage,
-            name = "Can be archived",
+            name = "Permitted",
             type = 'bar',
             marker = list(
                 color = color_palette[3],
@@ -844,7 +844,7 @@ plot_opensci_green_oa <- function (dataset, umc, absnum, color_palette) {
         ) %>%
             add_trace(
                 y = ~cant_archive,
-                name = "Cannot be archived",
+                name = "Not permitted",
                 marker = list(
                     color = color_palette[12],
                     line = list(
@@ -855,7 +855,7 @@ plot_opensci_green_oa <- function (dataset, umc, absnum, color_palette) {
             ) %>%
             add_trace(
                 y = ~no_data,
-                name = "Data not available",
+                name = "No data",
                 marker = list(
                     color = color_palette[7],
                     line = list(
@@ -1594,7 +1594,7 @@ plot_randomization <- function (dataset, umc, absnum, color_palette) {
             ) %>%
             add_trace(
                 y = ~nosciscore,
-                name = "Data not available",
+                name = "No data",
                 marker = list(
                     color = color_palette[7],
                     line = list(
@@ -1846,7 +1846,7 @@ plot_blinding <- function (dataset, umc, absnum, color_palette) {
             ) %>%
             add_trace(
                 y = ~nosciscore,
-                name = "Data not available",
+                name = "No data",
                 marker = list(
                     color = color_palette[7],
                     line = list(
@@ -2097,7 +2097,7 @@ plot_power <- function (dataset, umc, absnum, color_palette) {
             ) %>%
             add_trace(
                 y = ~nosciscore,
-                name = "Data not available",
+                name = "No data",
                 marker = list(
                     color = color_palette[7],
                     line = list(
