@@ -36,7 +36,7 @@ methods_page <- tabPanel(
                                the development of this smaller proof-of-principle dataset as most metrics are
                                based on articles. The code used to generate the UMC publication set, process
                                samples for specificity checks, and create the proof-of-principle dataset are openly
-                                      available at: [enter link to repository in GitHub].")),
+                                      available at: [coming soon].")),
                                value = "methodsPanels_PublicationSearch",
                                style = "default")),
     
@@ -91,7 +91,7 @@ methods_page <- tabPanel(
                              could be made openly accessible by depositing the accepted version in a repository.
                              In many cases, journal or publisher self-archiving policies allow researchers to
                              make the accepted version of their publication openly accessible in a repository
-                             6 to 12 months after publication.",
+                             12 months after publication.",
                              
                              HTML('In a first step, we filtered our dataset for publications which are currently
                              behind a paywall ("closed"). Then, we queried the
@@ -100,7 +100,7 @@ methods_page <- tabPanel(
                              self-archiving permissions and identify publications which could be made openly
                              accessible by depositing the accepted version in an institutional or generalist repository.'),
                              
-                             "The method relies on the Shareyourpaper.org permissions database being up-to-date. We
+                             "This metric relies on the Shareyourpaper.org permissions database being up-to-date. We
                              only included publications which have an authoritative permission in the Shareyourpaper.org
                              database. The date at which a publication can be made openly accessible via self-archiving
                              depends on the publication date and the length of the embargo (if any). Therefore, the
@@ -269,7 +269,7 @@ methods_page <- tabPanel(
                         adhere to a core set of reporting standards for animal studies as described by
                         <a href=https://www.nature.com/articles/nature11556>Landis et al. (2012)</a>.
                         Specifically, we focus on the following research parameters: reporting of investigator
-                        blinding, randomization of subjects, and sample size estimation."),
+                        blinding, randomization of subjects, and sample size calculation."),
                              
                              HTML('In a first step, we filtered the publication dataset for animal studies based
                         on a previously published <a href=https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3104815/
@@ -288,11 +288,11 @@ methods_page <- tabPanel(
                         animal studies in our publication set not indexed in PubMed. <i> (2) Evaluation of
                         robustness measures.</i> For the purposes of this dashboard, we obtained SciScore data
                         for publications in the PubMed Central (PMC) corpus. At this stage, we do not have this
-                        data for publications in our dataset not indexed in PMC. The robustness measures depend
+                        data for publications in our dataset not indexed in PMC. We also only included animal studies in English in the analysis. The robustness measures depend
                         on the performance of the SciScore classifier (see more information on classifier
                         performance analysis in <a href=https://www.sciencedirect.com/science/article/pii/S2589004220308907?via%3Dihub#mmc1
                         >this publication</a>). Finally, it is important to note that randomization, blinding,
-                        and sample size estimation may not always apply, especially in early-stage
+                        and sample size calculation may not always apply, especially in early-stage
                         exploratory research (hypothesis-generating experiments). At present, we do not have a
                         way of distinguishing these studies from confirmatory, hypothesis-testing experiments."))),
                
@@ -320,22 +320,24 @@ methods_page <- tabPanel(
 openaccess_tooltip <- strwrap("The Open Access metric shows the percentage of research publications that are
                              published as Open Access (OA) articles. Gold OA denotes publication in a pure
                              OA journal. Green OA denotes a freely available repository version. Hybrid OA
-                             denotes an OA publication in a journal with offers both a subscription based
-                             model as well as an Open Access option. For some articles no Open Access
+                             denotes an OA publication in a journal which offers both a subscription based
+                             model as well as an Open Access option. Bronze OA denotes a publication which is
+                             freely available on the journal page, but without a clear open license.
+                             Closed articles are not freely available. For some articles no Open Access
                              information was available.") %>%
 
 paste(collapse = " ")
 
-opendata_tooltip <- strwrap("The Open Data metric measures the percentage of publications in English and for
-                            which the full text could be screened that mention sharing of data.
-                            Openly shared data makes research more transparent, as research findings can be
-                            reproduced. Additionally, shared datasets can be reused and combined by other
+opendata_tooltip <- strwrap("This metric measures the percentage of screened publications that state
+                                that they shared their research data. Openly shared data makes research more
+                                transparent, as research findings can be reproduced. Additionally, shared
+                                datasets can be reused and combined by other
                             scientists to answer new research questions.") %>%
 
 paste(collapse = " ")
 
-opencode_tooltip <- strwrap("The Open Code metric measures the percentage of publications in English and for
-                            which the full text could be screened that mention sharing of code.
+opencode_tooltip <- strwrap("The Open Code metric measures the percentage of screened publications
+                             that state that they shared their analysis code.
                             Like openly shared data, Open Code makes research more transparent, as research
                             findings can be reproduced.") %>%
 
@@ -391,9 +393,9 @@ randomization_tooltip <- strwrap("This metric measures how many animal studies r
                             randomization of subjects into groups. Animal studies were identified using a
                             previously published PubMed search filter. Reporting of randomization was evaluated
                             with SciScore, an automated tool which evaluates research articles based on their
-                            adherence to rigour and reproducibility criteria. Only animal studies in English in the
-                            PubMed Central corpus for which we have SciScore data are were included
-                            in this analysis.") %>%
+                            adherence to rigour and reproducibility criteria. Only animal studies in English
+                            and contained in the PubMed Central corpus (for which we have SciScore data) could
+                            be analyzed.") %>%
     
 paste(collapse = " ")
 
@@ -402,9 +404,9 @@ blinding_tooltip <- strwrap("This metric measures how many animal studies report
                             investigators were blinded to group assignment and/or outcome assessment. Animal
                             studies were identified using a previously published PubMed search filter. Reporting
                             of blinding was evaluated with SciScore, an automated tool which evaluates research
-                            articles based on their adherence to rigour and reproducibility criteria. Only animal
-                            studies in English in the PubMed Central corpus for which we have SciScore data are were
-                            included in this analysis.") %>%
+                            articles based on their adherence to rigour and reproducibility criteria. Only animal studies in English
+                            and contained in the PubMed Central corpus (for which we have SciScore data) could
+                            be analyzed.") %>%
 
 paste(collapse = " ")
 
@@ -413,15 +415,14 @@ power_tooltip <- strwrap("This metric measures how many animal studies report a 
                          calculation. Animal studies were identified using a previously published PubMed search
                          filter. Reporting of sample size calculation was evaluated with SciScore, an automated
                          tool which evaluates research articles based on their adherence to rigour and
-                         reproducibility criteria. Only animal studies in English in the
-                            PubMed Central corpus for which we have SciScore data are were included
-                            in this analysis.") %>%
+                         reproducibility criteria. Only animal studies in English
+                            and contained in the PubMed Central corpus (for which we have SciScore data) could
+                            be analyzed.") %>%
     
 paste(collapse = " ")
 
-greenopenaccess_tooltip <- strwrap("This is the number of publications currently behind a paywall that could be
-                                   made openly accessible by depositing the accepted version in a repository.")
-
+greenopenaccess_tooltip <- strwrap("This metric shows the number of publications currently behind a paywall that could be made openly accessible by depositing the accepted version in a repository. Article-level permissions were obtained by querying the Shareyourpaper.org permissions's API. Only authoritative permissions were considered at this stage.") %>%
+paste(collapse = " ")
                                         # iacuc_tooltip <- strwrap("This metric measures how many animal studies report an Institutional animal care and
 #                          use committee statement.") %>%
 #     
@@ -436,7 +437,7 @@ lim_timpub_tooltip <- strwrap("Some detected publications might be missed in the
 lim_trn_tooltip <- strwrap("We identified human clinical trials based on the following search term in PubMed: 'clinical trial'[pt] NOT (animals [mh] NOT humans [mh]). However, we have not tested (1) the sensitivity of this PubMed search term (i.e., what proportion of true clinical trial publications are detected?); (2) the specificity of this search term (i.e, what proportion of detected publications are not true clinical trials publications?). Furthermore, our algorithm does not distinguish true TRNs that do not resolve to a registration. Finally, the algorithm does not determine whether the TRN is reported as a registration for the publication's study (i.e., clinical trial result) or is otherwise mentioned (i.e., in a review, reference to other clinical trials, etc.)")
 
 lim_openaccess_tooltip <- strwrap("Unpaywall only stores information for publications which have a DOI assigned by Crossref. Articles without a Crossref DOI have to be excluded from the OA analysis. The OA percentage is not a fixed number, but changes over time as some publications become accessible with a delay. The current data was retrieved on: 28/02/2021.")
-lim_greenopenaccess_tooltip <- strwrap("The method relies on the Shareyourpaper.org (Open Access Button) permissions database being up to date. The date at which a publication can be made openly accessible via self-archiving depends on the publication date and the length of the embargo (if any). Therefore, the number of potential green OA research articles will change over time. The Shareyourpaper permissions API was queried on 28/02/2021.")
+lim_greenopenaccess_tooltip <- strwrap("Not all publications had an authoritative permission when the query was made. This metric relies on the permissions database being up-to-date. The date at which a publication can be made openly accessible via self-archiving depends on the publication date and the length of the embargo (if any). Therefore, the number of potential green OA publications will change over time. The Shareyourpaper.org permissions API was queried on 28/02/2021.")
 lim_opendata_tooltip <- strwrap("This analysis could only be performed on articles for which we could access the full text. ODDPub only finds ~75% of all Open Data publications and finds false positive cases (no manual check of the results). ODDPub also does not verify that the dataset is available and whether it fulfills our definition of Open Data. Finally, Open Data is not relevant for all publications.")
 lim_opencode_tooltip <- strwrap("This analysis could only be performed on articles for which we could access the full text. ODDPub only finds ~75% of all publications with Open Code and finds false positive cases (no manual check of the results). ODDPub also does not verify that the code is available and whether it fulfills our definition of Open Code Finally, Open Code is not relevant for all publications.")
 lim_allumc_openaccess_tooltip <- strwrap("Unpaywall only stores information for publications which have a DOI assigned by Crossref. Articles without a Crossref DOI have to be excluded from the OA analysis. The OA percentage is not a fixed number, but changes over time as some publications become accessible with a delay. The current data was retrieved on: 28/02/2021.")
