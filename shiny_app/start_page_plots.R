@@ -1160,7 +1160,7 @@ plot_clinicaltrials_prereg <- function (dataset, umc, color_palette) {
                 ) %>%
                     layout(
                         xaxis = list(
-                            title = '<b>UMC</b>',
+                            title = '<b>Year</b>',
                             dtick = 1
                         ),
                         yaxis = list(
@@ -1326,7 +1326,7 @@ plot_clinicaltrials_timpub <- function (dataset, umc, color_palette) {
             ) %>%
             layout(
                 xaxis = list(
-                    title = '<b>UMC</b>',
+                    title = '<b>Year</b>',
                     dtick = 1
                 ),
                 yaxis = list(
