@@ -37,6 +37,8 @@ about_rm_page <- tabPanel(
                                 Franzen, Delwen (Conceptualization);
                                 Maia Salholz-Hillel (Conceptualization);
                                 Holst, Martin (Conceptualization);
+                                Haven, Tamarinde (Conceptualization);
+                                Haslberger, Martin (Conceptualization);
                                 Saksone, Lana (Conceptualization);
                                 Strech, Daniel (Conceptualization);
                                 Weissgerber, Tracey (Conceptualization);
