@@ -80,7 +80,8 @@ methods_page <- tabPanel(
                         that repository versions are often made available with a delay, such that the OA
                         percentage for a given year typically rises retrospectively. Thus, the point in time
                         at which the OA status is retrieved is important for the OA percentage. The current
-                        OA data was retrieved on: 28/02/2021.'),
+                        OA data was retrieved using (with <a href="https://github.com/NicoRiedel/unpaywallR">
+                             UnpaywallR</a>) on: 28/02/2021.'),
                              
                              "Unpaywall only stores information for publications which have a DOI assigned by
                         Crossref. Articles without a Crossref DOI have to be excluded from the OA analysis."),
