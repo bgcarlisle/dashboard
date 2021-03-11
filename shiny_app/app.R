@@ -235,8 +235,9 @@ server <- function (input, output, session) {
             all_numer_rando <- rm_data %>%
                 filter(
                     is_animal == 1,
+                    language == "English",
                     ! is.na(sciscore),
-                    type == "Article"
+                    type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
                 ) %>%
                 select(randomization) %>%
                 sum(na.rm=TRUE)
@@ -247,8 +248,9 @@ server <- function (input, output, session) {
                 filter(city == input$selectUMC) %>%
                 filter(
                     is_animal == 1,
+                    language == "English",
                     ! is.na(sciscore),
-                    type == "Article"
+                    type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
                 ) %>%
                 select(randomization) %>%
                 sum(na.rm=TRUE)
@@ -262,8 +264,9 @@ server <- function (input, output, session) {
         all_numer_blinded <- rm_data %>%
             filter(
                 is_animal == 1,
+                language == "English",
                 ! is.na(sciscore),
-                type == "Article"
+                type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
             ) %>%
             select(blinding) %>%
             sum(na.rm=TRUE)
@@ -274,8 +277,9 @@ server <- function (input, output, session) {
             filter(city == input$selectUMC) %>%
             filter(
                 is_animal == 1,
+                language == "English",
                 ! is.na(sciscore),
-                type == "Article"
+                type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
             ) %>%
             select(blinding) %>%
             sum(na.rm=TRUE)
@@ -289,8 +293,9 @@ server <- function (input, output, session) {
             all_numer_power <- rm_data %>%
                 filter(
                     is_animal == 1,
+                    language == "English",
                     ! is.na(sciscore),
-                    type == "Article"
+                    type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
                 ) %>%
                 select(power) %>%
                 sum(na.rm=TRUE)
@@ -301,8 +306,9 @@ server <- function (input, output, session) {
                 filter(city == input$selectUMC) %>%
                 filter(
                     is_animal == 1,
+                    language == "English",
                     ! is.na(sciscore),
-                    type == "Article"
+                    type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
                 ) %>%
                 select(power) %>%
                 sum(na.rm=TRUE)
@@ -323,8 +329,9 @@ server <- function (input, output, session) {
             all_denom_animal_sciscore <- rm_data %>%
                 filter(
                     is_animal == 1,
+                    language == "English",
                     ! is.na(sciscore),
-                    type == "Article"
+                    type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
                 ) %>%
                 nrow()
             
@@ -334,8 +341,9 @@ server <- function (input, output, session) {
                 filter(city == input$selectUMC) %>%
                 filter(
                     is_animal == 1,
+                    language == "English",
                     ! is.na(sciscore),
-                    type == "Article"
+                    type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
                 ) %>%
                 nrow()
             
