@@ -134,7 +134,7 @@ methods_page <- tabPanel(
                         (Code: <a href="https://github.com/quest-bih/oddpub">
                         https://github.com/quest-bih/oddpub</a>,
                         publication: <a href="https://datascience.codata.org/article/10.5334/dsj-2020-042/">
-                        https://datascience.codata.org/article/10.5334/dsj-2020-042/</a>),
+                        https://datascience.codata.org/article/10.5334/dsj-2020-042/</a>)
                         developed by QUEST. ODDPub searches the publication full-text
                         for statements indicating sharing of raw data or analysis code.
                         It does however not check the shared data itself.
