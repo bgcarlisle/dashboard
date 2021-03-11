@@ -11,8 +11,8 @@ library(DT)
 
 ## Load data
 rm_data <- read_csv(
-    "data/2021-03-01_pp-dataset-oa-trn-sciscore-od-animals-permissions.csv",
-    col_types="ccdddcccccdccccdlllllcddlccccccccccccccccccccddddddddddddddddddddddddlcclclccdccccDlclclllccccdcDlll"
+    "data/2021-03-01_pp-dataset-oa-trn-sciscore-od-animals-permissions-greenoa.csv",
+    col_types="ccdddcccccdccccdlllllcddlccccccccccccccccccccddddddddddddddddddddddddlcclclccdccccDlclclllccccdcDlllc"
     ## Need to specify column types here because read_csv
     ## only looks at the first few rows to determine type
     ## automatically, and if they're all empty, assumes
