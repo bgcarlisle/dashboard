@@ -332,15 +332,17 @@ openaccess_tooltip <- strwrap("The Open Access metric shows the percentage of re
 paste(collapse = " ")
 
 opendata_tooltip <- strwrap("This metric measures the percentage of screened publications that state
-                                that they shared their research data. Openly shared data makes research more
-                                transparent, as research findings can be reproduced. Additionally, shared
-                                datasets can be reused and combined by other
+                                that they shared their research data. We used the text-mining algorithm
+                                ODDPub to identify publications which share research data.
+                                Openly shared data makes research more transparent, as research findings can
+                                be reproduced. Additionally, shared datasets can be reused and combined by other
                             scientists to answer new research questions.") %>%
 
 paste(collapse = " ")
 
 opencode_tooltip <- strwrap("The Open Code metric measures the percentage of screened publications
-                             that state that they shared their analysis code.
+                             that state that they shared their analysis code. We used the text-mining
+                             algorithm ODDPub to identify publications which share analysis code.
                             Like openly shared data, Open Code makes research more transparent, as research
                             findings can be reproduced.") %>%
 
