@@ -86,27 +86,31 @@ methods_page <- tabPanel(
                              "Unpaywall only stores information for publications which have a DOI assigned by
                         Crossref. Articles without a Crossref DOI have to be excluded from the OA analysis."),
                
-               methods_panel("Potential Green Open Access (OA)",
+               methods_panel("Potential Green Open Access",
                              
-                             "This metric measures how many publications currently hidden behind a paywall
-                             could be made openly accessible by depositing the accepted version in a repository.
-                             In many cases, journal or publisher self-archiving policies allow researchers to
-                             make the accepted version of their publication openly accessible in a repository
-                             12 months after publication.",
+                             "This metric measures how many paywalled publications with the potential for green OA
+                             have been made openly accessible in a repository. In many cases, journal or publisher
+                             self-archiving policies allow researchers to make the accepted version of their
+                             publication openly accessible in a repository after an embargo period.",
                              
-                             HTML('In a first step, we filtered our dataset for publications which are currently
-                             behind a paywall ("closed"). Then, we queried the
+                             HTML('We queried the Unpaywall API (with <a href="https://github.com/NicoRiedel/unpaywallR">
+                             UnpaywallR</a>) and applied the following hierarchy to identify 
+                             publications only accessible via green OA: gold - hybrid - bronze - green. To identify
+                             paywalled publications with the potential for green OA, we filtered our dataset for
+                             paywalled publications and queried the
                              <a href="https://shareyourpaper.org/permissions/about#api">
                              Shareyourpaper.org permissions API</a> (Open Access button) to obtain article-level
-                             self-archiving permissions and identify publications which could be made openly
-                             accessible by depositing the accepted version in an institutional or generalist repository.'),
+                             self-archiving permissions based on journal and/or publisher policies. Publications
+                             were considered to have the potential for green OA if an authoritative permission
+                             was found for archiving the accepted version of the publication in an institutional
+                                  repository.'),
                              
-                             "This metric relies on the Shareyourpaper.org permissions database being up-to-date. We
+                             "This measure depends on the Shareyourpaper.org permissions database being up-to-date. We
                              only included publications which have an authoritative permission in the Shareyourpaper.org
                              database. The date at which a publication can be made openly accessible via self-archiving
                              depends on the publication date and the length of the embargo (if any). Therefore, the
                              number of potential green OA research articles will change over time. The Shareyourpaper
-                             permissions API was queried on 28/02/2021."),
+                             permissions API was queried on 28/02/2021. The Unpaywall database was queried on 11/03/2021."),
                
                methods_panel("Open Data and Open Code",
                              
