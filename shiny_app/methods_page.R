@@ -419,7 +419,14 @@ power_tooltip <- strwrap("This metric measures how many animal studies report a 
     
 paste(collapse = " ")
 
-greenopenaccess_tooltip <- strwrap("This metric shows the number of publications currently behind a paywall that could be made openly accessible by depositing the accepted version in a repository. Article-level permissions were obtained by querying the Shareyourpaper.org permissions API. Only authoritative permissions were considered at this stage.") %>%
+greenopenaccess_tooltip <- strwrap("This metric measures how many paywalled publications with the potential for green OA
+                             have been made openly accessible in a repository. In many cases, journal or publisher
+                             self-archiving policies allow researchers to make the accepted version of their
+                             publication openly accessible in a repository after an embargo period. We queried the
+                             Shareyourpaper.org permissions API (Open Access Button) to obtain article-level
+                             self-archiving permissions. Publications were considered to have the potential
+                             for green OA if an authoritative permission was found for archiving the accepted
+                             version of the publication in an institutional repository.") %>%
 paste(collapse = " ")
                                         # iacuc_tooltip <- strwrap("This metric measures how many animal studies report an Institutional animal care and
 #                          use committee statement.") %>%
