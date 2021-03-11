@@ -204,8 +204,8 @@ methods_page <- tabPanel(
                              
                              "This metric measures how many clinical trials registered on ClinicalTrials.gov
                         reported their results either as a journal publication or as summary
-                        results on the trials registry within 2 or 5 years after completion. Trials
-                        completed between 2009 and 2013 were considered.
+                        results on the trials registry within 2 years after completion. Trials
+                        completed between 2009 and 2017 were considered.
                         A fast dissemination of the trial results is crucial to make the evidence gained
                         in those trials available. The World Health organization recommends publishing
                         clinical trial results within one year after the end of a study.",
@@ -215,9 +215,7 @@ methods_page <- tabPanel(
                              UMCs. A manual search for published results was done, searching the
                         registry, PubMed and Google. When calculating the time to publication, we only
                         considered trials where we could track the full timeframe since completion.
-                        As not all trials could be tracked for 5 years since completion at
-                        the time when this study was carried out, we have less trials where we can
-                        report the publications 5 years after completion. The results were previously
+                        The results were previously
                         published as part of the <a href="https://s-quest.bihealth.org/intovalue/">IntoValue study</a>.
                         Detailed methods can be found under
                         <a href="https://doi.org/10.1101/467746">https://doi.org/10.1101/467746</a>.'),
@@ -377,8 +375,8 @@ paste(collapse = " ")
 
 timpub_tooltip <- strwrap("This metric measures how many clinical trials registered on ClinicalTrials.gov
                         reported their results either as a journal publication or as summary results on the
-                        trials registry within 2 or 5 years after completion. Trials completed between 2009
-                        and 2013 were considered. The results were previously published as part of the
+                        trials registry within 2 years after completion. Trials completed between 2009
+                        and 2017 were considered. The results were previously published as part of the
                         IntoValue study (https://s-quest.bihealth.org/intovalue/). Clinical trials are expensive
                         and often have many contributing patients. A fast dissemination of the trial results
                         is crucial to make the evidence gained in those trials available. The World Health
