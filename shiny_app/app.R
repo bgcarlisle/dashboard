@@ -808,7 +808,7 @@ server <- function (input, output, session) {
                 column(
                     col_width,
                     metric_box(
-                        title = "Open Access",
+                        title = "Open Access (OA)",
                         value = paste0(round(100*all_numer_oa/all_denom_oa), "%"),
                         value_text = "of 2018 publications are Open Access",
                         plot = plotlyOutput('plot_opensci_oa', height="300px"),
