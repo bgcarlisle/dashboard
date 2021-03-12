@@ -80,32 +80,37 @@ methods_page <- tabPanel(
                         that repository versions are often made available with a delay, such that the OA
                         percentage for a given year typically rises retrospectively. Thus, the point in time
                         at which the OA status is retrieved is important for the OA percentage. The current
-                        OA data was retrieved on: 28/02/2021.'),
+                        OA data was retrieved using (with <a href="https://github.com/NicoRiedel/unpaywallR">
+                             UnpaywallR</a>) on: 28/02/2021.'),
                              
                              "Unpaywall only stores information for publications which have a DOI assigned by
                         Crossref. Articles without a Crossref DOI have to be excluded from the OA analysis."),
                
-               methods_panel("Potential Green Open Access (OA)",
+               methods_panel("Potential Green Open Access",
                              
-                             "This metric measures how many publications currently hidden behind a paywall
-                             could be made openly accessible by depositing the accepted version in a repository.
-                             In many cases, journal or publisher self-archiving policies allow researchers to
-                             make the accepted version of their publication openly accessible in a repository
-                             12 months after publication.",
+                             "This metric measures how many paywalled publications with the potential for green OA
+                             have been made openly accessible in a repository. In many cases, journal or publisher
+                             self-archiving policies allow researchers to make the accepted version of their
+                             publication openly accessible in a repository after an embargo period.",
                              
-                             HTML('In a first step, we filtered our dataset for publications which are currently
-                             behind a paywall ("closed"). Then, we queried the
+                             HTML('We queried the Unpaywall API (with <a href="https://github.com/NicoRiedel/unpaywallR">
+                             UnpaywallR</a>) and applied the following hierarchy to identify 
+                             publications only accessible via green OA: gold - hybrid - bronze - green. To identify
+                             paywalled publications with the potential for green OA, we filtered our dataset for
+                             paywalled publications and queried the
                              <a href="https://shareyourpaper.org/permissions/about#api">
                              Shareyourpaper.org permissions API</a> (Open Access button) to obtain article-level
-                             self-archiving permissions and identify publications which could be made openly
-                             accessible by depositing the accepted version in an institutional or generalist repository.'),
+                             self-archiving permissions based on journal and/or publisher policies. Publications
+                             were considered to have the potential for green OA if an authoritative permission
+                             was found for archiving the accepted version of the publication in an institutional
+                                  repository.'),
                              
-                             "This metric relies on the Shareyourpaper.org permissions database being up-to-date. We
+                             "This measure depends on the Shareyourpaper.org permissions database being up-to-date. We
                              only included publications which have an authoritative permission in the Shareyourpaper.org
                              database. The date at which a publication can be made openly accessible via self-archiving
                              depends on the publication date and the length of the embargo (if any). Therefore, the
                              number of potential green OA research articles will change over time. The Shareyourpaper
-                             permissions API was queried on 28/02/2021."),
+                             permissions API was queried on 28/02/2021. The Unpaywall database was queried on 11/03/2021."),
                
                methods_panel("Open Data and Open Code",
                              
@@ -129,7 +134,7 @@ methods_page <- tabPanel(
                         (Code: <a href="https://github.com/quest-bih/oddpub">
                         https://github.com/quest-bih/oddpub</a>,
                         publication: <a href="https://datascience.codata.org/article/10.5334/dsj-2020-042/">
-                        https://datascience.codata.org/article/10.5334/dsj-2020-042/</a>),
+                        https://datascience.codata.org/article/10.5334/dsj-2020-042/</a>)
                         developed by QUEST. ODDPub searches the publication full-text
                         for statements indicating sharing of raw data or analysis code.
                         It does however not check the shared data itself.
@@ -327,15 +332,17 @@ openaccess_tooltip <- strwrap("The Open Access metric shows the percentage of re
 paste(collapse = " ")
 
 opendata_tooltip <- strwrap("This metric measures the percentage of screened publications that state
-                                that they shared their research data. Openly shared data makes research more
-                                transparent, as research findings can be reproduced. Additionally, shared
-                                datasets can be reused and combined by other
+                                that they shared their research data. We used the text-mining algorithm
+                                ODDPub to identify publications which share research data.
+                                Openly shared data makes research more transparent, as research findings can
+                                be reproduced. Additionally, shared datasets can be reused and combined by other
                             scientists to answer new research questions.") %>%
 
 paste(collapse = " ")
 
 opencode_tooltip <- strwrap("The Open Code metric measures the percentage of screened publications
-                             that state that they shared their analysis code.
+                             that state that they shared their analysis code. We used the text-mining
+                             algorithm ODDPub to identify publications which share analysis code.
                             Like openly shared data, Open Code makes research more transparent, as research
                             findings can be reproduced.") %>%
 
@@ -419,7 +426,14 @@ power_tooltip <- strwrap("This metric measures how many animal studies report a 
     
 paste(collapse = " ")
 
-greenopenaccess_tooltip <- strwrap("This metric shows the number of publications currently behind a paywall that could be made openly accessible by depositing the accepted version in a repository. Article-level permissions were obtained by querying the Shareyourpaper.org permissions API. Only authoritative permissions were considered at this stage.") %>%
+greenopenaccess_tooltip <- strwrap("This metric measures how many paywalled publications with the potential for green OA
+                             have been made openly accessible in a repository. In many cases, journal or publisher
+                             self-archiving policies allow researchers to make the accepted version of their
+                             publication openly accessible in a repository after an embargo period. We queried the
+                             Shareyourpaper.org permissions API (Open Access Button) to obtain article-level
+                             self-archiving permissions. Publications were considered to have the potential
+                             for green OA if an authoritative permission was found for archiving the accepted
+                             version of the publication in an institutional repository.") %>%
 paste(collapse = " ")
                                         # iacuc_tooltip <- strwrap("This metric measures how many animal studies report an Institutional animal care and
 #                          use committee statement.") %>%
@@ -435,7 +449,7 @@ lim_timpub_tooltip <- strwrap("Some detected publications might be missed in the
 lim_trn_tooltip <- strwrap(HTML("We identified human clinical trials based on the following search term in PubMed: &#39clinical trial&#39[pt] NOT (animals [mh] NOT humans [mh]). However, we have not tested (1) the sensitivity of this PubMed search term; (2) the specificity of this search term. Our algorithm does not distinguish true TRNs that do not resolve to a registration. Our algorithm does not determine whether the TRN is reported as a registration for the publication&#39s study."))
 
 lim_openaccess_tooltip <- strwrap("Unpaywall only stores information for publications which have a DOI assigned by Crossref. Articles without a Crossref DOI have to be excluded from the OA analysis. The OA percentage is not a fixed number, but changes over time as some publications become accessible with a delay. The current data was retrieved on: 28/02/2021.")
-lim_greenopenaccess_tooltip <- strwrap("Not all publications had an authoritative permission when the query was made. This metric relies on the permissions database being up-to-date. The date at which a publication can be made openly accessible via self-archiving depends on the publication date and the length of the embargo (if any). Therefore, the number of potential green OA publications will change over time. The Shareyourpaper.org permissions API was queried on 28/02/2021.")
+lim_greenopenaccess_tooltip <- strwrap("Not all publications had an authoritative permission when the query was made. This metric relies on the permissions database being up-to-date. Moreover, the date at which a publication can be made openly accessible via self-archiving depends on the publication date and the length of the embargo (if any). Therefore, the number of potential green OA publications will change over time. The Shareyourpaper.org permissions API was queried on 28/02/2021.")
 lim_opendata_tooltip <- strwrap("This analysis could only be performed on articles for which we could access the full text. ODDPub only finds ~75% of all Open Data publications and finds false positive cases (no manual check of the results). ODDPub also does not verify that the dataset is available and whether it fulfills our definition of Open Data. Finally, Open Data is not relevant for all publications.")
 lim_opencode_tooltip <- strwrap("This analysis could only be performed on articles for which we could access the full text. ODDPub only finds ~75% of all publications with Open Code and finds false positive cases (no manual check of the results). ODDPub also does not verify that the code is available and whether it fulfills our definition of Open Code Finally, Open Code is not relevant for all publications.")
 lim_allumc_openaccess_tooltip <- strwrap("Unpaywall only stores information for publications which have a DOI assigned by Crossref. Articles without a Crossref DOI have to be excluded from the OA analysis. The OA percentage is not a fixed number, but changes over time as some publications become accessible with a delay. The current data was retrieved on: 28/02/2021.")

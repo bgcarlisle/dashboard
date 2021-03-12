@@ -717,122 +717,335 @@ plot_opensci_oc <- function (dataset, umc, absnum, color_palette) {
 }
 
 ## Green open access
+# plot_opensci_green_oa <- function (dataset, umc, absnum, color_palette) {
+# 
+#     plot_data <- dataset %>%
+#         filter(
+#             color == "closed",
+#             ! is.na(permission_postprint)
+#         )
+# 
+#     all_denom <- plot_data %>%
+#         nrow()
+# 
+#     all_numer <- plot_data$permission_postprint %>%
+#         sum()
+# 
+#     all_cant_archive <- dataset %>%
+#         filter(
+#             ! is.na(permission_postprint),
+#             color == "closed",
+#             ! permission_postprint
+#         ) %>%
+#         nrow()
+# 
+#     all_no_data <- dataset %>%
+#         filter(
+#             color == "closed",
+#             is.na(permission_postprint)
+#         ) %>%
+#         nrow()
+# 
+#     if ( umc != "All" ) {
+#         ## If the selected UMC is not "all," calculate
+#         ## the percentage
+# 
+#         umc_denom <- plot_data %>%
+#             filter(city == umc) %>%
+#             nrow()
+# 
+#         umc_numer <- plot_data %>%
+#             filter(city == umc, permission_postprint == TRUE) %>%
+#             nrow()
+# 
+#         umc_cant_archive <- dataset %>%
+#             filter(
+#                 city == umc,
+#                 ! is.na(permission_postprint),
+#                 color == "closed",
+#                 ! permission_postprint
+#             ) %>%
+#             nrow()
+# 
+#         umc_no_data <- dataset %>%
+#             filter(
+#                 city == umc,
+#                 color == "closed",
+#                 is.na(permission_postprint)
+#             ) %>%
+#             nrow()
+# 
+#         if (absnum) {
+# 
+#             plot_data <- tribble(
+#                 ~x_label, ~percentage, ~cant_archive,    ~no_data,
+#                 umc,      umc_numer,   umc_cant_archive, umc_no_data
+#             )
+# 
+#             upperlimit <- 1.1 * sum(umc_numer, umc_cant_archive, umc_no_data)
+#             ylabel <- "Number of publications"
+#             
+#         } else {
+# 
+#             plot_data <- tribble(
+#                 ~x_label, ~percentage,
+#                 "All", round(100*all_numer/all_denom),
+#                 umc, round(100*umc_numer/umc_denom)
+#             )
+# 
+#             plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
+# 
+#             upperlimit <- 100
+#             ylabel <- "Percentage of publications"
+#             
+#         }
+#         
+#     } else {
+# 
+#         if (absnum) {
+# 
+#             plot_data <- tribble(
+#                 ~x_label, ~percentage, ~cant_archive,    ~no_data,
+#                 "All",    all_numer,   all_cant_archive, all_no_data
+#             )
+# 
+#             upperlimit <- 1.1 * sum(all_numer, all_cant_archive, all_no_data)
+#             ylabel <- "Number of publications"
+#             
+#         } else {
+# 
+#             plot_data <- tribble(
+#                 ~x_label, ~percentage,
+#                 "All", round(100*all_numer/all_denom)
+#             )
+# 
+#             upperlimit <- 100
+#             ylabel <- "Percentage of publications"
+#             
+#         }
+# 
+#     }
+# 
+#     if (absnum) {
+# 
+#         plot_ly(
+#             plot_data,
+#             x = ~x_label,
+#             y = ~percentage,
+#             name = "Permitted",
+#             type = 'bar',
+#             marker = list(
+#                 color = color_palette[3],
+#                 line = list(
+#                     color = 'rgb(0,0,0)',
+#                     width = 1.5
+#                 )
+#             )
+#         ) %>%
+#             add_trace(
+#                 y = ~cant_archive,
+#                 name = "Not permitted",
+#                 marker = list(
+#                     color = color_palette[12],
+#                     line = list(
+#                         color = 'rgb(0,0,0)',
+#                         width = 1.5
+#                     )
+#                 )
+#             ) %>%
+#             add_trace(
+#                 y = ~no_data,
+#                 name = "No data",
+#                 marker = list(
+#                     color = color_palette[7],
+#                     line = list(
+#                         color = 'rgb(0,0,0)',
+#                         width = 1.5
+#                     )
+#                 )
+#             ) %>%
+#             layout(
+#                 barmode = 'stack',
+#                 xaxis = list(
+#                     title = '<b>UMC</b>'
+#                 ),
+#                 yaxis = list(
+#                     title = paste('<b>', ylabel, '</b>'),
+#                     range = c(0, upperlimit)
+#                 ),
+#                 paper_bgcolor = color_palette[9],
+#                 plot_bgcolor = color_palette[9]
+#             )
+#         
+#     } else {
+# 
+#         plot_ly(
+#             plot_data,
+#             x = ~x_label,
+#             y = ~percentage,
+#             type = 'bar',
+#             marker = list(
+#                 color = color_palette[3],
+#                 line = list(
+#                     color = 'rgb(0,0,0)',
+#                     width = 1.5
+#                 )
+#             )
+#         ) %>%
+#             layout(
+#                 xaxis = list(
+#                     title = '<b>UMC</b>'
+#                 ),
+#                 yaxis = list(
+#                     title = paste('<b>', ylabel, '</b>'),
+#                     range = c(0, upperlimit)
+#                 ),
+#                 paper_bgcolor = color_palette[9],
+#                 plot_bgcolor = color_palette[9]
+#             )
+#         
+#     }
+#     
+# }
+
 plot_opensci_green_oa <- function (dataset, umc, absnum, color_palette) {
 
-    plot_data <- dataset %>%
+    all_closed_with_potential <- dataset %>%
         filter(
-            color == "closed",
-            ! is.na(permission_postprint)
-        )
-
-    all_denom <- plot_data %>%
+            color_green_only == "closed",
+            ! is.na(permission_postprint),
+            permission_postprint == TRUE
+        ) %>%
         nrow()
-
-    all_numer <- plot_data$permission_postprint %>%
-        sum()
-
+    
+    all_greenoa_only <- dataset %>%
+        filter(
+            color_green_only == "green"
+        ) %>%
+        nrow()
+    
+    all_denom <- all_closed_with_potential + all_greenoa_only
+    
+    all_numer <- all_greenoa_only
+    
+    all_can_archive <- all_closed_with_potential
+    
     all_cant_archive <- dataset %>%
         filter(
             ! is.na(permission_postprint),
-            color == "closed",
+            color_green_only == "closed",
             ! permission_postprint
         ) %>%
         nrow()
-
+    
     all_no_data <- dataset %>%
         filter(
-            color == "closed",
+            color_green_only == "closed",
             is.na(permission_postprint)
         ) %>%
         nrow()
-
+    
     if ( umc != "All" ) {
         ## If the selected UMC is not "all," calculate
         ## the percentage
-
-        umc_denom <- plot_data %>%
-            filter(city == umc) %>%
+        
+        umc_closed_with_potential <- dataset %>%
+            filter(
+                city == umc,
+                color_green_only == "closed",
+                ! is.na(permission_postprint),
+                permission_postprint == TRUE
+            ) %>%
             nrow()
-
-        umc_numer <- plot_data %>%
-            filter(city == umc, permission_postprint == TRUE) %>%
+        
+        umc_greenoa_only <- dataset %>%
+            filter(
+                city == umc,
+                color_green_only == "green"
+            ) %>%
             nrow()
-
+        
+        umc_denom <- umc_closed_with_potential + umc_greenoa_only
+        
+        umc_numer <- umc_greenoa_only
+        
+        umc_can_archive <- umc_closed_with_potential
+        
         umc_cant_archive <- dataset %>%
             filter(
                 city == umc,
                 ! is.na(permission_postprint),
-                color == "closed",
+                color_green_only == "closed",
                 ! permission_postprint
             ) %>%
             nrow()
-
+        
         umc_no_data <- dataset %>%
             filter(
                 city == umc,
-                color == "closed",
+                color_green_only == "closed",
                 is.na(permission_postprint)
             ) %>%
             nrow()
-
+        
         if (absnum) {
-
+            
             plot_data <- tribble(
-                ~x_label, ~percentage, ~cant_archive,    ~no_data,
-                umc,      umc_numer,   umc_cant_archive, umc_no_data
+                ~x_label, ~percentage, ~can_archive,   ~cant_archive,    ~no_data,
+                umc,      umc_numer,   umc_can_archive, umc_cant_archive, umc_no_data
             )
-
-            upperlimit <- 1.1 * sum(umc_numer, umc_cant_archive, umc_no_data)
+            
+            upperlimit <- 1.1 * sum(umc_numer, umc_can_archive, umc_cant_archive, umc_no_data)
             ylabel <- "Number of publications"
             
         } else {
-
+            
             plot_data <- tribble(
                 ~x_label, ~percentage,
                 "All", round(100*all_numer/all_denom),
                 umc, round(100*umc_numer/umc_denom)
             )
-
+            
             plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
-
+            
             upperlimit <- 100
             ylabel <- "Percentage of publications"
             
         }
         
     } else {
-
+        
         if (absnum) {
-
+            
             plot_data <- tribble(
-                ~x_label, ~percentage, ~cant_archive,    ~no_data,
-                "All",    all_numer,   all_cant_archive, all_no_data
+                ~x_label, ~percentage, ~can_archive,   ~cant_archive,    ~no_data,
+                "All",    all_numer,   all_can_archive, all_cant_archive, all_no_data
             )
-
-            upperlimit <- 1.1 * sum(all_numer, all_cant_archive, all_no_data)
+            
+            upperlimit <- 1.1 * sum(all_numer, all_can_archive, all_cant_archive, all_no_data)
             ylabel <- "Number of publications"
             
         } else {
-
+            
             plot_data <- tribble(
                 ~x_label, ~percentage,
                 "All", round(100*all_numer/all_denom)
             )
-
+            
             upperlimit <- 100
             ylabel <- "Percentage of publications"
             
         }
-
+        
     }
-
+    
     if (absnum) {
-
+        
         plot_ly(
             plot_data,
             x = ~x_label,
             y = ~percentage,
-            name = "Permitted",
+            name = "Archived",
             type = 'bar',
             marker = list(
                 color = color_palette[3],
@@ -843,10 +1056,21 @@ plot_opensci_green_oa <- function (dataset, umc, absnum, color_palette) {
             )
         ) %>%
             add_trace(
-                y = ~cant_archive,
-                name = "Not permitted",
+                y = ~can_archive,
+                name = "Can archive",
                 marker = list(
                     color = color_palette[12],
+                    line = list(
+                        color = 'rgb(0,0,0)',
+                        width = 1.5
+                    )
+                )
+            ) %>% 
+            add_trace(
+                y = ~cant_archive,
+                name = "Cannot archive",
+                marker = list(
+                    color = color_palette[7],
                     line = list(
                         color = 'rgb(0,0,0)',
                         width = 1.5
@@ -857,7 +1081,7 @@ plot_opensci_green_oa <- function (dataset, umc, absnum, color_palette) {
                 y = ~no_data,
                 name = "No data",
                 marker = list(
-                    color = color_palette[7],
+                    color = color_palette[6],
                     line = list(
                         color = 'rgb(0,0,0)',
                         width = 1.5
@@ -878,7 +1102,7 @@ plot_opensci_green_oa <- function (dataset, umc, absnum, color_palette) {
             )
         
     } else {
-
+        
         plot_ly(
             plot_data,
             x = ~x_label,

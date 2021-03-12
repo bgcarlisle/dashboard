@@ -11,8 +11,8 @@ library(DT)
 
 ## Load data
 rm_data <- read_csv(
-    "data/2021-03-01_pp-dataset-oa-trn-sciscore-od-animals-permissions.csv",
-    col_types="ccdddcccccdccccdlllllcddlccccccccccccccccccccddddddddddddddddddddddddlcclclccdccccDlclclllccccdcDlll"
+    "data/2021-03-01_pp-dataset-oa-trn-sciscore-od-animals-permissions-greenoa.csv",
+    col_types="ccdddcccccdccccdlllllcddlccccccccccccccccccccddddddddddddddddddddddddlcclclccdccccDlclclllccccdcDlllc"
     ## Need to specify column types here because read_csv
     ## only looks at the first few rows to determine type
     ## automatically, and if they're all empty, assumes
@@ -759,41 +759,85 @@ server <- function (input, output, session) {
 
         ## Value for Green OA
 
+        # if ( input$selectUMC == "All") {
+        # 
+        #     denom_greenoa <- rm_data %>%
+        #         filter(
+        #             color == "closed",
+        #             ! is.na(permission_postprint)
+        #         ) %>%
+        #         nrow()
+        # 
+        #     numer_greenoa <- rm_data %>%
+        #         filter(
+        #             color == "closed",
+        #             ! is.na(permission_postprint),
+        #             permission_postprint == TRUE
+        #         ) %>%
+        #         nrow()
+        # 
+        # } else {
+        # 
+        #     denom_greenoa <- rm_data %>%
+        #         filter(
+        #             color == "closed",
+        #             ! is.na(permission_postprint),
+        #             city == input$selectUMC
+        #         ) %>%
+        #         nrow()
+        # 
+        #     numer_greenoa <- rm_data %>%
+        #         filter(
+        #             color == "closed",
+        #             ! is.na(permission_postprint),
+        #             permission_postprint == TRUE,
+        #             city == input$selectUMC
+        #         ) %>%
+        #         nrow()
+        # }
+        
         if ( input$selectUMC == "All") {
-
-            denom_greenoa <- rm_data %>%
+            
+            closed_with_potential <- rm_data %>%
                 filter(
-                    color == "closed",
-                    ! is.na(permission_postprint)
-                ) %>%
-                nrow()
-
-            numer_greenoa <- rm_data %>%
-                filter(
-                    color == "closed",
+                    color_green_only == "closed",
                     ! is.na(permission_postprint),
                     permission_postprint == TRUE
                 ) %>%
                 nrow()
             
-        } else {
-
-            denom_greenoa <- rm_data %>%
+            greenoa_only <- rm_data %>%
                 filter(
-                    color == "closed",
-                    ! is.na(permission_postprint),
-                    city == input$selectUMC
+                    color_green_only == "green",
                 ) %>%
                 nrow()
-
-            numer_greenoa <- rm_data %>%
+            
+            denom_greenoa <- closed_with_potential + greenoa_only
+            
+            numer_greenoa <- greenoa_only
+            
+            
+        } else {
+            
+            closed_with_potential <- rm_data %>%
                 filter(
-                    color == "closed",
+                    color_green_only == "closed",
                     ! is.na(permission_postprint),
                     permission_postprint == TRUE,
                     city == input$selectUMC
                 ) %>%
                 nrow()
+            
+            greenoa_only <- rm_data %>%
+                filter(
+                    color_green_only == "green",
+                    city == input$selectUMC
+                ) %>%
+                nrow()
+            
+            denom_greenoa <- closed_with_potential + greenoa_only
+            
+            numer_greenoa <- greenoa_only
         }
         
         wellPanel(
@@ -808,7 +852,7 @@ server <- function (input, output, session) {
                 column(
                     col_width,
                     metric_box(
-                        title = "Open Access",
+                        title = "Open Access (OA)",
                         value = paste0(round(100*all_numer_oa/all_denom_oa), "%"),
                         value_text = "of 2018 publications are Open Access",
                         plot = plotlyOutput('plot_opensci_oa', height="300px"),
@@ -825,7 +869,7 @@ server <- function (input, output, session) {
                     metric_box(
                         title = "Potential Green OA",
                         value = paste0(round(100*numer_greenoa/denom_greenoa), "%"),
-                        value_text = "paywalled publications could be made openly accessible",
+                        value_text = "of publications otherwise behind a paywall are openly accessible via green OA",
                         plot = plotlyOutput('plot_opensci_green_oa', height="300px"),
                         info_id = "infoGreenOA",
                         info_title = "Potential Green Open Access",
