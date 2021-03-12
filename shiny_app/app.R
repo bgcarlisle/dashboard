@@ -94,7 +94,7 @@ ui <- tagList(
     navbarPage(
         "Responsible Metrics Dashboard", theme = shinytheme("flatly"), id = "navbarTabs",
         start_page,
-        all_umcs_page,
+        ## all_umcs_page,
         methods_page,
         datasets_page,
         about_rm_page,
@@ -118,14 +118,14 @@ server <- function (input, output, session) {
 
     ## Define button actions
 
-    observeEvent(
-        input$buttonAllUMCs, {
-            updateTabsetPanel(
-                session, "navbarTabs",
-                selected = "tabAllUMCs"
-            )
-        }
-    )
+    ## observeEvent(
+    ##     input$buttonAllUMCs, {
+    ##         updateTabsetPanel(
+    ##             session, "navbarTabs",
+    ##             selected = "tabAllUMCs"
+    ##         )
+    ##     }
+    ## )
     
     observeEvent(
         input$buttonMethods, {
@@ -178,11 +178,11 @@ server <- function (input, output, session) {
                     hr(),
                     br(),
                     br(),
-                    actionButton(
-                        style = "color: white; background-color: #aa1c7d;",
-                        'buttonAllUMCs',
-                        'See all UMCs'
-                    ),
+                    ## actionButton(
+                    ##     style = "color: white; background-color: #aa1c7d;",
+                    ##     'buttonAllUMCs',
+                    ##     'See all UMCs'
+                    ## ),
                     actionButton(
                         style = "color: white; background-color: #aa1c7d;",
                         'buttonMethods',
@@ -195,20 +195,20 @@ server <- function (input, output, session) {
                     ),
                     br()
                 )
-            ),
-            fluidRow(
-                column(
-                    4,
-                    br(),
-                    br(),
-                    selectInput(
-                        "selectUMC",
-                        strong("Choose UMC"),
-                        choices = umclist,
-                        selected = NA
-                    )
-                )
-            )
+            )## ,
+            ## fluidRow(
+            ##     column(
+            ##         4,
+            ##         br(),
+            ##         br(),
+            ##         selectInput(
+            ##             "selectUMC",
+            ##             strong("Choose UMC"),
+            ##             choices = umclist,
+            ##             selected = NA
+            ##         )
+            ##     )
+            ## )
         )
         
     })
@@ -220,7 +220,7 @@ server <- function (input, output, session) {
     output$robustness_metrics <- renderUI({
 
         req(input$width)
-        req(input$selectUMC)
+        req("UMC 8")
 
         if (input$width < 1400) {
             col_width <- 6
@@ -232,7 +232,7 @@ server <- function (input, output, session) {
 
         ## Value for randomization
 
-        if (input$selectUMC == "All") {
+        if ("UMC 8" == "All") {
 
             all_numer_rando <- rm_data %>%
                 filter(
@@ -247,7 +247,7 @@ server <- function (input, output, session) {
         } else {
 
             all_numer_rando <- rm_data %>%
-                filter(city == input$selectUMC) %>%
+                filter(city == "UMC 8") %>%
                 filter(
                     is_animal == 1,
                     language == "English",
@@ -261,7 +261,7 @@ server <- function (input, output, session) {
 
         ## Value for Blinding
 
-        if (input$selectUMC == "All") {
+        if ("UMC 8" == "All") {
 
         all_numer_blinded <- rm_data %>%
             filter(
@@ -276,7 +276,7 @@ server <- function (input, output, session) {
         } else {
 
         all_numer_blinded <- rm_data %>%
-            filter(city == input$selectUMC) %>%
+            filter(city == "UMC 8") %>%
             filter(
                 is_animal == 1,
                 language == "English",
@@ -290,7 +290,7 @@ server <- function (input, output, session) {
 
         ## Value for Power calc
 
-        if (input$selectUMC == "All") {
+        if ("UMC 8" == "All") {
 
             all_numer_power <- rm_data %>%
                 filter(
@@ -305,7 +305,7 @@ server <- function (input, output, session) {
         } else {
 
             all_numer_power <- rm_data %>%
-                filter(city == input$selectUMC) %>%
+                filter(city == "UMC 8") %>%
                 filter(
                     is_animal == 1,
                     language == "English",
@@ -326,7 +326,7 @@ server <- function (input, output, session) {
         ##     select(iacuc) %>%
         ##     sum(na.rm=TRUE)
 
-        if (input$selectUMC == "All") {
+        if ("UMC 8" == "All") {
 
             all_denom_animal_sciscore <- rm_data %>%
                 filter(
@@ -340,7 +340,7 @@ server <- function (input, output, session) {
         } else {
 
             all_denom_animal_sciscore <- rm_data %>%
-                filter(city == input$selectUMC) %>%
+                filter(city == "UMC 8") %>%
                 filter(
                     is_animal == 1,
                     language == "English",
@@ -430,7 +430,7 @@ server <- function (input, output, session) {
     output$clinicaltrials_metrics <- renderUI({
 
         req(input$width)
-        req(input$selectUMC)
+        req("UMC 8")
 
         if (input$width < 1400) {
             col_width <- 6
@@ -442,7 +442,7 @@ server <- function (input, output, session) {
 
         ## Value for TRN
 
-        if (input$selectUMC == "All") {
+        if ("UMC 8" == "All") {
 
             all_numer_trn <- rm_data %>%
                 filter(
@@ -458,7 +458,7 @@ server <- function (input, output, session) {
         } else {
 
             all_numer_trn <- rm_data %>%
-                filter(city == input$selectUMC) %>%
+                filter(city == "UMC 8") %>%
                 filter(
                     is_human_ct == 1,
                     ! is.na(abs_trn_1)
@@ -466,7 +466,7 @@ server <- function (input, output, session) {
                 nrow()
             
             all_denom_trn <- rm_data %>%
-                filter(city == input$selectUMC) %>%
+                filter(city == "UMC 8") %>%
                 filter(is_human_ct == 1) %>%
                 nrow()
             
@@ -474,7 +474,7 @@ server <- function (input, output, session) {
 
         ## Value for summary results
 
-        if (input$selectUMC == "All") {
+        if ("UMC 8" == "All") {
             
             all_numer_sumres <- eutt_data %>%
                 filter (
@@ -491,7 +491,7 @@ server <- function (input, output, session) {
         } else {
             
             all_numer_sumres <- eutt_data %>%
-                filter(city == input$selectUMC) %>%
+                filter(city == "UMC 8") %>%
                 filter (
                     due_or_not == "Due",
                     status == "Reported results" |
@@ -500,7 +500,7 @@ server <- function (input, output, session) {
                 nrow()
 
             all_denom_sumres <- eutt_data %>%
-                filter(city == input$selectUMC) %>%
+                filter(city == "UMC 8") %>%
                 filter(due_or_not == "Due") %>%
                 nrow()
             
@@ -516,7 +516,7 @@ server <- function (input, output, session) {
 
         ## Value for prereg
 
-        if (input$selectUMC == "All") {
+        if ("UMC 8" == "All") {
 
             iv_data_unique <- iv_data %>%
                 distinct(id, .keep_all = TRUE)
@@ -524,7 +524,7 @@ server <- function (input, output, session) {
         } else {
 
             iv_data_unique <- iv_data %>%
-                filter(city == input$selectUMC) %>%
+                filter(city == "UMC 8") %>%
                 distinct(id, .keep_all = TRUE)
         }
 
@@ -635,7 +635,7 @@ server <- function (input, output, session) {
     output$openscience_metrics <- renderUI({
 
         req(input$width)
-        req(input$selectUMC)
+        req("UMC 8")
 
         if (input$width < 1400) {
             col_width <- 6
@@ -647,7 +647,7 @@ server <- function (input, output, session) {
 
         ## Value for Open Access
 
-        if ( input$selectUMC == "All") {
+        if ( "UMC 8" == "All") {
             
             all_numer_oa <- rm_data %>%
                 filter(
@@ -666,7 +666,7 @@ server <- function (input, output, session) {
         } else {
             
             all_numer_oa <- rm_data %>%
-                filter(city == input$selectUMC) %>%
+                filter(city == "UMC 8") %>%
                 filter(
                     color == "gold" | color == "green" | color == "hybrid"
                     
@@ -674,7 +674,7 @@ server <- function (input, output, session) {
                 nrow()
 
             all_denom_oa <- rm_data %>%
-                filter(city == input$selectUMC) %>%
+                filter(city == "UMC 8") %>%
                 filter(
                     ! is.na(color)
                     
@@ -685,7 +685,7 @@ server <- function (input, output, session) {
 
         ## Value for Open Data
 
-        if ( input$selectUMC == "All") {
+        if ( "UMC 8" == "All") {
             
             all_denom_od <- rm_data %>%
                 filter(
@@ -704,7 +704,7 @@ server <- function (input, output, session) {
         } else {
             
             all_denom_od <- rm_data %>%
-                filter(city == input$selectUMC) %>%
+                filter(city == "UMC 8") %>%
                 filter(
                     ! is.na (is_open_data),
                     language == "English"
@@ -712,7 +712,7 @@ server <- function (input, output, session) {
                 nrow()
 
             all_numer_od <- rm_data %>%
-                filter(city == input$selectUMC) %>%
+                filter(city == "UMC 8") %>%
                 filter(
                     is_open_data,
                     language == "English"
@@ -723,7 +723,7 @@ server <- function (input, output, session) {
         
         ## Value for Open Code
 
-        if ( input$selectUMC == "All") {
+        if ( "UMC 8" == "All") {
 
             all_denom_oc <- rm_data %>%
                 filter(
@@ -742,7 +742,7 @@ server <- function (input, output, session) {
         } else {
 
             all_denom_oc <- rm_data %>%
-                filter(city == input$selectUMC) %>%
+                filter(city == "UMC 8") %>%
                 filter(
                     ! is.na (is_open_code),
                     language == "English"
@@ -750,7 +750,7 @@ server <- function (input, output, session) {
                 nrow()
 
             all_numer_oc <- rm_data %>%
-                filter(city == input$selectUMC) %>%
+                filter(city == "UMC 8") %>%
                 filter(
                     is_open_code,
                     language == "English"
@@ -761,7 +761,7 @@ server <- function (input, output, session) {
 
         ## Value for Green OA
 
-        # if ( input$selectUMC == "All") {
+        # if ( "UMC 8" == "All") {
         # 
         #     denom_greenoa <- rm_data %>%
         #         filter(
@@ -784,7 +784,7 @@ server <- function (input, output, session) {
         #         filter(
         #             color == "closed",
         #             ! is.na(permission_postprint),
-        #             city == input$selectUMC
+        #             city == "UMC 8"
         #         ) %>%
         #         nrow()
         # 
@@ -793,12 +793,12 @@ server <- function (input, output, session) {
         #             color == "closed",
         #             ! is.na(permission_postprint),
         #             permission_postprint == TRUE,
-        #             city == input$selectUMC
+        #             city == "UMC 8"
         #         ) %>%
         #         nrow()
         # }
         
-        if ( input$selectUMC == "All") {
+        if ( "UMC 8" == "All") {
             
             closed_with_potential <- rm_data %>%
                 filter(
@@ -826,14 +826,14 @@ server <- function (input, output, session) {
                     color_green_only == "closed",
                     ! is.na(permission_postprint),
                     permission_postprint == TRUE,
-                    city == input$selectUMC
+                    city == "UMC 8"
                 ) %>%
                 nrow()
             
             greenoa_only <- rm_data %>%
                 filter(
                     color_green_only == "green",
-                    city == input$selectUMC
+                    city == "UMC 8"
                 ) %>%
                 nrow()
             
@@ -1288,62 +1288,62 @@ server <- function (input, output, session) {
     
     ## Open Access plot
     output$plot_opensci_oa <- renderPlotly({
-        return (plot_opensci_oa(rm_data, input$selectUMC, input$opensci_absnum, color_palette_delwen))
+        return (plot_opensci_oa(rm_data, "UMC 8", input$opensci_absnum, color_palette_delwen))
     })
     
     ## Open Data plot
     output$plot_opensci_od <- renderPlotly({
-        return (plot_opensci_od(rm_data, input$selectUMC, input$opensci_absnum, color_palette_delwen))
+        return (plot_opensci_od(rm_data, "UMC 8", input$opensci_absnum, color_palette_delwen))
     })
     
     ## Open Code plot
     output$plot_opensci_oc <- renderPlotly({
-        return (plot_opensci_oc(rm_data, input$selectUMC, input$opensci_absnum, color_palette_delwen))
+        return (plot_opensci_oc(rm_data, "UMC 8", input$opensci_absnum, color_palette_delwen))
     })
     
     ## Green Open Access plot
     output$plot_opensci_green_oa <- renderPlotly({
-        return (plot_opensci_green_oa(rm_data, input$selectUMC, input$opensci_absnum, color_palette_delwen))
+        return (plot_opensci_green_oa(rm_data, "UMC 8", input$opensci_absnum, color_palette_delwen))
     })
     
     ## TRN plot
     output$plot_clinicaltrials_trn <- renderPlotly({
-        return (plot_clinicaltrials_trn(rm_data, input$selectUMC, color_palette))
+        return (plot_clinicaltrials_trn(rm_data, "UMC 8", color_palette))
     })
     
     ## Summary results plot
     output$plot_clinicaltrials_sumres <- renderPlotly({
-        return (plot_clinicaltrials_sumres(eutt_data, input$selectUMC, color_palette))
+        return (plot_clinicaltrials_sumres(eutt_data, "UMC 8", color_palette))
     })
     
     ## Preregistration plot
     output$plot_clinicaltrials_prereg <- renderPlotly({
-        return (plot_clinicaltrials_prereg(iv_data, input$selectUMC, color_palette))
+        return (plot_clinicaltrials_prereg(iv_data, "UMC 8", color_palette))
     })
     
     ## Timely Publication plot
     output$plot_clinicaltrials_timpub <- renderPlotly({
-        return (plot_clinicaltrials_timpub(iv_data, input$selectUMC, color_palette))
+        return (plot_clinicaltrials_timpub(iv_data, "UMC 8", color_palette))
     })
 
     ## Robustness plot
     output$plot_randomization <- renderPlotly({
-        return (plot_randomization(rm_data, input$selectUMC, input$animals_absnum, color_palette_delwen))
+        return (plot_randomization(rm_data, "UMC 8", input$animals_absnum, color_palette_delwen))
     })
 
     ## Blinding plot
     output$plot_blinding <- renderPlotly({
-        return(plot_blinding(rm_data, input$selectUMC, input$animals_absnum, color_palette_delwen))
+        return(plot_blinding(rm_data, "UMC 8", input$animals_absnum, color_palette_delwen))
     })
 
     ## Power calc plot
     output$plot_power <- renderPlotly({
-        return(plot_power(rm_data, input$selectUMC, input$animals_absnum, color_palette_delwen))
+        return(plot_power(rm_data, "UMC 8", input$animals_absnum, color_palette_delwen))
     })
 
     ## IACUC plot
     ## output$plot_iacuc <- renderPlotly({
-    ##     return(plot_iacuc(rm_data, input$selectUMC, color_palette))
+    ##     return(plot_iacuc(rm_data, "UMC 8", color_palette))
     ## })
 
     ## All UMC's page plots ##
