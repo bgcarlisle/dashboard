@@ -185,7 +185,7 @@ methods_page <- tabPanel(
                methods_panel("Prospective registration",
                              
                              "This metric measures if the clinical trials are registered before the
-                        start date of the study, according to the information given on ClinicalTrials.gov.
+                        start date of the study, according to the information given on ClinicalTrials.gov or DRKS.de.
                         The idea of prospective registration of studies is to make the trial specifications,
                         including primary and secondary outcomes, publicly available before study start.
                         Prospective registration adds transparency, helps protect against outcome switching.",
