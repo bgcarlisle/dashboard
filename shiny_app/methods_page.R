@@ -31,12 +31,11 @@ methods_page <- tabPanel(
                                is openly available in OSF. Briefly, 50 publications per UMC were manually checked
                                as to whether any author is affiliated to the medical faculty of the university of
                                question. Based on these results, we generated a proof-of-principle dataset with
-                               publications from UMCs with a precision equal to or higher than 85 (n=13 UMCs). For
+                               publications from UMCs with a precision equal to or greater than 85% (n=13 UMCs). For
                                each UMC, we selected a random sample of 500 articles. Reviews were exluded from
-                               the development of this smaller proof-of-principle dataset as most metrics are
-                               based on articles. The code used to generate the UMC publication set, process
-                               samples for precision checks, and create the proof-of-principle dataset are openly
-                                      available at: [coming soon].")),
+                               this proof-of-principle dataset as most metrics are
+                               based on articles. This dashboard displays the data of one of these UMCs and
+                               contextualizes it to the data of all UMCs included in the proof-of-principle dataset.")),
                                value = "methodsPanels_PublicationSearch",
                                style = "default")),
     
@@ -99,7 +98,7 @@ methods_page <- tabPanel(
                              paywalled publications with the potential for green OA, we filtered our dataset for
                              paywalled publications and queried the
                              <a href="https://shareyourpaper.org/permissions/about#api">
-                             Shareyourpaper.org permissions API</a> (Open Access button) to obtain article-level
+                             Shareyourpaper.org permissions API</a> (Open Access Button) to obtain article-level
                              self-archiving permissions based on journal and/or publisher policies. Publications
                              were considered to have the potential for green OA if an authoritative permission
                              was found for archiving the accepted version of the publication in an institutional
@@ -121,13 +120,11 @@ methods_page <- tabPanel(
                         can be reused and combined by other scientists to answer new research
                         questions. The definition of Open Data used here is a low barrier definition.
                         Only a part of the raw data underlying a study has to be freely available
-                        and no further quality criteria such as the FAIR criteria are checked -
-                        for further details on the Open Data definition used see
-                        <a href="https://www.bihealth.org/en/research/quest-center/mission-approaches/incentives/including-open-data/open-data-criteria/">
-                        here</a>. Note also that data sharing is not possible for all studies, for example if
+                        and no further quality criteria such as the FAIR criteria are checked. Note
+                        also that data sharing is not possible for all studies, for example if
                         there is no dataset to be shared or if the data cannot be shared, e.g. due to privacy
                         concerns for patient data. Data sharing under restrictions is currently not considered,
-                        but we are planning to do so in the future.'),
+                        but this is planned in the future.'),
                              
                              HTML('To identify publications which share research data or analysis code,
                         we use the text-mining algorithm ODDPub
@@ -149,16 +146,16 @@ methods_page <- tabPanel(
                              
                              "Several limitations apply:
                         Only full texts for Open Access publications or publications in journals to which
-                        the Charite has a subscription could be retrieved (~78% of all detected publications).
+                        we had a subscription could be retrieved (~78% of all detected publications).
                         ODDPub only finds ~75% of all Open Data publications and finds false positive cases
                         (no manual check of the results is done). ODDPub also does not verify that the
                         indicated dataset is indeed available and whether the dataset fulfills our definition
                         of Open Data. Open Data is not relevant for all publications, so we would not
                         expect 100% of the publications to contain Open Data, not even in an ideal case.
                         We considered all publications which had at least one author affiliated to one of the
-                        included UMCs. Depending on an author's contribution to a project, he/she/they may have
-                        differing influence on the decision whether to make data or code available alongside
-                        a publication.")),
+                        included UMCs. Authors with different project contributions and roles may have varing
+                        influence on the decision whether to make data or code available alongside a
+                        publication.")),
     
     hr(),
     h2("Clinical trials"),
@@ -177,7 +174,7 @@ methods_page <- tabPanel(
                              dataset from the
                         <a href="https://eu.trialstracker.net">EU Trials Tracker</a> by the EBM DataLab.'),
                              
-                             "While the EU Clinical Trials Register is one of the most important
+                             "While the EU Clinical Trials Register is one of the most predominant
                         European trial registries, it is not the only available registry. There are other
                         registries such as ClinicalTrials.gov. or the German Clinical Trials Registry,
                         which are not considered here. Additionally, the EU Trials Tracker does not
@@ -268,16 +265,18 @@ methods_page <- tabPanel(
     bsCollapse(id = "methodsPanels_Robustness",
                methods_panel("Robustness of animal studies",
                              
-                             HTML("The robustness metrics assess whether animal studies in our publication set
-                        adhere to a core set of reporting standards for animal studies as described by
-                        <a href=https://www.nature.com/articles/nature11556>Landis et al. (2012)</a>.
+                             HTML("The robustness measures depend on the performance of the SciScore classifier
+                        (see
+                        <a href=\"https://www.sciencedirect.com/science/article/pii/S2589004220308907\" target=\"_blank\">Menke et al. 2020</a>
+                        for more information on classifier performance analysis).
                         Specifically, we focus on the following research parameters: reporting of investigator
                         blinding, randomization of subjects, and sample size calculation."),
                              
                              HTML('In a first step, we filtered the publication dataset for animal studies based
-                        on a previously published <a href=https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3104815/
-                        >PubMed search query</a>. The robustness measures were evaluated with
-                        <a href="https://www.sciencedirect.com/science/article/pii/S2589004220308907">SciScore</a>,
+                        on a previously published
+                        <a href=\"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3104815/\" target=\"_blank\">PubMed search query</a>.
+                        The robustness measures were evaluated with
+                        <a href=\"https://www.sciencedirect.com/science/article/pii/S2589004220308907\" target=\"_blank\">SciScore</a>,
                         an automated tool which evaluates research articles based on their adherence to rigour
                         and reproducibility criteria.'),
                              
@@ -366,7 +365,7 @@ sumres_tooltip <- strwrap("This metric measures how many clinical trials registe
                         done so. A trial is due to report its results 12 month after trial completion.
                         The data were retrieved from the EU Trials Tracker by the EBM DataLab
                         (eu.trialstracker.net). Clinical trials are expensive and have often many contributing
-                        patients. A fast dissemination of the trial results is crucial to make the evidence
+                        patients. A timely dissemination of the trial results is crucial to make the evidence
                         gained in those trials available. The World Health organization recommends publishing
                         clinical trial results within one year after the end of a study.") %>%
     

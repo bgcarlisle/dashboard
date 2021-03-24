@@ -4,7 +4,7 @@ about_rm_page <- tabPanel(
     h3("Contributions"),
     br(),
     helpText('We would like to thank all those who contributed to this proof-of-principle dashboard. We would
-             particularly like to thank Nico Riedel who designed an initial version of this dashboard, which
+             particularly like to thank Nico Riedel who created the original version of this dashboard, which
              we adapted for use with multiple institutions.'),
     br(),
     h4("UMC publication search"),
@@ -34,7 +34,7 @@ about_rm_page <- tabPanel(
     h4("Shiny app"),
     helpText('Riedel, Nico (Conceptualization, Technical Implementation);
                                 Carlisle, Benjamin Gregory (Conceptualization, Technical Implementation);
-                                Franzen, Delwen (Conceptualization);
+                                Franzen, Delwen (Conceptualization, Technical Implementation);
                                 Maia Salholz-Hillel (Conceptualization);
                                 Holst, Martin (Conceptualization);
                                 Haven, Tamarinde (Conceptualization);

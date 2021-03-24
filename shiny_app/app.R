@@ -156,12 +156,14 @@ server <- function (input, output, session) {
                     8,
                     h1(style = "margin-left:0cm", strong("Proof-of-principle Responsible Metrics Dashboard (2018)"), align = "left"),
                     h4(style = "margin-left:0cm",
-                       "This dashboard is a proof-of-principle overview of several metrics of open and robust
+                       "This proof-of-principle dashboard provides an overview of several metrics of open and robust
                        research for several German University Medical Centres (UMCs). This dashboard is a pilot
                        that is still under development, and should not be used to compare UMCs or inform policy.
                        More metrics may be added in the future."),
                     h4(style = "margin-left:0cm",
-                       "Besides the metrics
+                       "The dashboard includes data of UMCs for which publications could be identified with a
+                       precision equal to or higher than 85%. The data displayed is based on a random sample of
+                       500 articles per UMC. An example UMC is highlighted. Besides the metrics
                        Summary Results Reporting, Prospective Registration, and Timely Publication, all other
                        metrics are based on publications from 2018. For the Open Science and Robustness metrics,
                        the data can be viewed as 1) the percentage of analyzable publications which display the
@@ -368,7 +370,7 @@ server <- function (input, output, session) {
                     metric_box(
                         title = "Randomization",
                         value = all_percent_randomized,
-                        value_text = "of analyzable 2018 animal studies report randomization",
+                        value_text = "of analyzable 2018 animal studies report on randomization",
                         plot = plotlyOutput('plot_randomization', height="300px"),
                         info_id = "infoRandomization",
                         info_title = "Randomization",
@@ -383,7 +385,7 @@ server <- function (input, output, session) {
                     metric_box(
                         title = "Blinding",
                         value = all_percent_blinded,
-                        value_text = "of analyzable 2018 animal studies report blinding",
+                        value_text = "of analyzable 2018 animal studies report on blinding",
                         plot = plotlyOutput('plot_blinding', height="300px"),
                         info_id = "infoBlinding",
                         info_title = "Blinding",
@@ -398,7 +400,7 @@ server <- function (input, output, session) {
                     metric_box(
                         title = "Power calculation",
                         value = all_percent_power,
-                        value_text = "of analyzable 2018 animal studies report a power calculation",
+                        value_text = "of analyzable 2018 animal studies report on power calculation",
                         plot = plotlyOutput('plot_power', height="300px"),
                         info_id = "infoPower",
                         info_title = "Power",
@@ -509,7 +511,7 @@ server <- function (input, output, session) {
             sumresvaltext <- "No clinical trials for this metric were captured by this method for this UMC"
         } else {
             sumresval <- paste0(round(100*all_numer_sumres/all_denom_sumres), "%")
-            sumresvaltext <- "of due clinical trials reporting summary results"
+            sumresvaltext <- "of due clinical trials report summary results"
         }
 
         ## Value for prereg
@@ -538,7 +540,7 @@ server <- function (input, output, session) {
             preregvaltext <- "No clinical trials for this metric were captured by this method for this UMC"
         } else {
             preregval <- paste0(round(100*all_numer_prereg/all_denom_prereg), "%")
-            preregvaltext <- "of clinical trials were prospectively registered"
+            preregvaltext <- "of registered clinical trials were prospectively registered"
         }
 
         ## Value for timely pub
@@ -1098,7 +1100,7 @@ server <- function (input, output, session) {
                     metric_box(
                         title = "Summary Results Reporting",
                         value = paste0(round(100*all_numer_sumres/all_denom_sumres), "%"),
-                        value_text = "of due clinical trials reporting summary results",
+                        value_text = "of due clinical trials report summary results",
                         plot = plotlyOutput('plot_allumc_clinicaltrials_sumres', height="300px"),
                         info_id = "infoALLUMCSumRes",
                         info_title = "Summary results reporting (All UMCs)",
@@ -1115,7 +1117,7 @@ server <- function (input, output, session) {
                     metric_box(
                         title = "Prospective registration",
                         value = paste0(round(100*all_numer_prereg/all_denom_prereg), "%"),
-                        value_text = "of clinical trials were prospectively registered",
+                        value_text = "of registered clinical trials were prospectively registered",
                         plot = plotlyOutput('plot_allumc_clinicaltrials_prereg', height="300px"),
                         info_id = "infoALLUMCPreReg",
                         info_title = "Prospective registration (All UMCs)",
@@ -1209,7 +1211,7 @@ server <- function (input, output, session) {
                     metric_box(
                         title = "Randomization",
                         value = all_percent_randomized,
-                        value_text = "of analyzable 2018 animal studies report randomization",
+                        value_text = "of analyzable 2018 animal studies report on randomization",
                         plot = plotlyOutput('plot_allumc_animal_rando', height="300px"),
                         info_id = "infoAllUMCAnimalRando",
                         info_title = "Randomization",
@@ -1226,7 +1228,7 @@ server <- function (input, output, session) {
                     metric_box(
                         title = "Blinding",
                         value = all_percent_blinded,
-                        value_text = "of analyzable 2018 animal studies report blinding",
+                        value_text = "of analyzable 2018 animal studies report on blinding",
                         plot = plotlyOutput('plot_allumc_animal_blind', height="300px"),
                         info_id = "infoAllUMCAnimalBlind",
                         info_title = "Blinding",
@@ -1243,7 +1245,7 @@ server <- function (input, output, session) {
                     metric_box(
                         title = "Power calculation",
                         value = all_percent_power,
-                        value_text = "of analyzable 2018 animal studies report a power calculation",
+                        value_text = "of analyzable 2018 animal studies report on power calculation",
                         plot = plotlyOutput('plot_allumc_animal_power', height="300px"),
                         info_id = "infoAllUMCAnimalPower",
                         info_title = "Power calculation",
