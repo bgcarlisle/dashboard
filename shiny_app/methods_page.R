@@ -212,8 +212,8 @@ methods_page <- tabPanel(
                         in those trials available. The World Health organization recommends publishing
                         clinical trial results within one year after the end of a study.",
                              
-                             HTML('The registry ClinicalTrials.gov was searched for studies with one of the UMCs
-                             as the responsible party/sponsor or with a principle investigator from one of the
+                             HTML('ClinicalTrials.gov and DRKS.de were searched for studies with one of the UMCs
+                             as the responsible party/sponsor or with a principal investigator from one of the
                              UMCs. A manual search for published results was done, searching the
                         registry, PubMed and Google. When calculating the time to publication, we only
                         considered trials where we could track the full timeframe since completion.
@@ -372,14 +372,14 @@ sumres_tooltip <- strwrap("This metric measures how many clinical trials registe
 paste(collapse = " ")
 
 prereg_tooltip <- strwrap("This metric measures if the clinical trials are registered before the
-                        start date of the study, according to the information given on ClinicalTrials.gov.
+                        start date of the study, according to the information given on ClinicalTrials.gov or DRKS.de.
                         The idea of prospective registration of studies is to make the trial specifications,
                         including primary and secondary outcomes, publicly available before study start.
                         Prospective registration adds transparency, helps protect against outcome switching.") %>%
     
 paste(collapse = " ")
 
-timpub_tooltip <- strwrap("This metric measures how many clinical trials registered on ClinicalTrials.gov
+timpub_tooltip <- strwrap("This metric measures how many clinical trials registered on ClinicalTrials.gov or DRKS.de
                         reported their results either as a journal publication or as summary results on the
                         trials registry within 2 years after completion. Trials completed between 2009
                         and 2017 were considered. The results were previously published as part of the
@@ -443,7 +443,7 @@ lim_randomization_tooltip <- strwrap("We did not test the sensitivity and precis
 lim_blinding_tooltip <- strwrap("We did not test the sensitivity and precision of the approach used to identify animal studies in our dataset, nor the data obtained from SciScore. Moreover, we do not have SciScore data for all studies in our publication set. Finally, blinding may not always apply, especially in early-stage exploratory research (hypothesis-generating experiments).")
 lim_power_tooltip <- strwrap("We did not test the sensitivity and precision of the approach used to identify animal studies in our dataset, nor the data obtained from SciScore. Moreover, we do not have SciScore data for all studies in our publication set. Finally, sample size calculation may not always apply, especially in early-stage exploratory research (hypothesis-generating experiments).")
 lim_sumres_tooltip <- strwrap("While the EU Clinical Trials Register is one of the most important European trial registries, it is not the only available registry. There are other registries such as ClinicalTrials.gov. or the German Clinical Trials Registry, which are not considered here. Additionally, the EU Trials Tracker does not measure for how long the trials have been due. Finally, we only considered the latest data available in the EU Trials Tracker. We plan to include historic data in the future.")
-lim_prereg_tooltip <- strwrap("Like in the case of the summary results metric, we only focused on the ClinicalTrials.gov while there are other available registries as well. Also, we rely on the information on ClinicalTrials.gov being accurate.")
+lim_prereg_tooltip <- strwrap("We focused on ClinicalTrials.gov and DRKS.de while there are other available registries as well. Also, we rely on the information on ClinicalTrials.gov and DRKS.de being accurate.")
 lim_timpub_tooltip <- strwrap("Some detected publications might be missed in the manual search procedure as we only searched a limited number of scientific databases and did not contact the responsible parties. Furthermore, we did not include observational clinical studies in our sample. Additionally, we might overestimate the time to publication for some studies as we stopped the manual search after the first detected publication.")
 lim_trn_tooltip <- strwrap(HTML("We identified human clinical trials based on the following search term in PubMed: &#39clinical trial&#39[pt] NOT (animals [mh] NOT humans [mh]). However, we have not tested (1) the sensitivity of this PubMed search term; (2) the precision of this search term. Our algorithm does not distinguish true TRNs that do not resolve to a registration. Our algorithm does not determine whether the TRN is reported as a registration for the publication&#39s study."))
 
