@@ -13,7 +13,7 @@ methods_page <- tabPanel(
                bsCollapsePanel(strong("Publication Search"),
                                p(HTML("Many of the assessed metrics are publication-based metrics. To assess those
                                metrics on the institutional level, we first had to identify publications
-                               that can be assigned to one of the UMCs in Germany. We searched
+                               that can be assigned to UMCs in Germany. We searched
                                Web of Science for publications published in 2018 with at least one author
                                at each UMC. We used the organisation-enhanced index of the Web of Science
                                Core Collection to disambiguate author affiliations. As a proxy for the publication
@@ -26,16 +26,17 @@ methods_page <- tabPanel(
                                performed on 22/09/2020.
                                <br>
                                <br>To evaluate the precision of our approach, we performed a manual check of
-                               a sample of publications per UMC. A
+                               a random sample of publications per UMC. A
                                <a href=https://osf.io/a248e/>detailed protocol</a> of our precision checks
                                is openly available in OSF. Briefly, 50 publications per UMC were manually checked
                                as to whether any author is affiliated to the medical faculty of the university of
-                               question. Based on these results, we generated a proof-of-principle dataset with
-                               publications from UMCs with a precision equal to or greater than 85% (n=13 UMCs). For
-                               each UMC, we selected a random sample of 500 articles. Reviews were exluded from
-                               this proof-of-principle dataset as most metrics are
-                               based on articles. This dashboard displays the data of one of these UMCs and
-                               contextualizes it to the data of all UMCs included in the proof-of-principle dataset.")),
+                               question. Based on these results, we generated a proof-of-principle dataset
+                               which includes UMCs for which we could identify publication sets with a precision
+                               equal to or greater than 85% (n=13 UMCs). For each UMC, we included a random sample
+                               of 500 articles (or all articles if less than 500). Reviews were excluded from this
+                               proof-of-principle dataset as most metrics are based on articles. An example UMC is
+                               highlighted and contextualized to the average of all UMCs included in the
+                               proof-of-principle dataset.")),
                                value = "methodsPanels_PublicationSearch",
                                style = "default")),
     
@@ -99,17 +100,17 @@ methods_page <- tabPanel(
                              paywalled publications and queried the
                              <a href="https://shareyourpaper.org/permissions/about#api">
                              Shareyourpaper.org permissions API</a> (Open Access Button) to obtain article-level
-                             self-archiving permissions based on journal and/or publisher policies. Publications
+                             self-archiving permissions based on journal or publisher policies. Publications
                              were considered to have the potential for green OA if an authoritative permission
-                             was found for archiving the accepted version of the publication in an institutional
-                                  repository.'),
+                             was found for archiving the accepted version in an institutional repository and the
+                             embargo (if any) had elapsed by the query date.'),
                              
-                             "This measure depends on the Shareyourpaper.org permissions database being up-to-date. We
-                             only included publications which have an authoritative permission in the Shareyourpaper.org
+                             "We only included publications which have an authoritative permission in the Shareyourpaper.org
                              database. The date at which a publication can be made openly accessible via self-archiving
                              depends on the publication date and the length of the embargo (if any). Therefore, the
-                             number of potential green OA research articles will change over time. The Shareyourpaper
-                             permissions API was queried on 28/02/2021. The Unpaywall database was queried on 11/03/2021."),
+                             number of potential green OA research articles will change over time. The Shareyourpaper.org
+                             permissions API was queried on 28/02/2021. The Unpaywall database was queried with the
+                             aforementioned OA hierarchy on 11/03/2021."),
                
                methods_panel("Open Data and Open Code",
                              
@@ -198,13 +199,14 @@ methods_page <- tabPanel(
                         we chose a conservative estimate of prospective registration and allow for a delay
                         between start and registration date of up to 60 days.",
                              
-                             "Like in the case of the summary results metric, we only focused on the
-                        ClinicalTrials.gov while there are other available registries as well.
-                        Also, we rely on the information on ClinicalTrials.gov being accurate."),
+                             "For this metric, while there are other available registries, we only focused
+                        on ClinicalTrials.gov. Also, we rely on the information on ClinicalTrials.gov being
+                        accurate."),
                
                methods_panel("Timely publication of results",
                              
                              "This metric measures how many clinical trials registered on ClinicalTrials.gov
+                        or DRKS.de
                         reported their results either as a journal publication or as summary
                         results on the trials registry within 2 years after completion. Trials
                         completed between 2009 and 2017 were considered.
@@ -217,10 +219,9 @@ methods_page <- tabPanel(
                              UMCs. A manual search for published results was done, searching the
                         registry, PubMed and Google. When calculating the time to publication, we only
                         considered trials where we could track the full timeframe since completion.
-                        The results were previously
-                        published as part of the <a href="https://s-quest.bihealth.org/intovalue/">IntoValue study</a>.
-                        Detailed methods can be found under
-                        <a href="https://doi.org/10.1101/467746">https://doi.org/10.1101/467746</a>.'),
+                        A part of these data were were previously
+                        published in the <a href="https://s-quest.bihealth.org/intovalue/">IntoValue study</a>.
+                        Detailed methods can be found in the <a href="https://www.sciencedirect.com/science/article/abs/pii/S0895435618310631?via%3Dihub" target="_blank">associated publication</a>.'),
                              "Some detected publications might be missed in the manual search
                         procedure as we only searched a limited number of scientific databases and did not
                         contact the responsible parties. Furthermore, we did not include observational clinical

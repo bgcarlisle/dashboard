@@ -157,13 +157,11 @@ server <- function (input, output, session) {
                     h1(style = "margin-left:0cm", strong("Proof-of-principle Responsible Metrics Dashboard (2018)"), align = "left"),
                     h4(style = "margin-left:0cm",
                        "This proof-of-principle dashboard provides an overview of several metrics of open and robust
-                       research for several German University Medical Centres (UMCs). This dashboard is a pilot
+                       research at several German University Medical Centres (UMCs). It is a pilot
                        that is still under development, and should not be used to compare UMCs or inform policy.
                        More metrics may be added in the future."),
                     h4(style = "margin-left:0cm",
-                       "The dashboard includes data of UMCs for which publications could be identified with a
-                       precision equal to or higher than 85%. The data displayed is based on a random sample of
-                       500 articles per UMC. An example UMC is highlighted. Besides the metrics
+                       "The dashboard includes UMCs for which we could identify publication sets with a precision equal to or greater than 85%. For each UMC, we included a random sample of 500 articles (or all articles if less than 500). An example UMC is highlighted and contextualized to the average of all included UMCs. Besides the metrics
                        Summary Results Reporting, Prospective Registration, and Timely Publication, all other
                        metrics are based on publications from 2018. For the Open Science and Robustness metrics,
                        the data can be viewed as 1) the percentage of analyzable publications which display the
