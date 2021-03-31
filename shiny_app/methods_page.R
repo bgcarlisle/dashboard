@@ -200,8 +200,8 @@ methods_page <- tabPanel(
                         between start and registration date of up to 60 days.",
                              
                              "For this metric, while there are other available registries, we only focused
-                        on ClinicalTrials.gov. Also, we rely on the information on ClinicalTrials.gov being
-                        accurate."),
+                        on ClinicalTrials.gov and DRKS.de. Also, we rely on the information on
+                        ClinicalTrials.gov and DRKS.de being accurate."),
                
                methods_panel("Timely publication of results",
                              
