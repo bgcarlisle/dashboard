@@ -24,29 +24,6 @@ rm_data <- read_csv(
     ## SPECIFICATION WILL NEED TO BE UPDATED MANUALLY
 )
 
-## Generates the UMC list for the drop-down menu
-ddumcs <- rm_data %>%
-    select(city)
-
-if (sum(substr(ddumcs$city, 1, 4) == "UMC ") == nrow(ddumcs)) {
-    ddumcs$umcno <- substr(ddumcs$city, 5, nchar(ddumcs$city)) %>%
-        as.numeric()
-
-    ddumcs <- ddumcs %>%
-        arrange(umcno) %>%
-        select(city)
-} else {
-
-    ddumcs <- ddumcs %>%
-        arrange(city)
-    
-}
-
-umclist <- c(
-    "All",
-    ddumcs$city %>% unique()
-)
-
 ## WARNING
 ## Okay not really a warning
 ## But kinda
@@ -74,6 +51,16 @@ eutt_data <- read_csv(
 iv_data <- read_csv(
     "data/2021-02-25-IntoValue1-2.csv"
     # This is the IntoValue2 data set.
+)
+
+## Generates the UMC list for the drop-down menu
+ddumcs <- iv_data %>%
+    select(city) %>%
+    arrange(city)
+
+umclist <- c(
+    "All",
+    ddumcs$city %>% unique()
 )
 
 ## Load functions
