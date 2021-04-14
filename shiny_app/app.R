@@ -72,6 +72,7 @@ source("all_umc_plots.R")
 source("start_page.R")
 source("all_umcs_page.R")
 source("methods_page.R")
+source("report_card_page.R")
 source("datasets_page.R")
 source("about_rm.R")
 
@@ -82,6 +83,7 @@ ui <- tagList(
         "Responsible Metrics Dashboard", theme = shinytheme("flatly"), id = "navbarTabs",
         start_page,
         all_umcs_page,
+        report_card_page,
         methods_page,
         datasets_page,
         about_rm_page,
