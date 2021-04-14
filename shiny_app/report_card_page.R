@@ -1,4 +1,4 @@
 report_card_page <- tabPanel(
-    "Methods", value = "tabMethods",
+    "Report card", value = "tabReportcard",
     h1("Report card")
 )
