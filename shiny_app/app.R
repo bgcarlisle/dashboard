@@ -1484,7 +1484,7 @@ server <- function (input, output, session) {
 
         } else {
 
-            p("Please enter a well-formed NCT or DRKS number")
+            p("Please enter an NCT or DRKS number")
             
         }
         
