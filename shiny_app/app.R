@@ -1422,6 +1422,73 @@ server <- function (input, output, session) {
     output$data_table_iv_data <- DT::renderDataTable({
         make_datatable(iv_data)
     })
+
+    output$reportcard <- renderUI({
+
+        
+
+        if (str_detect(input$trn, "\\bNCT[0-9]{8}\\b") | str_detect(input$trn, "\\bDRKS[0-9]{8}\\b")) {
+
+            trn <- str_extract(input$trn, "\\bNCT[0-9]{8}\\b|\\bDRKS[0-9]{8}\\b")
+
+            if (nrow(filter(iv_data, id == trn)) > 0) {
+
+                rc <- iv_data %>%
+                    filter(id == trn)
+
+                rc_city <- rc %>%
+                    select(city) %>%
+                    pull()
+
+                rc_city <- paste("UMC:", rc_city)
+
+                rc_completiondate <- rc %>%
+                    select(completion_date) %>%
+                    pull()
+
+                rc_completiondate <- paste("Completion date:", rc_completiondate)
+
+                rc_preregistered <- rc %>%
+                    select(preregistered) %>%
+                    pull()
+
+                if (rc_preregistered) {
+                    rc_preregistered <- "This study was prospectively registered"
+                } else {
+                    rc_preregistered <- "This study was not prospectively registered"
+                }
+
+                rc_published2a <- rc %>%
+                    select(published_2a) %>%
+                    pull()
+
+                if (rc_published2a) {
+                    rc_published2a <- "This study published results within 2 years of completion"
+                } else {
+                    rc_published2a <- "This study did not publish results within 2 years of completion"
+                }
+
+                fluidRow(
+                    column(
+                        12,
+                        p(rc_city),
+                        p(rc_completiondate),
+                        p(rc_preregistered),
+                        p(rc_published2a)
+                    )
+                )
+                
+            } else {
+                p("NCT number not found")
+            }
+
+        } else {
+
+            p("Please enter a well-formed NCT number")
+            
+        }
+        
+    })
     
 }
 
