@@ -1479,12 +1479,12 @@ server <- function (input, output, session) {
                 )
                 
             } else {
-                p("NCT number not found")
+                p("Trial registry number not found")
             }
 
         } else {
 
-            p("Please enter a well-formed NCT number")
+            p("Please enter a well-formed NCT or DRKS number")
             
         }
         
