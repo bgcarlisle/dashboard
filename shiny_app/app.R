@@ -83,7 +83,7 @@ source("all_umc_plots.R")
 
 ## Load pages
 source("start_page.R")
-## source("all_umcs_page.R")
+source("all_umcs_page.R")
 source("methods_page.R")
 source("datasets_page.R")
 source("about_rm.R")
@@ -94,7 +94,7 @@ ui <- tagList(
     navbarPage(
         "Responsible Metrics Dashboard", theme = shinytheme("flatly"), id = "navbarTabs",
         start_page,
-        ## all_umcs_page,
+        all_umcs_page,
         methods_page,
         datasets_page,
         about_rm_page,
@@ -178,11 +178,11 @@ server <- function (input, output, session) {
                     hr(),
                     br(),
                     br(),
-                    ## actionButton(
-                    ##     style = "color: white; background-color: #aa1c7d;",
-                    ##     'buttonAllUMCs',
-                    ##     'See all UMCs'
-                    ## ),
+                    actionButton(
+                        style = "color: white; background-color: #aa1c7d;",
+                        'buttonAllUMCs',
+                        'See all UMCs'
+                    ),
                     actionButton(
                         style = "color: white; background-color: #aa1c7d;",
                         'buttonMethods',
