@@ -100,5 +100,5 @@ all_umcs_page <- tabPanel(
     ),
     uiOutput("allumc_openscience"),
     uiOutput("allumc_clinicaltrials"),
-    uiOutput("allumc_robustness")
+    ## uiOutput("allumc_robustness")
 )

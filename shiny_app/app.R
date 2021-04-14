@@ -204,215 +204,215 @@ server <- function (input, output, session) {
     ## at program start; four columns if resolution large enough,
     ## otherwise two columns.
 
-    output$robustness_metrics <- renderUI({
+    ## output$robustness_metrics <- renderUI({
 
-        req(input$width)
-        req(input$selectUMC)
+    ##     req(input$width)
+    ##     req(input$selectUMC)
 
-        if (input$width < 1400) {
-            col_width <- 6
-            alignment <- "left"
-        } else {
-            col_width <- 3
-            alignment <- "right"
-        }
+    ##     if (input$width < 1400) {
+    ##         col_width <- 6
+    ##         alignment <- "left"
+    ##     } else {
+    ##         col_width <- 3
+    ##         alignment <- "right"
+    ##     }
 
-        ## Value for randomization
+    ##     ## Value for randomization
 
-        if (input$selectUMC == "All") {
+    ##     if (input$selectUMC == "All") {
 
-            all_numer_rando <- rm_data %>%
-                filter(
-                    is_animal == 1,
-                    language == "English",
-                    ! is.na(sciscore),
-                    type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
-                ) %>%
-                select(randomization) %>%
-                sum(na.rm=TRUE)
+    ##         all_numer_rando <- rm_data %>%
+    ##             filter(
+    ##                 is_animal == 1,
+    ##                 language == "English",
+    ##                 ! is.na(sciscore),
+    ##                 type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
+    ##             ) %>%
+    ##             select(randomization) %>%
+    ##             sum(na.rm=TRUE)
             
-        } else {
+    ##     } else {
 
-            all_numer_rando <- rm_data %>%
-                filter(city == input$selectUMC) %>%
-                filter(
-                    is_animal == 1,
-                    language == "English",
-                    ! is.na(sciscore),
-                    type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
-                ) %>%
-                select(randomization) %>%
-                sum(na.rm=TRUE)
+    ##         all_numer_rando <- rm_data %>%
+    ##             filter(city == input$selectUMC) %>%
+    ##             filter(
+    ##                 is_animal == 1,
+    ##                 language == "English",
+    ##                 ! is.na(sciscore),
+    ##                 type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
+    ##             ) %>%
+    ##             select(randomization) %>%
+    ##             sum(na.rm=TRUE)
             
-        }
+    ##     }
 
-        ## Value for Blinding
+    ##     ## Value for Blinding
 
-        if (input$selectUMC == "All") {
+    ##     if (input$selectUMC == "All") {
 
-        all_numer_blinded <- rm_data %>%
-            filter(
-                is_animal == 1,
-                language == "English",
-                ! is.na(sciscore),
-                type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
-            ) %>%
-            select(blinding) %>%
-            sum(na.rm=TRUE)
+    ##     all_numer_blinded <- rm_data %>%
+    ##         filter(
+    ##             is_animal == 1,
+    ##             language == "English",
+    ##             ! is.na(sciscore),
+    ##             type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
+    ##         ) %>%
+    ##         select(blinding) %>%
+    ##         sum(na.rm=TRUE)
             
-        } else {
+    ##     } else {
 
-        all_numer_blinded <- rm_data %>%
-            filter(city == input$selectUMC) %>%
-            filter(
-                is_animal == 1,
-                language == "English",
-                ! is.na(sciscore),
-                type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
-            ) %>%
-            select(blinding) %>%
-            sum(na.rm=TRUE)
+    ##     all_numer_blinded <- rm_data %>%
+    ##         filter(city == input$selectUMC) %>%
+    ##         filter(
+    ##             is_animal == 1,
+    ##             language == "English",
+    ##             ! is.na(sciscore),
+    ##             type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
+    ##         ) %>%
+    ##         select(blinding) %>%
+    ##         sum(na.rm=TRUE)
             
-        }
+    ##     }
 
-        ## Value for Power calc
+    ##     ## Value for Power calc
 
-        if (input$selectUMC == "All") {
+    ##     if (input$selectUMC == "All") {
 
-            all_numer_power <- rm_data %>%
-                filter(
-                    is_animal == 1,
-                    language == "English",
-                    ! is.na(sciscore),
-                    type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
-                ) %>%
-                select(power) %>%
-                sum(na.rm=TRUE)
+    ##         all_numer_power <- rm_data %>%
+    ##             filter(
+    ##                 is_animal == 1,
+    ##                 language == "English",
+    ##                 ! is.na(sciscore),
+    ##                 type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
+    ##             ) %>%
+    ##             select(power) %>%
+    ##             sum(na.rm=TRUE)
             
-        } else {
+    ##     } else {
 
-            all_numer_power <- rm_data %>%
-                filter(city == input$selectUMC) %>%
-                filter(
-                    is_animal == 1,
-                    language == "English",
-                    ! is.na(sciscore),
-                    type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
-                ) %>%
-                select(power) %>%
-                sum(na.rm=TRUE)
+    ##         all_numer_power <- rm_data %>%
+    ##             filter(city == input$selectUMC) %>%
+    ##             filter(
+    ##                 is_animal == 1,
+    ##                 language == "English",
+    ##                 ! is.na(sciscore),
+    ##                 type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
+    ##             ) %>%
+    ##             select(power) %>%
+    ##             sum(na.rm=TRUE)
             
-        }
+    ##     }
 
-        ## all_numer_iacuc <- rm_data %>%
-        ##     filter(
-        ##         is_animal == 1,
-        ##         ! is.na(sciscore),
-        ##         type == "Article"
-        ##     ) %>%
-        ##     select(iacuc) %>%
-        ##     sum(na.rm=TRUE)
+    ##     ## all_numer_iacuc <- rm_data %>%
+    ##     ##     filter(
+    ##     ##         is_animal == 1,
+    ##     ##         ! is.na(sciscore),
+    ##     ##         type == "Article"
+    ##     ##     ) %>%
+    ##     ##     select(iacuc) %>%
+    ##     ##     sum(na.rm=TRUE)
 
-        if (input$selectUMC == "All") {
+    ##     if (input$selectUMC == "All") {
 
-            all_denom_animal_sciscore <- rm_data %>%
-                filter(
-                    is_animal == 1,
-                    language == "English",
-                    ! is.na(sciscore),
-                    type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
-                ) %>%
-                nrow()
+    ##         all_denom_animal_sciscore <- rm_data %>%
+    ##             filter(
+    ##                 is_animal == 1,
+    ##                 language == "English",
+    ##                 ! is.na(sciscore),
+    ##                 type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
+    ##             ) %>%
+    ##             nrow()
             
-        } else {
+    ##     } else {
 
-            all_denom_animal_sciscore <- rm_data %>%
-                filter(city == input$selectUMC) %>%
-                filter(
-                    is_animal == 1,
-                    language == "English",
-                    ! is.na(sciscore),
-                    type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
-                ) %>%
-                nrow()
+    ##         all_denom_animal_sciscore <- rm_data %>%
+    ##             filter(city == input$selectUMC) %>%
+    ##             filter(
+    ##                 is_animal == 1,
+    ##                 language == "English",
+    ##                 ! is.na(sciscore),
+    ##                 type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
+    ##             ) %>%
+    ##             nrow()
             
-        }
+    ##     }
 
-        all_percent_randomized <- paste0(round(100*all_numer_rando/all_denom_animal_sciscore), "%")
-        all_percent_blinded <- paste0(round(100*all_numer_blinded/all_denom_animal_sciscore), "%")
-        all_percent_power <- paste0(round(100*all_numer_power/all_denom_animal_sciscore), "%")
-        ## all_percent_iacuc <- paste0(round(100*all_numer_iacuc/all_denom_animal_sciscore), "%")
+    ##     all_percent_randomized <- paste0(round(100*all_numer_rando/all_denom_animal_sciscore), "%")
+    ##     all_percent_blinded <- paste0(round(100*all_numer_blinded/all_denom_animal_sciscore), "%")
+    ##     all_percent_power <- paste0(round(100*all_numer_power/all_denom_animal_sciscore), "%")
+    ##     ## all_percent_iacuc <- paste0(round(100*all_numer_iacuc/all_denom_animal_sciscore), "%")
 
-        wellPanel(
-            style = "padding-top: 0px; padding-bottom: 0px;",
-            h2(strong("Robustness of Animal Studies"), align = "left"),
-            checkboxInput(
-                "animals_absnum",
-                strong("Show absolute numbers"),
-                value = FALSE
-            ),
-            fluidRow(
-                column(
-                    col_width,
-                    metric_box(
-                        title = "Randomization",
-                        value = all_percent_randomized,
-                        value_text = "of analyzable 2018 animal studies report on randomization",
-                        plot = plotlyOutput('plot_randomization', height="300px"),
-                        info_id = "infoRandomization",
-                        info_title = "Randomization",
-                        info_text = randomization_tooltip,
-                        lim_id = "limRandomization",
-                        lim_title = "Limitations: Randomization",
-                        lim_text = lim_randomization_tooltip
-                    )
-                ),
-                column(
-                    col_width,
-                    metric_box(
-                        title = "Blinding",
-                        value = all_percent_blinded,
-                        value_text = "of analyzable 2018 animal studies report on blinding",
-                        plot = plotlyOutput('plot_blinding', height="300px"),
-                        info_id = "infoBlinding",
-                        info_title = "Blinding",
-                        info_text = blinding_tooltip,
-                        lim_id = "limBlinding",
-                        lim_title = "Limitations: Blinding",
-                        lim_text = lim_blinding_tooltip
-                    )
-                ),
-                column(
-                    col_width,
-                    metric_box(
-                        title = "Power calculation",
-                        value = all_percent_power,
-                        value_text = "of analyzable 2018 animal studies report on power calculation",
-                        plot = plotlyOutput('plot_power', height="300px"),
-                        info_id = "infoPower",
-                        info_title = "Power",
-                        info_text = power_tooltip,
-                        lim_id = "limPower",
-                        lim_title = "Limitations: Power",
-                        lim_text = lim_power_tooltip
-                    )
-                )##,
-                ## column(
-                ##     col_width,
-                ##     metric_box(
-                ##         title = "IACUC statement",
-                ##         value = all_percent_iacuc,
-                ##         value_text = "of animal studies report an IACUC statement",
-                ##         plot = plotlyOutput('plot_iacuc', height="300px"),
-                ##         info_id = "infoIACUC",
-                ##         info_title = "IACUC",
-                ##         info_text = iacuc_tooltip
-                ##     )
-                ## )
-            )
-        )        
+    ##     wellPanel(
+    ##         style = "padding-top: 0px; padding-bottom: 0px;",
+    ##         h2(strong("Robustness of Animal Studies"), align = "left"),
+    ##         checkboxInput(
+    ##             "animals_absnum",
+    ##             strong("Show absolute numbers"),
+    ##             value = FALSE
+    ##         ),
+    ##         fluidRow(
+    ##             column(
+    ##                 col_width,
+    ##                 metric_box(
+    ##                     title = "Randomization",
+    ##                     value = all_percent_randomized,
+    ##                     value_text = "of analyzable 2018 animal studies report on randomization",
+    ##                     plot = plotlyOutput('plot_randomization', height="300px"),
+    ##                     info_id = "infoRandomization",
+    ##                     info_title = "Randomization",
+    ##                     info_text = randomization_tooltip,
+    ##                     lim_id = "limRandomization",
+    ##                     lim_title = "Limitations: Randomization",
+    ##                     lim_text = lim_randomization_tooltip
+    ##                 )
+    ##             ),
+    ##             column(
+    ##                 col_width,
+    ##                 metric_box(
+    ##                     title = "Blinding",
+    ##                     value = all_percent_blinded,
+    ##                     value_text = "of analyzable 2018 animal studies report on blinding",
+    ##                     plot = plotlyOutput('plot_blinding', height="300px"),
+    ##                     info_id = "infoBlinding",
+    ##                     info_title = "Blinding",
+    ##                     info_text = blinding_tooltip,
+    ##                     lim_id = "limBlinding",
+    ##                     lim_title = "Limitations: Blinding",
+    ##                     lim_text = lim_blinding_tooltip
+    ##                 )
+    ##             ),
+    ##             column(
+    ##                 col_width,
+    ##                 metric_box(
+    ##                     title = "Power calculation",
+    ##                     value = all_percent_power,
+    ##                     value_text = "of analyzable 2018 animal studies report on power calculation",
+    ##                     plot = plotlyOutput('plot_power', height="300px"),
+    ##                     info_id = "infoPower",
+    ##                     info_title = "Power",
+    ##                     info_text = power_tooltip,
+    ##                     lim_id = "limPower",
+    ##                     lim_title = "Limitations: Power",
+    ##                     lim_text = lim_power_tooltip
+    ##                 )
+    ##             )##,
+    ##             ## column(
+    ##             ##     col_width,
+    ##             ##     metric_box(
+    ##             ##         title = "IACUC statement",
+    ##             ##         value = all_percent_iacuc,
+    ##             ##         value_text = "of animal studies report an IACUC statement",
+    ##             ##         plot = plotlyOutput('plot_iacuc', height="300px"),
+    ##             ##         info_id = "infoIACUC",
+    ##             ##         info_title = "IACUC",
+    ##             ##         info_text = iacuc_tooltip
+    ##             ##     )
+    ##             ## )
+    ##         )
+    ##     )        
         
-    })
+    ## })
 
     output$clinicaltrials_metrics <- renderUI({
 
@@ -672,79 +672,79 @@ server <- function (input, output, session) {
 
         ## Value for Open Data
 
-        if ( input$selectUMC == "All") {
+        ## if ( input$selectUMC == "All") {
             
-            all_denom_od <- rm_data %>%
-                filter(
-                    ! is.na (is_open_data),
-                    language == "English"
-                ) %>%
-                nrow()
+        ##     all_denom_od <- rm_data %>%
+        ##         filter(
+        ##             ! is.na (is_open_data),
+        ##             language == "English"
+        ##         ) %>%
+        ##         nrow()
 
-            all_numer_od <- rm_data %>%
-                filter(
-                    is_open_data,
-                    language == "English"
-                ) %>%
-                nrow()
+        ##     all_numer_od <- rm_data %>%
+        ##         filter(
+        ##             is_open_data,
+        ##             language == "English"
+        ##         ) %>%
+        ##         nrow()
 
-        } else {
+        ## } else {
             
-            all_denom_od <- rm_data %>%
-                filter(city == input$selectUMC) %>%
-                filter(
-                    ! is.na (is_open_data),
-                    language == "English"
-                ) %>%
-                nrow()
+        ##     all_denom_od <- rm_data %>%
+        ##         filter(city == input$selectUMC) %>%
+        ##         filter(
+        ##             ! is.na (is_open_data),
+        ##             language == "English"
+        ##         ) %>%
+        ##         nrow()
 
-            all_numer_od <- rm_data %>%
-                filter(city == input$selectUMC) %>%
-                filter(
-                    is_open_data,
-                    language == "English"
-                ) %>%
-                nrow()
+        ##     all_numer_od <- rm_data %>%
+        ##         filter(city == input$selectUMC) %>%
+        ##         filter(
+        ##             is_open_data,
+        ##             language == "English"
+        ##         ) %>%
+        ##         nrow()
 
-        }
+        ## }
         
         ## Value for Open Code
 
-        if ( input$selectUMC == "All") {
+        ## if ( input$selectUMC == "All") {
 
-            all_denom_oc <- rm_data %>%
-                filter(
-                    ! is.na (is_open_code),
-                    language == "English"
-                ) %>%
-                nrow()
+        ##     all_denom_oc <- rm_data %>%
+        ##         filter(
+        ##             ! is.na (is_open_code),
+        ##             language == "English"
+        ##         ) %>%
+        ##         nrow()
 
-            all_numer_oc <- rm_data %>%
-                filter(
-                    is_open_code,
-                    language == "English"
-                ) %>%
-                nrow()
+        ##     all_numer_oc <- rm_data %>%
+        ##         filter(
+        ##             is_open_code,
+        ##             language == "English"
+        ##         ) %>%
+        ##         nrow()
             
-        } else {
+        ## } else {
 
-            all_denom_oc <- rm_data %>%
-                filter(city == input$selectUMC) %>%
-                filter(
-                    ! is.na (is_open_code),
-                    language == "English"
-                ) %>%
-                nrow()
+        ##     all_denom_oc <- rm_data %>%
+        ##         filter(city == input$selectUMC) %>%
+        ##         filter(
+        ##             ! is.na (is_open_code),
+        ##             language == "English"
+        ##         ) %>%
+        ##         nrow()
 
-            all_numer_oc <- rm_data %>%
-                filter(city == input$selectUMC) %>%
-                filter(
-                    is_open_code,
-                    language == "English"
-                ) %>%
-                nrow()
+        ##     all_numer_oc <- rm_data %>%
+        ##         filter(city == input$selectUMC) %>%
+        ##         filter(
+        ##             is_open_code,
+        ##             language == "English"
+        ##         ) %>%
+        ##         nrow()
             
-        }
+        ## }
 
         ## Value for Green OA
 
@@ -867,37 +867,37 @@ server <- function (input, output, session) {
                         lim_title = "Limitations: Potential Green Open Access",
                         lim_text = lim_greenopenaccess_tooltip
                     )
-                ),
-                column(
-                    col_width,
-                    metric_box(
-                        title = "Any Open Data",
-                        value = paste0(round(100*all_numer_od/all_denom_od), "%"),
-                        value_text = "of 2018 analyzable publications mentioned sharing of data",
-                        plot = plotlyOutput('plot_opensci_od', height="300px"),
-                        info_id = "infoOpenData",
-                        info_title = "Any Open Data",
-                        info_text = opendata_tooltip,
-                        lim_id = "limOpenData",
-                        lim_title = "Limitations: Any Open Data",
-                        lim_text = lim_opendata_tooltip
-                    )
-                ),
-                column(
-                    col_width,
-                    metric_box(
-                        title = "Any Open Code",
-                        value = paste0(round(100*all_numer_oc/all_denom_oc), "%"),
-                        value_text = "of 2018 analyzable publications mentioned sharing of code",
-                        plot = plotlyOutput('plot_opensci_oc', height="300px"),
-                        info_id = "infoOpenCode",
-                        info_title = "Any Open Code",
-                        info_text = opencode_tooltip,
-                        lim_id = "limOpenCode",
-                        lim_title = "Limitations: Any Open Code",
-                        lim_text = lim_opencode_tooltip
-                    )
-                )
+                )## ,
+                ## column(
+                ##     col_width,
+                ##     metric_box(
+                ##         title = "Any Open Data",
+                ##         value = paste0(round(100*all_numer_od/all_denom_od), "%"),
+                ##         value_text = "of 2018 analyzable publications mentioned sharing of data",
+                ##         plot = plotlyOutput('plot_opensci_od', height="300px"),
+                ##         info_id = "infoOpenData",
+                ##         info_title = "Any Open Data",
+                ##         info_text = opendata_tooltip,
+                ##         lim_id = "limOpenData",
+                ##         lim_title = "Limitations: Any Open Data",
+                ##         lim_text = lim_opendata_tooltip
+                ##     )
+                ## ),
+                ## column(
+                ##     col_width,
+                ##     metric_box(
+                ##         title = "Any Open Code",
+                ##         value = paste0(round(100*all_numer_oc/all_denom_oc), "%"),
+                ##         value_text = "of 2018 analyzable publications mentioned sharing of code",
+                ##         plot = plotlyOutput('plot_opensci_oc', height="300px"),
+                ##         info_id = "infoOpenCode",
+                ##         info_title = "Any Open Code",
+                ##         info_text = opencode_tooltip,
+                ##         lim_id = "limOpenCode",
+                ##         lim_title = "Limitations: Any Open Code",
+                ##         lim_text = lim_opencode_tooltip
+                ##     )
+                ## )
                 
             )
         )
@@ -923,35 +923,35 @@ server <- function (input, output, session) {
         
         ## Value for All UMC Open Data
 
-        all_denom_od <- rm_data %>%
-            filter(
-                ! is.na (is_open_data),
-                language == "English"
-            ) %>%
-            nrow()
+        ## all_denom_od <- rm_data %>%
+        ##     filter(
+        ##         ! is.na (is_open_data),
+        ##         language == "English"
+        ##     ) %>%
+        ##     nrow()
 
-        all_numer_od <- rm_data %>%
-            filter(
-                is_open_data,
-                language == "English"
-            ) %>%
-            nrow()
+        ## all_numer_od <- rm_data %>%
+        ##     filter(
+        ##         is_open_data,
+        ##         language == "English"
+        ##     ) %>%
+        ##     nrow()
         
         ## Value for All UMC Open Code
  
-        all_denom_oc <- rm_data %>%
-            filter(
-                ! is.na (is_open_code),
-                language == "English"
-            ) %>%
-            nrow()
+        ## all_denom_oc <- rm_data %>%
+        ##     filter(
+        ##         ! is.na (is_open_code),
+        ##         language == "English"
+        ##     ) %>%
+        ##     nrow()
 
-        all_numer_oc <- rm_data %>%
-            filter(
-                is_open_code,
-                language == "English"
-            ) %>%
-            nrow()
+        ## all_numer_oc <- rm_data %>%
+        ##     filter(
+        ##         is_open_code,
+        ##         language == "English"
+        ##     ) %>%
+        ##     nrow()
 
         wellPanel(
             style="padding-top: 0px; padding-bottom: 0px;",
@@ -973,40 +973,40 @@ server <- function (input, output, session) {
                     )
                 )
             ),
-            fluidRow(
-                column(
-                    12,
-                    metric_box(
-                        title = "Any Open Data",
-                        value = paste0(round(100*all_numer_od/all_denom_od), "%"),
-                        value_text = "of 2018 analyzable publications mentioned sharing of data",
-                        plot = plotlyOutput('plot_allumc_opendata', height="300px"),
-                        info_id = "infoALLUMCOpenData",
-                        info_title = "Any Open Data (All UMCs)",
-                        info_text = allumc_opendata_tooltip,
-                        lim_id = "limALLUMCOpenData",
-                        lim_title = "Limitations: Any Open Data (All UMCs)",
-                        lim_text = lim_allumc_opendata_tooltip
-                    )
-                )
-            ),
-            fluidRow(
-                column(
-                    12,
-                    metric_box(
-                        title = "Any Open Code",
-                        value = paste0(round(100*all_numer_oc/all_denom_oc), "%"),
-                        value_text = "of 2018 analyzable publications mentioned sharing of code",
-                        plot = plotlyOutput('plot_allumc_opencode', height="300px"),
-                        info_id = "infoALLUMCOpenCode",
-                        info_title = "Any Open Code (All UMCs)",
-                        info_text = allumc_opencode_tooltip,
-                        lim_id = "limALLUMCOpenCode",
-                        lim_title = "Limitations: Any Open Code (All UMCs)",
-                        lim_text = lim_allumc_opencode_tooltip
-                    )
-                )
-            )
+            ## fluidRow(
+            ##     column(
+            ##         12,
+            ##         metric_box(
+            ##             title = "Any Open Data",
+            ##             value = paste0(round(100*all_numer_od/all_denom_od), "%"),
+            ##             value_text = "of 2018 analyzable publications mentioned sharing of data",
+            ##             plot = plotlyOutput('plot_allumc_opendata', height="300px"),
+            ##             info_id = "infoALLUMCOpenData",
+            ##             info_title = "Any Open Data (All UMCs)",
+            ##             info_text = allumc_opendata_tooltip,
+            ##             lim_id = "limALLUMCOpenData",
+            ##             lim_title = "Limitations: Any Open Data (All UMCs)",
+            ##             lim_text = lim_allumc_opendata_tooltip
+            ##         )
+            ##     )
+            ## ),
+            ## fluidRow(
+            ##     column(
+            ##         12,
+            ##         metric_box(
+            ##             title = "Any Open Code",
+            ##             value = paste0(round(100*all_numer_oc/all_denom_oc), "%"),
+            ##             value_text = "of 2018 analyzable publications mentioned sharing of code",
+            ##             plot = plotlyOutput('plot_allumc_opencode', height="300px"),
+            ##             info_id = "infoALLUMCOpenCode",
+            ##             info_title = "Any Open Code (All UMCs)",
+            ##             info_text = allumc_opencode_tooltip,
+            ##             lim_id = "limALLUMCOpenCode",
+            ##             lim_title = "Limitations: Any Open Code (All UMCs)",
+            ##             lim_text = lim_allumc_opencode_tooltip
+            ##         )
+            ##     )
+            ## )
             
         )
     })
@@ -1136,130 +1136,130 @@ server <- function (input, output, session) {
         
     })
 
-    output$allumc_robustness <- renderUI({
+    ## output$allumc_robustness <- renderUI({
 
-        ## Values for All UMC Robustness metrics
+    ##     ## Values for All UMC Robustness metrics
 
-        all_numer_rando <- rm_data %>%
-            filter(
-                is_animal == 1,
-                ! is.na(sciscore),
-                type == "Article"
-            ) %>%
-            select(randomization) %>%
-            sum(na.rm=TRUE)
+    ##     all_numer_rando <- rm_data %>%
+    ##         filter(
+    ##             is_animal == 1,
+    ##             ! is.na(sciscore),
+    ##             type == "Article"
+    ##         ) %>%
+    ##         select(randomization) %>%
+    ##         sum(na.rm=TRUE)
 
-        all_numer_blinded <- rm_data %>%
-            filter(
-                is_animal == 1,
-                ! is.na(sciscore),
-                type == "Article"
-            ) %>%
-            select(blinding) %>%
-            sum(na.rm=TRUE)
+    ##     all_numer_blinded <- rm_data %>%
+    ##         filter(
+    ##             is_animal == 1,
+    ##             ! is.na(sciscore),
+    ##             type == "Article"
+    ##         ) %>%
+    ##         select(blinding) %>%
+    ##         sum(na.rm=TRUE)
 
-        all_numer_power <- rm_data %>%
-            filter(
-                is_animal == 1,
-                ! is.na(sciscore),
-                type == "Article"
-            ) %>%
-            select(power) %>%
-            sum(na.rm=TRUE)
+    ##     all_numer_power <- rm_data %>%
+    ##         filter(
+    ##             is_animal == 1,
+    ##             ! is.na(sciscore),
+    ##             type == "Article"
+    ##         ) %>%
+    ##         select(power) %>%
+    ##         sum(na.rm=TRUE)
 
-        ## all_numer_iacuc <- rm_data %>%
-        ##     filter(
-        ##         is_animal == 1,
-        ##         ! is.na(sciscore),
-        ##         type == "Article"
-        ##     ) %>%
-        ##     select(iacuc) %>%
-        ##     sum(na.rm=TRUE)
+    ##     ## all_numer_iacuc <- rm_data %>%
+    ##     ##     filter(
+    ##     ##         is_animal == 1,
+    ##     ##         ! is.na(sciscore),
+    ##     ##         type == "Article"
+    ##     ##     ) %>%
+    ##     ##     select(iacuc) %>%
+    ##     ##     sum(na.rm=TRUE)
 
-        all_denom_animal_sciscore <- rm_data %>%
-            filter(
-                is_animal == 1,
-                ! is.na(sciscore),
-                type == "Article"
-            ) %>%
-            nrow()
+    ##     all_denom_animal_sciscore <- rm_data %>%
+    ##         filter(
+    ##             is_animal == 1,
+    ##             ! is.na(sciscore),
+    ##             type == "Article"
+    ##         ) %>%
+    ##         nrow()
 
-        all_percent_randomized <- paste0(round(100*all_numer_rando/all_denom_animal_sciscore), "%")
-        all_percent_blinded <- paste0(round(100*all_numer_blinded/all_denom_animal_sciscore), "%")
-        all_percent_power <- paste0(round(100*all_numer_power/all_denom_animal_sciscore), "%")
-        ## all_percent_iacuc <- paste0(round(100*all_numer_iacuc/all_denom_animal_sciscore), "%")
+    ##     all_percent_randomized <- paste0(round(100*all_numer_rando/all_denom_animal_sciscore), "%")
+    ##     all_percent_blinded <- paste0(round(100*all_numer_blinded/all_denom_animal_sciscore), "%")
+    ##     all_percent_power <- paste0(round(100*all_numer_power/all_denom_animal_sciscore), "%")
+    ##     ## all_percent_iacuc <- paste0(round(100*all_numer_iacuc/all_denom_animal_sciscore), "%")
 
-        wellPanel(
-            style="padding-top: 0px; padding-bottom: 0px;",
-            h2(strong("Robustness of Animal Studies"), align = "left"),
-            fluidRow(
-                column(
-                    12,
-                    metric_box(
-                        title = "Randomization",
-                        value = all_percent_randomized,
-                        value_text = "of analyzable 2018 animal studies report on randomization",
-                        plot = plotlyOutput('plot_allumc_animal_rando', height="300px"),
-                        info_id = "infoAllUMCAnimalRando",
-                        info_title = "Randomization",
-                        info_text = allumc_animal_rando_tooltip,
-                        lim_id = "limAllUMCAnimalRando",
-                        lim_title = "Limitations: Randomization",
-                        lim_text = lim_allumc_animal_rando_tooltip
-                    )
-                )
-            ),
-            fluidRow(
-                column(
-                    12,
-                    metric_box(
-                        title = "Blinding",
-                        value = all_percent_blinded,
-                        value_text = "of analyzable 2018 animal studies report on blinding",
-                        plot = plotlyOutput('plot_allumc_animal_blind', height="300px"),
-                        info_id = "infoAllUMCAnimalBlind",
-                        info_title = "Blinding",
-                        info_text = allumc_animal_blind_tooltip,
-                        lim_id = "limAllUMCAnimalBlind",
-                        lim_title = "Limitations: Blinding",
-                        lim_text = lim_allumc_animal_blind_tooltip
-                    )
-                )
-            ),
-            fluidRow(
-                column(
-                    12,
-                    metric_box(
-                        title = "Power calculation",
-                        value = all_percent_power,
-                        value_text = "of analyzable 2018 animal studies report on power calculation",
-                        plot = plotlyOutput('plot_allumc_animal_power', height="300px"),
-                        info_id = "infoAllUMCAnimalPower",
-                        info_title = "Power calculation",
-                        info_text = allumc_animal_power_tooltip,
-                        lim_id = "limAllUMCAnimalPower",
-                        lim_title = "Limitations: Power calculation",
-                        lim_text = lim_allumc_animal_power_tooltip
-                    )
-                )
-            )##,
-            ## fluidRow(
-            ##     column(
-            ##         12,
-            ##         metric_box(
-            ##             title = "IACUC statement",
-            ##             value = all_percent_iacuc,
-            ##             value_text = "of animal studies report an IACUC statement",
-            ##             plot = plotlyOutput('plot_allumc_animal_iacuc', height="300px"),
-            ##             info_id = "infoAllUMCAnimalIACUC",
-            ##             info_title = "IACUC statement",
-            ##             info_text = allumc_animal_iacuc_tooltip
-            ##         )
-            ##     )
-            ## )
-        )
+    ##     wellPanel(
+    ##         style="padding-top: 0px; padding-bottom: 0px;",
+    ##         h2(strong("Robustness of Animal Studies"), align = "left"),
+    ##         fluidRow(
+    ##             column(
+    ##                 12,
+    ##                 metric_box(
+    ##                     title = "Randomization",
+    ##                     value = all_percent_randomized,
+    ##                     value_text = "of analyzable 2018 animal studies report on randomization",
+    ##                     plot = plotlyOutput('plot_allumc_animal_rando', height="300px"),
+    ##                     info_id = "infoAllUMCAnimalRando",
+    ##                     info_title = "Randomization",
+    ##                     info_text = allumc_animal_rando_tooltip,
+    ##                     lim_id = "limAllUMCAnimalRando",
+    ##                     lim_title = "Limitations: Randomization",
+    ##                     lim_text = lim_allumc_animal_rando_tooltip
+    ##                 )
+    ##             )
+    ##         ),
+    ##         fluidRow(
+    ##             column(
+    ##                 12,
+    ##                 metric_box(
+    ##                     title = "Blinding",
+    ##                     value = all_percent_blinded,
+    ##                     value_text = "of analyzable 2018 animal studies report on blinding",
+    ##                     plot = plotlyOutput('plot_allumc_animal_blind', height="300px"),
+    ##                     info_id = "infoAllUMCAnimalBlind",
+    ##                     info_title = "Blinding",
+    ##                     info_text = allumc_animal_blind_tooltip,
+    ##                     lim_id = "limAllUMCAnimalBlind",
+    ##                     lim_title = "Limitations: Blinding",
+    ##                     lim_text = lim_allumc_animal_blind_tooltip
+    ##                 )
+    ##             )
+    ##         ),
+    ##         fluidRow(
+    ##             column(
+    ##                 12,
+    ##                 metric_box(
+    ##                     title = "Power calculation",
+    ##                     value = all_percent_power,
+    ##                     value_text = "of analyzable 2018 animal studies report on power calculation",
+    ##                     plot = plotlyOutput('plot_allumc_animal_power', height="300px"),
+    ##                     info_id = "infoAllUMCAnimalPower",
+    ##                     info_title = "Power calculation",
+    ##                     info_text = allumc_animal_power_tooltip,
+    ##                     lim_id = "limAllUMCAnimalPower",
+    ##                     lim_title = "Limitations: Power calculation",
+    ##                     lim_text = lim_allumc_animal_power_tooltip
+    ##                 )
+    ##             )
+    ##         )##,
+    ##         ## fluidRow(
+    ##         ##     column(
+    ##         ##         12,
+    ##         ##         metric_box(
+    ##         ##             title = "IACUC statement",
+    ##         ##             value = all_percent_iacuc,
+    ##         ##             value_text = "of animal studies report an IACUC statement",
+    ##         ##             plot = plotlyOutput('plot_allumc_animal_iacuc', height="300px"),
+    ##         ##             info_id = "infoAllUMCAnimalIACUC",
+    ##         ##             info_title = "IACUC statement",
+    ##         ##             info_text = allumc_animal_iacuc_tooltip
+    ##         ##         )
+    ##         ##     )
+    ##         ## )
+    ##     )
         
-    })
+    ## })
 
     color_palette <- c("#B6B6B6", "#879C9D", "#F1BA50", "#AA493A",
                      "#303A3E", "#007265", "#634587", "#000000",   #363457 #533A71 #011638 #634587
@@ -1279,14 +1279,14 @@ server <- function (input, output, session) {
     })
     
     ## Open Data plot
-    output$plot_opensci_od <- renderPlotly({
-        return (plot_opensci_od(rm_data, input$selectUMC, input$opensci_absnum, color_palette_delwen))
-    })
+    ## output$plot_opensci_od <- renderPlotly({
+    ##     return (plot_opensci_od(rm_data, input$selectUMC, input$opensci_absnum, color_palette_delwen))
+    ## })
     
     ## Open Code plot
-    output$plot_opensci_oc <- renderPlotly({
-        return (plot_opensci_oc(rm_data, input$selectUMC, input$opensci_absnum, color_palette_delwen))
-    })
+    ## output$plot_opensci_oc <- renderPlotly({
+    ##     return (plot_opensci_oc(rm_data, input$selectUMC, input$opensci_absnum, color_palette_delwen))
+    ## })
     
     ## Green Open Access plot
     output$plot_opensci_green_oa <- renderPlotly({
@@ -1314,19 +1314,19 @@ server <- function (input, output, session) {
     })
 
     ## Robustness plot
-    output$plot_randomization <- renderPlotly({
-        return (plot_randomization(rm_data, input$selectUMC, input$animals_absnum, color_palette_delwen))
-    })
+    ## output$plot_randomization <- renderPlotly({
+    ##     return (plot_randomization(rm_data, input$selectUMC, input$animals_absnum, color_palette_delwen))
+    ## })
 
     ## Blinding plot
-    output$plot_blinding <- renderPlotly({
-        return(plot_blinding(rm_data, input$selectUMC, input$animals_absnum, color_palette_delwen))
-    })
+    ## output$plot_blinding <- renderPlotly({
+    ##     return(plot_blinding(rm_data, input$selectUMC, input$animals_absnum, color_palette_delwen))
+    ## })
 
     ## Power calc plot
-    output$plot_power <- renderPlotly({
-        return(plot_power(rm_data, input$selectUMC, input$animals_absnum, color_palette_delwen))
-    })
+    ## output$plot_power <- renderPlotly({
+    ##     return(plot_power(rm_data, input$selectUMC, input$animals_absnum, color_palette_delwen))
+    ## })
 
     ## IACUC plot
     ## output$plot_iacuc <- renderPlotly({
@@ -1345,15 +1345,15 @@ server <- function (input, output, session) {
 
     ## Open Data
 
-    output$plot_allumc_opendata <- renderPlotly({
-        return(plot_allumc_opendata(rm_data, color_palette, color_palette_bars))
-    })
+    ## output$plot_allumc_opendata <- renderPlotly({
+    ##     return(plot_allumc_opendata(rm_data, color_palette, color_palette_bars))
+    ## })
 
     ## Open Code
 
-    output$plot_allumc_opencode <- renderPlotly({
-        return(plot_allumc_opencode(rm_data, color_palette, color_palette_bars))
-    })
+    ## output$plot_allumc_opencode <- renderPlotly({
+    ##     return(plot_allumc_opencode(rm_data, color_palette, color_palette_bars))
+    ## })
 
     ## Clinical Trials
 
@@ -1385,21 +1385,21 @@ server <- function (input, output, session) {
 
     ## Randomization
 
-    output$plot_allumc_animal_rando <- renderPlotly({
-        return(plot_allumc_animal_rando(rm_data, color_palette, color_palette_bars))
-    })
+    ## output$plot_allumc_animal_rando <- renderPlotly({
+    ##     return(plot_allumc_animal_rando(rm_data, color_palette, color_palette_bars))
+    ## })
 
     ## Blinding
 
-    output$plot_allumc_animal_blind <- renderPlotly({
-        return(plot_allumc_animal_blind(rm_data, color_palette, color_palette_bars))
-    })
+    ## output$plot_allumc_animal_blind <- renderPlotly({
+    ##     return(plot_allumc_animal_blind(rm_data, color_palette, color_palette_bars))
+    ## })
 
     ## Power calc
 
-    output$plot_allumc_animal_power <- renderPlotly({
-        return(plot_allumc_animal_power(rm_data, color_palette, color_palette_bars))
-    })
+    ## output$plot_allumc_animal_power <- renderPlotly({
+    ##     return(plot_allumc_animal_power(rm_data, color_palette, color_palette_bars))
+    ## })
 
     ## IACUC
 
@@ -1409,9 +1409,9 @@ server <- function (input, output, session) {
 
     ## Generate data tables
 
-    output$data_table_rm_data <- DT::renderDataTable({
-        make_datatable(rm_data)
-    })
+    ## output$data_table_rm_data <- DT::renderDataTable({
+    ##     make_datatable(rm_data)
+    ## })
 
     output$data_table_eutt_data <- DT::renderDataTable({
         make_datatable(eutt_data)
