@@ -6,7 +6,7 @@
 
 ## Get the commits like this
 
-## $ echo "hash,date" > ~/Downloads/commits.csv
+## $ echo "hash,date" > commits.csv
 ## $ git log | grep -e '^commit\|^Date' | sed ':a;N;$!ba;s/\nDate:   /,/g' | sed 's/commit //g' >> commits.csv
 
 ## Copy commits.csv to this folder
@@ -31,46 +31,53 @@ sponsors_of_interest <- tribble(
     "Julius Maximilian University of Würzburg", "Würzburg"    
 )
 
-tribble(
-    ~city, ~percent_unreported, ~date
-) %>%
-    write_csv(output_filename, col_names=TRUE)
+if (!file.exists(output_filename)) {
+    tribble(
+        ~city, ~percent_unreported, ~hash, ~date
+    ) %>%
+        write_csv(output_filename, col_names=TRUE)
+}
 
 for (commithash in commits$hash) {
 
-    url <- paste0("https://github.com/ebmdatalab/euctr-tracker-data/raw/", commithash, "/all_sponsors.json")
+    alreadydone <- read_csv(output_filename)
 
-    temp <- tempfile()
+    if (! commithash %in% alreadydone$hash) {
 
-    download.file(url, temp)
+        url <- paste0("https://github.com/ebmdatalab/euctr-tracker-data/raw/", commithash, "/all_sponsors.json")
 
-    jsondata <- read_file(temp)
+        temp <- tempfile()
 
-    unlink(temp)
+        download.file(url, temp)
 
-    ## This is because tidyjson has a hard time with NaN's
-    jsondata <- str_replace_all(jsondata, "NaN", "null")
+        jsondata <- read_file(temp)
 
-    jsondata <- jsondata %>%
-        as.tbl_json %>%
-        gather_array %>%
-        spread_all() %>%
-        tibble() %>%
-        filter(total_due > 0)
+        unlink(temp)
 
-    jsondata <- jsondata %>%
-        left_join(sponsors_of_interest) %>%
-        filter(! is.na (city)) %>%
-        select(city, percent_unreported)
+        ## This is because tidyjson has a hard time with NaN's
+        jsondata <- str_replace_all(jsondata, "NaN", "null")
 
-    jsondata$hash <- commithash
+        jsondata <- jsondata %>%
+            as.tbl_json %>%
+            gather_array %>%
+            spread_all() %>%
+            tibble() %>%
+            filter(total_due > 0)
 
-    jsondata <- jsondata %>%
-        left_join(commits) %>%
-        select(!hash)
+        jsondata <- jsondata %>%
+            left_join(sponsors_of_interest) %>%
+            filter(! is.na (city)) %>%
+            select(city, percent_unreported)
 
-    jsondata %>%
-        write_csv(output_filename, append=TRUE)
-    
+        jsondata$hash <- commithash
+
+        jsondata <- jsondata %>%
+            left_join(commits)
+
+        jsondata %>%
+            write_csv(output_filename, append=TRUE)
+        
+    }
+
 }
 
