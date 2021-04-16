@@ -48,6 +48,12 @@ eutt_data <- read_csv(
     ## http://eu.trialstracker.net/ into LibreOffice Calc.
 )
 
+eutt_hist <- read_csv(
+    "data/2021-04-16-eutt-history.csv"
+    ## Generate this from the EUTT repo using the script in
+    ## prep/eutt-history.R
+)
+
 iv_data <- read_csv(
     "data/2021-02-25-IntoValue1-2.csv"
     # This is the IntoValue2 data set.
@@ -465,41 +471,37 @@ server <- function (input, output, session) {
 
         if (input$selectUMC == "All") {
             
-            all_numer_sumres <- eutt_data %>%
-                filter (
-                    due_or_not == "Due",
-                    status == "Reported results" |
-                    status == "Reported results Terminated"
-                ) %>%
-                nrow()
+            sumres_percent <- eutt_hist %>%
+                group_by(date) %>%
+                mutate(avg = mean(percent_reported)) %>%
+                slice_head() %>%
+                ungroup() %>%
+                slice_tail() %>%
+                select(avg) %>%
+                pull()
 
-            all_denom_sumres <- eutt_data %>%
-                filter(due_or_not == "Due") %>%
+            n_eutt_records <- eutt_hist %>%
                 nrow()
             
         } else {
-            
-            all_numer_sumres <- eutt_data %>%
-                filter(city == input$selectUMC) %>%
-                filter (
-                    due_or_not == "Due",
-                    status == "Reported results" |
-                    status == "Reported results Terminated"
-                ) %>%
-                nrow()
 
-            all_denom_sumres <- eutt_data %>%
+            sumres_percent <- eutt_hist %>%
                 filter(city == input$selectUMC) %>%
-                filter(due_or_not == "Due") %>%
+                slice_head() %>%
+                select(percent_reported) %>%
+                pull()
+
+            n_eutt_records <- eutt_hist %>%
+                filter(city == input$selectUMC) %>%
                 nrow()
             
         }
 
-        if (all_denom_sumres == 0) {
+        if (n_eutt_records == 0) {
             sumresval <- "Not applicable"
             sumresvaltext <- "No clinical trials for this metric were captured by this method for this UMC"
         } else {
-            sumresval <- paste0(round(100*all_numer_sumres/all_denom_sumres), "%")
+            sumresval <- paste0(sumres_percent, "%")
             sumresvaltext <- "of due clinical trials report summary results"
         }
 
@@ -1302,7 +1304,7 @@ server <- function (input, output, session) {
     
     ## Summary results plot
     output$plot_clinicaltrials_sumres <- renderPlotly({
-        return (plot_clinicaltrials_sumres(eutt_data, input$selectUMC, color_palette))
+        return (plot_clinicaltrials_sumres(eutt_hist, input$selectUMC, color_palette))
     })
     
     ## Preregistration plot

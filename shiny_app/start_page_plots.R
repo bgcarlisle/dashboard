@@ -1229,76 +1229,92 @@ plot_clinicaltrials_trn <- function (dataset, umc, color_palette) {
 # Summary results
 plot_clinicaltrials_sumres <- function (dataset, umc, color_palette) {
 
-    plot_data <- dataset %>%
-        filter(due_or_not == "Due")
+    if (umc != "All") {
 
-    all_denom <- plot_data %>%
-        nrow()
-    
-    all_numer <- plot_data %>%
-        filter(
-            status == "Reported results" |
-            status == "Reported results Terminated"
+        
+        all_data <- dataset %>%
+            group_by(date) %>%
+            mutate(avg = mean(percent_reported)) %>%
+            slice_head() %>%
+            select(date, hash, avg) %>%
+            rename(percent_reported = avg) %>%
+            mutate(city = "All") %>%
+            ungroup()
+
+
+        city_data <- dataset %>%
+            filter(city == umc)
+
+        plot_data <- rbind(all_data, city_data)
+
+        plot_ly(
+            plot_data,
+            x = ~date,
+            y = ~percent_reported,
+            name = ~city,
+            type = 'scatter',
+            mode = 'lines+markers',
+            marker = list(
+                color = color_palette[3],
+                line = list(
+                    color = 'rgb(0,0,0)',
+                    width = 1.5
+                )
+            )
         ) %>%
-        nrow()
-
-    if ( umc != "all" ) {
-        ## If the selected UMC is not "all," calculate
-        ## the percentage
-
-        umc_denom <- plot_data %>%
-            filter(city == umc) %>%
-            nrow()
-
-        umc_numer <- plot_data %>%
-            filter(
-                status == "Reported results" |
-                status == "Reported results Terminated",
-                city == umc
-            ) %>%
-            nrow()
-
-        plot_data <- tribble(
-            ~x_label, ~percentage,
-            "All", round(100*all_numer/all_denom),
-            umc, round(100*umc_numer/umc_denom),
-        )
-
-        plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
+            layout(
+                xaxis = list(
+                    title = '<b>Date</b>'
+                ),
+                yaxis = list(
+                    title = '<b>Summary results reported (%)</b>',
+                    range = c(0, 100)
+                ),
+                paper_bgcolor = color_palette[9],
+                plot_bgcolor = color_palette[9],
+                legend = list(xanchor= "right")
+            )
         
     } else {
 
-        plot_data <- tribble(
-            ~x_label, ~percentage,
-            "All", round(100*all_numer/all_denom)
-        )
+        plot_data <- dataset %>%
+            group_by(date) %>%
+            mutate(avg = mean(percent_reported)) %>%
+            slice_head() %>%
+            select(date, avg) %>%
+            rename(percent_reported = avg) %>%
+            mutate(city = "All") %>%
+            ungroup()
+
+        plot_ly(
+            plot_data,
+            x = ~date,
+            y = ~percent_reported,
+            name = "All",
+            type = 'scatter',
+            mode = 'lines+markers',
+            marker = list(
+                color = color_palette[3],
+                line = list(
+                    color = 'rgb(0,0,0)',
+                    width = 1.5
+                )
+            )
+        ) %>%
+            layout(
+                xaxis = list(
+                    title = '<b>Date</b>'
+                ),
+                yaxis = list(
+                    title = '<b>Summary results reported (%)</b>',
+                    range = c(0, 100)
+                ),
+                paper_bgcolor = color_palette[9],
+                plot_bgcolor = color_palette[9],
+                legend = list(xanchor= "right")
+            )
         
     }
-
-    plot_ly(
-        plot_data,
-        x = ~x_label,
-        y = ~percentage,
-        type = 'bar',
-        marker = list(
-            color = color_palette[3],
-            line = list(
-                color = 'rgb(0,0,0)',
-                width = 1.5
-            )
-        )
-    ) %>%
-        layout(
-            xaxis = list(
-                title = '<b>UMC</b>'
-            ),
-            yaxis = list(
-                title = '<b>Summary results reporting (%)</b>',
-                range = c(0, 100)
-            ),
-            paper_bgcolor = color_palette[9],
-            plot_bgcolor = color_palette[9]
-        )
     
 }
 
