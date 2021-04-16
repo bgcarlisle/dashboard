@@ -15,7 +15,20 @@ library(tidyverse)
 library(tidyjson)
 
 commits <- read_csv("commits.csv")
-output_filename <- "output.csv"
+
+# Format the date
+commits$monthday <- commits$date %>%
+    substr(5, 10)
+commits$year <- commits$date %>%
+    substr(nchar(commits$date)-9, nchar(commits$date)-6)
+commits$ymd <- paste(commits$year, commits$monthday)
+commits$date <- commits$ymd %>%
+    as.Date(format="%Y %b %d")
+commits <- commits %>%
+    select(hash, date) %>%
+    filter(date > Sys.Date()-365)
+
+output_filename <- paste0(Sys.Date(), "-eutt-history.csv")
 
 sponsors_of_interest <- tribble(
     ~sponsor_name,                              ~city,
