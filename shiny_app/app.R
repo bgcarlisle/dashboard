@@ -143,7 +143,7 @@ server <- function (input, output, session) {
             fluidRow(
                 column(
                     8,
-                    h1(style = "margin-left:0cm", strong("Proof-of-principle Responsible Metrics Dashboard (2018)"), align = "left"),
+                    h1(style = "margin-left:0cm", strong("Responsible Metrics Dashboard (2018, clinical trials)"), align = "left"),
                     h4(style = "margin-left:0cm",
                        "This proof-of-principle dashboard provides an overview of several metrics of open and robust
                        research for several German University Medical Centres (UMCs). This dashboard is a pilot
