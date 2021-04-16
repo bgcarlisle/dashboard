@@ -7,7 +7,7 @@
 ## Get the commits like this
 
 ## $ echo "hash,date" > commits.csv
-## $ git log | grep -e '^commit\|^Date' | sed ':a;N;$!ba;s/\nDate:   /,/g' | sed 's/commit //g' >> commits.csv
+## $ git log | grep -e '^commit\|^Date' | sed -e ':a' -e 'N' -e '$!ba' -e 's/\nDate:   /,/g' | sed 's/commit //g' >> commits.csv
 
 ## Copy commits.csv to this folder
 
