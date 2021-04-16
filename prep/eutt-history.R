@@ -46,7 +46,7 @@ sponsors_of_interest <- tribble(
 
 if (!file.exists(output_filename)) {
     tribble(
-        ~city, ~percent_unreported, ~hash, ~date
+        ~city, ~percent_reported, ~hash, ~date
     ) %>%
         write_csv(output_filename, col_names=TRUE)
 }
@@ -80,7 +80,7 @@ for (commithash in commits$hash) {
         jsondata <- jsondata %>%
             left_join(sponsors_of_interest) %>%
             filter(! is.na (city)) %>%
-            select(city, percent_unreported)
+            select(city, percent_reported)
 
         jsondata$hash <- commithash
 
@@ -94,3 +94,6 @@ for (commithash in commits$hash) {
 
 }
 
+## Note that this script is written such that if it stops partway
+## through, you can run the whole script again and it will start where
+## it left off
