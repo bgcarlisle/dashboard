@@ -1240,8 +1240,7 @@ plot_clinicaltrials_sumres <- function (dataset, umc, color_palette) {
             rename(percent_reported = avg) %>%
             mutate(city = "All") %>%
             ungroup()
-
-
+            
         city_data <- dataset %>%
             filter(city == umc)
 

@@ -26,7 +26,7 @@ commits$date <- commits$ymd %>%
     as.Date(format="%Y %b %d")
 commits <- commits %>%
     select(hash, date) %>%
-    filter(date > Sys.Date()-365)
+    filter(date > Sys.Date()-365*2)
 
 output_filename <- paste0(Sys.Date(), "-eutt-history.csv")
 
