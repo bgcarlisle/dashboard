@@ -739,6 +739,15 @@ server <- function (input, output, session) {
             timpubval5a <- paste0(round(100*all_numer_timpub/all_denom_timpub), "%")
             timpubvaltext5a <- "of clinical trials published results within 2 years"
         }
+        
+
+        if (all_denom_timpub5a == 0) {
+            timpubval5a <- "Not applicable"
+            timpubvaltext5a <- "No clinical trials for this metric were captured by this method for this UMC"
+        } else {
+            timpubval5a <- paste0(round(100*all_numer_timpub5a/all_denom_timpub5a), "%")
+            timpubvaltext5a <- "of clinical trials published results within 2 years"
+        }
 
         wellPanel(
             style="padding-top: 0px; padding-bottom: 0px;",
@@ -763,11 +772,11 @@ server <- function (input, output, session) {
                     col_width,
                     metric_box(
                         title = "Publication by 5 years",
-                        value = timpubval,
-                        value_text = timpubvaltext,
+                        value = timpubval5a,
+                        value_text = timpubvaltext5a,
                         plot = plotlyOutput('plot_clinicaltrials_timpub_5a', height="300px"),
                         info_id = "infoTimPub",
-                        info_title = "Publication at 5 years",
+                        info_title = "Publication by 5 years",
                         info_text = timpub_tooltip,
                         lim_id = "lim",
                         lim_title = "Limitations: Timely Publication",
