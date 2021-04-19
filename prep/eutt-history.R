@@ -30,19 +30,9 @@ commits <- commits %>%
 
 output_filename <- paste0(Sys.Date(), "-eutt-history.csv")
 
-sponsors_of_interest <- tribble(
-    ~sponsor_name,                              ~city,
-    "Charité-Universitätsmedizin Berlin",       "Berlin",
-    "Ruhr University Bochum",                   "Bochum",
-    "University Duisburg-Essen",                "Duisberg-Essen",
-    "University Erlangen-Nuremberg",            "Erlangen",
-    "University of Hamburg",                    "Hamburg",
-    "Hannover Medical School",                  "Hannover",
-    "Leipzig University",                       "Leipzig",
-    "Otto von Guericke University Magdeburg",   "Magdeburg",
-    "Universität Rostock",                      "Rostock",
-    "Julius Maximilian University of Würzburg", "Würzburg"    
-)
+sponsors_of_interest <- read_csv("eutt-sponsors-of-interest.csv")
+## Could not match the following (or don't know what they mean):
+## Frankfurt
 
 if (!file.exists(output_filename)) {
     tribble(
