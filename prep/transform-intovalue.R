@@ -2,7 +2,7 @@ library(tidyverse)
 
 iv <- readRDS("2021-02-24-intovalue-enhanced-pmid.rds")
 rm_data <- read_csv(
-    "../shiny_app/umc-data/2021-01-26_pp-dataset-oa-trn-sciscore-od-animals.csv",
+    "2021-01-26_pp-dataset-oa-trn-sciscore-od-animals.csv",
     col_types="ccdddcccccdccccdlllllcddccccDlccccccccccccccccccccddddddddddddddddddddddddlcclclccd"
     ## Need to specify column types here because read_csv
     ## only looks at the first few rows to determine type
@@ -31,6 +31,14 @@ iv <- iv %>%
     mutate (lead_cities = strsplit(as.character(lead_cities), " ")) %>%
     unnest(lead_cities)
 
+## This prints out the unique cities
+iv$lead_cities %>%
+    unique() %>%
+    tibble() %>%
+    rename(city = '.') %>%
+    arrange(city) %>%
+    print(n=50)
+
 ## This will apply the transformations
 iv <- iv %>%
     left_join(transforms)
@@ -52,6 +60,7 @@ iv.remaining$lead_cities %>% unique()
 
 iv$preregistered <- iv$days_reg_to_start > 0
 iv$published_2a <- iv$days_reg_to_publ < 365*2 & ! is.na(iv$days_reg_to_publ)
+iv$published_5a <- iv$days_reg_to_publ < 365*5 & ! is.na(iv$days_reg_to_publ)
 
 ## This writes the final CSV out
 
@@ -59,7 +68,7 @@ iv <- iv %>%
     filter( ! is.na(city) ) %>%
     filter(has_german_umc_lead) %>%
     filter(! is_dupe) %>%
-    select(id, city, completion_date, preregistered, published_2a)
+    select(id, city, completion_date, preregistered, published_2a, published_5a)
 
 iv %>%
-    write_csv("2021-02-25-IntoValue1-2.csv")
+    write_csv("2021-04-19-IntoValue1-2.csv")
