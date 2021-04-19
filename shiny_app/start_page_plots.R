@@ -1229,9 +1229,11 @@ plot_clinicaltrials_trn <- function (dataset, umc, color_palette) {
 # Summary results
 plot_clinicaltrials_sumres <- function (dataset, umc, color_palette) {
 
+    dataset <- dataset %>%
+        filter (date > Sys.Date()-365*1.5) ## Only look at the last year and a half
+    
     if (umc != "All") {
 
-        
         all_data <- dataset %>%
             group_by(date) %>%
             mutate(avg = mean(percent_reported)) %>%
