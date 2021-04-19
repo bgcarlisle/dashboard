@@ -86,7 +86,7 @@ source("about_rm.R")
 ui <- tagList(
     tags$head(tags$script(type="text/javascript", src = "code.js")),
     navbarPage(
-        "Dashboard for open science in clinical research", theme = shinytheme("flatly"), id = "navbarTabs",
+        "Open science in clinical research", theme = shinytheme("flatly"), id = "navbarTabs",
         start_page,
         all_umcs_page,
         ## report_card_page,
