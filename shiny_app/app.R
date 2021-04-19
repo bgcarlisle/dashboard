@@ -86,7 +86,7 @@ source("about_rm.R")
 ui <- tagList(
     tags$head(tags$script(type="text/javascript", src = "code.js")),
     navbarPage(
-        "Responsible Metrics Dashboard", theme = shinytheme("flatly"), id = "navbarTabs",
+        "Dashboard for open science in clinical research", theme = shinytheme("flatly"), id = "navbarTabs",
         start_page,
         all_umcs_page,
         ## report_card_page,
@@ -149,7 +149,7 @@ server <- function (input, output, session) {
             fluidRow(
                 column(
                     8,
-                    h1(style = "margin-left:0cm", strong("Responsible Metrics Dashboard (2018, clinical trials)"), align = "left"),
+                    h1(style = "margin-left:0cm", strong("Dashboard for open science in clinical research"), align = "left"),
                     h4(style = "margin-left:0cm",
                        "This proof-of-principle dashboard provides an overview of several metrics of open and robust
                        research for several German University Medical Centres (UMCs). This dashboard is a pilot
