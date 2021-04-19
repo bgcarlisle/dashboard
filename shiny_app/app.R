@@ -55,7 +55,7 @@ eutt_hist <- read_csv(
 )
 
 iv_data <- read_csv(
-    "data/2021-02-25-IntoValue1-2.csv"
+    "data/2021-04-19-IntoValue1-2.csv"
     # This is the IntoValue2 data set.
 )
 
@@ -422,7 +422,179 @@ server <- function (input, output, session) {
         
     ## })
 
-    output$clinicaltrials_metrics <- renderUI({
+    output$registry_metrics <- renderUI({
+
+        req(input$width)
+        req(input$selectUMC)
+
+        if (input$width < 1400) {
+            col_width <- 6
+            alignment <- "left"
+        } else {
+            col_width <- 3
+            alignment <- "right"
+        }
+
+        ## Value for TRN
+
+        if (input$selectUMC == "All") {
+
+            all_numer_trn <- rm_data %>%
+                filter(
+                    is_human_ct == 1,
+                    ! is.na(abs_trn_1)
+                ) %>%
+                nrow()
+            
+            all_denom_trn <- rm_data %>%
+                filter(is_human_ct == 1) %>%
+                nrow()
+            
+        } else {
+
+            all_numer_trn <- rm_data %>%
+                filter(city == input$selectUMC) %>%
+                filter(
+                    is_human_ct == 1,
+                    ! is.na(abs_trn_1)
+                ) %>%
+                nrow()
+            
+            all_denom_trn <- rm_data %>%
+                filter(city == input$selectUMC) %>%
+                filter(is_human_ct == 1) %>%
+                nrow()
+            
+        }
+
+        ## Value for summary results
+
+        if (input$selectUMC == "All") {
+            
+            sumres_percent <- eutt_hist %>%
+                group_by(date) %>%
+                mutate(avg = mean(percent_reported)) %>%
+                slice_head() %>%
+                ungroup() %>%
+                slice_tail() %>%
+                select(avg) %>%
+                pull()
+
+            n_eutt_records <- eutt_hist %>%
+                nrow()
+            
+        } else {
+
+            sumres_percent <- eutt_hist %>%
+                filter(city == input$selectUMC) %>%
+                slice_head() %>%
+                select(percent_reported) %>%
+                pull()
+
+            n_eutt_records <- eutt_hist %>%
+                filter(city == input$selectUMC) %>%
+                nrow()
+            
+        }
+
+        if (n_eutt_records == 0) {
+            sumresval <- "Not applicable"
+            sumresvaltext <- "No clinical trials for this metric were captured by this method for this UMC"
+        } else {
+            sumresval <- paste0(sumres_percent, "%")
+            sumresvaltext <- "of due clinical trials report summary results"
+        }
+
+        ## Value for prereg
+
+        if (input$selectUMC == "All") {
+
+            iv_data_unique <- iv_data %>%
+                distinct(id, .keep_all = TRUE)
+            
+        } else {
+
+            iv_data_unique <- iv_data %>%
+                filter(city == input$selectUMC) %>%
+                distinct(id, .keep_all = TRUE)
+        }
+
+        all_numer_prereg <- iv_data_unique %>%
+            filter(preregistered) %>%
+            nrow()
+
+        all_denom_prereg <- iv_data_unique %>%
+            nrow()
+
+        if (all_denom_prereg == 0) {
+            preregval <- "Not applicable"
+            preregvaltext <- "No clinical trials for this metric were captured by this method for this UMC"
+        } else {
+            preregval <- paste0(round(100*all_numer_prereg/all_denom_prereg), "%")
+            preregvaltext <- "of registered clinical trials were prospectively registered"
+        }
+
+        ## Value for timely pub 2a
+
+        all_numer_timpub <- iv_data_unique %>%
+            filter(published_2a) %>%
+            nrow()
+
+        all_denom_timpub <- iv_data_unique %>%
+            nrow()
+
+        if (all_denom_timpub == 0) {
+            timpubval <- "Not applicable"
+            timpubvaltext <- "No clinical trials for this metric were captured by this method for this UMC"
+        } else {
+            timpubval <- paste0(round(100*all_numer_timpub/all_denom_timpub), "%")
+            timpubvaltext <- "of clinical trials published results within 2 years"
+        }
+
+
+        wellPanel(
+            style="padding-top: 0px; padding-bottom: 0px;",
+            h2(strong("Clinical Trial Registry Entries"), align = "left"),
+            fluidRow(
+                column(
+                    col_width,
+                    metric_box(
+                        title = "Summary Results Reporting",
+                        value = sumresval,
+                        value_text = sumresvaltext,
+                        plot = plotlyOutput('plot_clinicaltrials_sumres', height="300px"),
+                        info_id = "infoSumRes",
+                        info_title = "Summary Results Reporting",
+                        info_text = sumres_tooltip,
+                        lim_id = "limSumRes",
+                        lim_title = "Limitations: Summary Results Reporting",
+                        lim_text = lim_sumres_tooltip
+                    )
+                ),
+                column(
+                    col_width,
+                    metric_box(
+                        title = "Prospective registration",
+                        value = preregval,
+                        value_text = preregvaltext,
+                        plot = plotlyOutput('plot_clinicaltrials_prereg', height="300px"),
+                        info_id = "infoPreReg",
+                        info_title = "Prospective registration",
+                        info_text = prereg_tooltip,
+                        lim_id = "limPreReg",
+                        lim_title = "Limitations: Prospective registration",
+                        lim_text = lim_prereg_tooltip
+                    )
+                )
+                
+            )
+
+        )
+
+        
+    })
+
+    output$publication_metrics <- renderUI({
 
         req(input$width)
         req(input$selectUMC)
@@ -551,49 +723,51 @@ server <- function (input, output, session) {
             timpubvaltext <- "of clinical trials published results within 2 years"
         }
 
+        ## Value for timely pub 5a
+
+        all_numer_timpub5a <- iv_data_unique %>%
+            filter(published_5a) %>%
+            nrow()
+
+        all_denom_timpub5a <- iv_data_unique %>%
+            nrow()
+
+        if (all_denom_timpub5a == 0) {
+            timpubval5a <- "Not applicable"
+            timpubvaltext5a <- "No clinical trials for this metric were captured by this method for this UMC"
+        } else {
+            timpubval5a <- paste0(round(100*all_numer_timpub/all_denom_timpub), "%")
+            timpubvaltext5a <- "of clinical trials published results within 2 years"
+        }
+
         wellPanel(
             style="padding-top: 0px; padding-bottom: 0px;",
-            h2(strong("Clinical Trials"), align = "left"),
+            h2(strong("Clinical Trials Reporting in Publications"), align = "left"),
             fluidRow(
                 column(
                     col_width,
                     metric_box(
-                        title = "Summary Results Reporting",
-                        value = sumresval,
-                        value_text = sumresvaltext,
-                        plot = plotlyOutput('plot_clinicaltrials_sumres', height="300px"),
-                        info_id = "infoSumRes",
-                        info_title = "Summary Results Reporting",
-                        info_text = sumres_tooltip,
-                        lim_id = "limSumRes",
-                        lim_title = "Limitations: Summary Results Reporting",
-                        lim_text = lim_sumres_tooltip
-                    )
-                ),
-                column(
-                    col_width,
-                    metric_box(
-                        title = "Prospective registration",
-                        value = preregval,
-                        value_text = preregvaltext,
-                        plot = plotlyOutput('plot_clinicaltrials_prereg', height="300px"),
-                        info_id = "infoPreReg",
-                        info_title = "Prospective registration",
-                        info_text = prereg_tooltip,
-                        lim_id = "limPreReg",
-                        lim_title = "Limitations: Prospective registration",
-                        lim_text = lim_prereg_tooltip
-                    )
-                ),
-                column(
-                    col_width,
-                    metric_box(
-                        title = "Timely publication",
+                        title = "Timely publication (2 years)",
                         value = timpubval,
                         value_text = timpubvaltext,
-                        plot = plotlyOutput('plot_clinicaltrials_timpub', height="300px"),
+                        plot = plotlyOutput('plot_clinicaltrials_timpub_2a', height="300px"),
                         info_id = "infoTimPub",
-                        info_title = "Timely Publication",
+                        info_title = "Timely Publication (2 years)",
+                        info_text = timpub_tooltip,
+                        lim_id = "lim",
+                        lim_title = "Limitations: Timely Publication",
+                        lim_text = lim_timpub_tooltip
+                    )
+                ),
+                column(
+                    col_width,
+                    metric_box(
+                        title = "Publication by 5 years",
+                        value = timpubval,
+                        value_text = timpubvaltext,
+                        plot = plotlyOutput('plot_clinicaltrials_timpub_5a', height="300px"),
+                        info_id = "infoTimPub",
+                        info_title = "Publication at 5 years",
                         info_text = timpub_tooltip,
                         lim_id = "lim",
                         lim_title = "Limitations: Timely Publication",
@@ -1312,9 +1486,14 @@ server <- function (input, output, session) {
         return (plot_clinicaltrials_prereg(iv_data, input$selectUMC, color_palette))
     })
     
-    ## Timely Publication plot
-    output$plot_clinicaltrials_timpub <- renderPlotly({
-        return (plot_clinicaltrials_timpub(iv_data, input$selectUMC, color_palette))
+    ## Timely Publication plot 2a
+    output$plot_clinicaltrials_timpub_2a <- renderPlotly({
+        return (plot_clinicaltrials_timpub_2a(iv_data, input$selectUMC, color_palette))
+    })
+    
+    ## Timely Publication plot 5a
+    output$plot_clinicaltrials_timpub_5a <- renderPlotly({
+        return (plot_clinicaltrials_timpub_5a(iv_data, input$selectUMC, color_palette))
     })
 
     ## Robustness plot

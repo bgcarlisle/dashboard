@@ -1479,8 +1479,173 @@ plot_clinicaltrials_prereg <- function (dataset, umc, color_palette) {
     
 }
 
-# Timely publication
-plot_clinicaltrials_timpub <- function (dataset, umc, color_palette) {
+# Timely publication within 5 years
+plot_clinicaltrials_timpub_5a <- function (dataset, umc, color_palette) {
+
+    dataset$year <- dataset$completion_date %>%
+        format("%Y")
+
+    years <- seq(from=min(dataset$year), to=max(dataset$year))
+
+    all_denom <- dataset %>%
+        nrow()
+    
+    all_numer <- dataset %>%
+        filter(published_2a) %>%
+        nrow()
+
+    if ( umc != "all" ) {
+        ## If the selected UMC is not "all," calculate
+        ## the percentage
+
+        plot_data <- tribble(
+            ~year, ~umc_percentage, ~all_percentage
+        )
+
+        for (current_year in years) {
+
+            umc_numer <-  dataset %>%
+                filter(
+                    city == umc,
+                    year == current_year,
+                    published_5a
+                ) %>%
+                nrow()
+
+            umc_denom <-  dataset %>%
+                filter(
+                    city == umc,
+                    year == current_year
+                ) %>%
+                nrow()
+
+            all_numer <-  dataset %>%
+                filter(
+                    year == current_year,
+                    published_5a
+                ) %>%
+                nrow()
+
+            all_denom <-  dataset %>%
+                filter(
+                    year == current_year
+                ) %>%
+                nrow()
+
+            umc_percentage <- 100*umc_numer/umc_denom
+            all_percentage <- 100*all_numer/all_denom
+
+            plot_data <- plot_data %>%
+                bind_rows(
+                    tribble(
+                        ~year, ~umc_percentage, ~all_percentage,
+                        current_year, umc_percentage, all_percentage
+                    )
+                )
+            
+        }
+
+        plot_ly(
+            plot_data,
+            x = ~year,
+            y = ~umc_percentage,
+            name = umc,
+            type = 'scatter',
+            mode = 'lines+markers',
+            marker = list(
+                color = color_palette[3],
+                line = list(
+                    color = 'rgb(0,0,0)',
+                    width = 1.5
+                )
+            )
+        ) %>%
+            add_trace(
+                y=~all_percentage,
+                name='All',
+                marker = list(color = color_palette[2])
+            ) %>%
+            layout(
+                xaxis = list(
+                    title = '<b>Year</b>',
+                    dtick = 1
+                ),
+                yaxis = list(
+                    title = '<b>Published within 2 years (%)</b>',
+                    range = c(0, 100)
+                ),
+                paper_bgcolor = color_palette[9],
+                plot_bgcolor = color_palette[9],
+                legend = list(xanchor= "right")
+            )
+        
+    } else {
+        plot_data <- tribble(
+            ~year, ~all_percentage
+        )
+
+        for (current_year in years) {
+
+            all_numer <-  dataset %>%
+                filter(
+                    year == current_year,
+                    published_5a
+                ) %>%
+                nrow()
+
+            all_denom <-  dataset %>%
+                filter(
+                    year == current_year
+                ) %>%
+                nrow()
+            all_percentage <- 100*all_numer/all_denom
+
+            plot_data <- plot_data %>%
+                bind_rows(
+                    tribble(
+                        ~year, ~all_percentage,
+                        current_year, all_percentage
+                    )
+                )
+            
+        }
+
+        plot_ly(
+            plot_data,
+            x = ~year,
+            y = ~all_percentage,
+            name = umc,
+            type = 'scatter',
+            mode = 'lines+markers',
+            marker = list(
+                color = color_palette[3],
+                line = list(
+                    color = 'rgb(0,0,0)',
+                    width = 1.5
+                )
+            )
+        ) %>%
+            layout(
+                xaxis = list(
+                    title = '<b>UMC</b>',
+                    dtick = 1
+                ),
+                yaxis = list(
+                    title = '<b>Published within 2 years (%)</b>',
+                    range = c(0, 100)
+                ),
+                paper_bgcolor = color_palette[9],
+                plot_bgcolor = color_palette[9],
+                legend = list(xanchor= "right")
+            )
+        
+        
+    }
+    
+}
+
+# Timely publication within 2 years
+plot_clinicaltrials_timpub_2a <- function (dataset, umc, color_palette) {
 
     dataset$year <- dataset$completion_date %>%
         format("%Y")
