@@ -634,7 +634,7 @@ server <- function (input, output, session) {
             sumresvaltext <- "No clinical trials for this metric were captured by this method for this UMC"
         } else {
             sumresval <- paste0(sumres_percent, "%")
-            sumresvaltext <- "of due clinical trials report summary results"
+            sumresvaltext <- "of due clinical trials registered in EUCTR reported summary results"
         }
 
         ## Value for prereg
@@ -736,7 +736,7 @@ server <- function (input, output, session) {
             sumresvaltext <- "No clinical trials for this metric were captured by this method for this UMC"
         } else {
             sumresval <- paste0(sumres_percent, "%")
-            sumresvaltext <- "of due clinical trials report summary results"
+            sumresvaltext <- "of due clinical trials registered in EUCTR reported summary results"
         }
 
 
@@ -747,15 +747,15 @@ server <- function (input, output, session) {
                 column(
                     col_width,
                     metric_box(
-                        title = "Summary Results Reporting",
+                        title = "Summary Results Reporting in EUCTR",
                         value = sumresval,
                         value_text = sumresvaltext,
                         plot = plotlyOutput('plot_clinicaltrials_sumres', height="300px"),
                         info_id = "infoSumRes",
-                        info_title = "Summary Results Reporting",
+                        info_title = "Summary Results Reporting in EUCTR",
                         info_text = sumres_tooltip,
                         lim_id = "limSumRes",
-                        lim_title = "Limitations: Summary Results Reporting",
+                        lim_title = "Limitations: Summary Results Reporting in EUCTR",
                         lim_text = lim_sumres_tooltip
                     )
                 ),
@@ -1263,15 +1263,15 @@ server <- function (input, output, session) {
                 column(
                     12,
                     metric_box(
-                        title = "Summary Results Reporting",
+                        title = "Summary Results Reporting in EUCTR",
                         value = paste0(round(100*all_numer_sumres/all_denom_sumres), "%"),
-                        value_text = "of due clinical trials report summary results",
+                        value_text = "of due clinical trials registered in EUCTR reported summary results",
                         plot = plotlyOutput('plot_allumc_clinicaltrials_sumres', height="300px"),
                         info_id = "infoALLUMCSumRes",
-                        info_title = "Summary results reporting (All UMCs)",
+                        info_title = "Summary results reporting in EUCTR (All UMCs)",
                         info_text = allumc_clinicaltrials_sumres_tooltip,
                         lim_id = "limALLUMCSumRes",
-                        lim_title = "Limitations: Summary results reporting (All UMCs)",
+                        lim_title = "Limitations: Summary results reporting in EUCTR (All UMCs)",
                         lim_text = lim_allumc_clinicaltrials_sumres_tooltip
                     )
                 )
