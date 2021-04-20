@@ -59,8 +59,10 @@ iv.remaining <- iv %>%
 iv.remaining$lead_cities %>% unique()
 
 iv$preregistered <- iv$days_reg_to_start > 0
-iv$published_2a <- iv$days_reg_to_publ < 365*2 & ! is.na(iv$days_reg_to_publ)
-iv$published_5a <- iv$days_reg_to_publ < 365*5 & ! is.na(iv$days_reg_to_publ)
+iv$published_2a <- (iv$days_reg_to_publ < 365*2 & ! is.na(iv$days_reg_to_publ)) |
+    (iv$days_to_summary < 365*2 & ! is.na (iv$days_to_summary))
+iv$published_5a <- iv$days_reg_to_publ < 365*5 & ! is.na(iv$days_reg_to_publ) |
+    (iv$days_to_summary < 365*5 & ! is.na (iv$days_to_summary))
 
 ## This writes the final CSV out
 
@@ -71,4 +73,4 @@ iv <- iv %>%
     select(id, city, completion_date, preregistered, published_2a, published_5a)
 
 iv %>%
-    write_csv("2021-04-19-IntoValue1-2.csv")
+    write_csv("2021-04-20-IntoValue1-2.csv")

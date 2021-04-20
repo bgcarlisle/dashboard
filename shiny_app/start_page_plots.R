@@ -1491,7 +1491,7 @@ plot_clinicaltrials_timpub_5a <- function (dataset, umc, color_palette) {
         nrow()
     
     all_numer <- dataset %>%
-        filter(published_2a) %>%
+        filter(published_5a) %>%
         nrow()
 
     if ( umc != "all" ) {

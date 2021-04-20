@@ -38,7 +38,7 @@ rm %>%
 ## IV1-2
 
 iv <- read_csv(
-    "2021-04-19-IntoValue1-2.csv"
+    "2021-04-20-IntoValue1-2.csv"
 )
 
 iv %>%
@@ -46,7 +46,7 @@ iv %>%
     mutate(city = NULL) %>%
     rename(city = umc) %>%
     relocate(city, .after = id) %>%
-    write_csv("2021-04-19-IntoValue1-2-umc.csv")
+    write_csv("2021-04-20-IntoValue1-2.csv")
 
 ## EUTT
 
