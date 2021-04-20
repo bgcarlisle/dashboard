@@ -151,21 +151,19 @@ server <- function (input, output, session) {
                     8,
                     h1(style = "margin-left:0cm", strong("Dashboard for open science in clinical research"), align = "left"),
                     h4(style = "margin-left:0cm",
-                       "This proof-of-principle dashboard provides an overview of several metrics of open and robust
-                       research for several German University Medical Centres (UMCs). This dashboard is a pilot
-                       that is still under development, and should not be used to compare UMCs or inform policy.
-                       More metrics may be added in the future."),
+                       "This is a proof-of-principle dashboard for Open Science in clinical research at University
+                       Medical Centers (UMCs) in Germany. This dashboard is a pilot that is still under development,
+                       and should not be used to compare UMCs or inform policy. More metrics may be added in the future."),
                     h4(style = "margin-left:0cm",
-                       "The dashboard includes data of UMCs for which publications could be identified with a
-                       precision equal to or higher than 85%. The data displayed is based on a random sample of
-                       500 articles per UMC. An example UMC is highlighted. Besides the metrics
-                       Summary Results Reporting, Prospective Registration, and Timely Publication, all other
-                       metrics are based on publications from 2018. For the Open Science and Robustness metrics,
-                       the data can be viewed as 1) the percentage of analyzable publications which display the
-                       given metric; 2) the absolute number of eligible publications which display the given
-                       metric. For each metric, you can find an overview of the methods and limitations by clicking
-                       on the relevant symbols. For more detailed information on the methods and underlying datasets
-                       used to calculate those metrics, visit the Methods or Datasets pages."),
+                       "The dashboard includes data relating to clinical trials of UMCs in Germany. While the dashboard
+                       displays the average across all UMCs, you can also view the data for a given UMC by selecting
+                       it in the drop-down menu. Once selected, you will see this UMC's data contextualized to the average
+                       of all included UMCs. For the Open Access metrics, the data can be viewed as either 1) the percentage
+                       of analyzable publications which display the given metric; or 2) the absolute number of eligible
+                       publications which display the given metric (click on the toggle to visualise both options). For
+                       each metric, you can find an overview of the methods and limitations by clicking on the relevant
+                       symbols. For more detailed information on the methods and underlying datasets used to calculate
+                       those metrics, visit the Methods or Datasets pages."),
                     br()
                 ),
                 column(
