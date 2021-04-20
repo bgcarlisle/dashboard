@@ -736,7 +736,7 @@ server <- function (input, output, session) {
             timpubval5a <- "Not applicable"
             timpubvaltext5a <- "No clinical trials for this metric were captured by this method for this UMC"
         } else {
-            timpubval5a <- paste0(round(100*all_numer_timpub/all_denom_timpub), "%")
+            timpubval5a <- paste0(round(100*all_numer_timpub5a/all_denom_timpub5a), "%")
             timpubvaltext5a <- "of clinical trials published results within 5 years"
         }
 
