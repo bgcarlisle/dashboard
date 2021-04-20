@@ -467,44 +467,6 @@ server <- function (input, output, session) {
             
         }
 
-        ## Value for summary results
-
-        if (input$selectUMC == "All") {
-            
-            sumres_percent <- eutt_hist %>%
-                group_by(date) %>%
-                mutate(avg = mean(percent_reported)) %>%
-                slice_head() %>%
-                ungroup() %>%
-                slice_tail() %>%
-                select(avg) %>%
-                pull()
-
-            n_eutt_records <- eutt_hist %>%
-                nrow()
-            
-        } else {
-
-            sumres_percent <- eutt_hist %>%
-                filter(city == input$selectUMC) %>%
-                slice_head() %>%
-                select(percent_reported) %>%
-                pull()
-
-            n_eutt_records <- eutt_hist %>%
-                filter(city == input$selectUMC) %>%
-                nrow()
-            
-        }
-
-        if (n_eutt_records == 0) {
-            sumresval <- "Not applicable"
-            sumresvaltext <- "No clinical trials for this metric were captured by this method for this UMC"
-        } else {
-            sumresval <- paste0(sumres_percent, "%")
-            sumresvaltext <- "of due clinical trials report summary results"
-        }
-
         ## Value for prereg
 
         if (input$selectUMC == "All") {
@@ -556,21 +518,6 @@ server <- function (input, output, session) {
             style="padding-top: 0px; padding-bottom: 0px;",
             h2(strong("Trial Registration"), align = "left"),
             fluidRow(
-                column(
-                    col_width,
-                    metric_box(
-                        title = "Summary Results Reporting",
-                        value = sumresval,
-                        value_text = sumresvaltext,
-                        plot = plotlyOutput('plot_clinicaltrials_sumres', height="300px"),
-                        info_id = "infoSumRes",
-                        info_title = "Summary Results Reporting",
-                        info_text = sumres_tooltip,
-                        lim_id = "limSumRes",
-                        lim_title = "Limitations: Summary Results Reporting",
-                        lim_text = lim_sumres_tooltip
-                    )
-                ),
                 column(
                     col_width,
                     metric_box(
@@ -740,10 +687,65 @@ server <- function (input, output, session) {
             timpubvaltext5a <- "of clinical trials published results within 5 years"
         }
 
+        
+        ## Value for summary results
+
+        if (input$selectUMC == "All") {
+            
+            sumres_percent <- eutt_hist %>%
+                group_by(date) %>%
+                mutate(avg = mean(percent_reported)) %>%
+                slice_head() %>%
+                ungroup() %>%
+                slice_tail() %>%
+                select(avg) %>%
+                pull()
+
+            n_eutt_records <- eutt_hist %>%
+                nrow()
+            
+        } else {
+
+            sumres_percent <- eutt_hist %>%
+                filter(city == input$selectUMC) %>%
+                slice_head() %>%
+                select(percent_reported) %>%
+                pull()
+
+            n_eutt_records <- eutt_hist %>%
+                filter(city == input$selectUMC) %>%
+                nrow()
+            
+        }
+
+        if (n_eutt_records == 0) {
+            sumresval <- "Not applicable"
+            sumresvaltext <- "No clinical trials for this metric were captured by this method for this UMC"
+        } else {
+            sumresval <- paste0(sumres_percent, "%")
+            sumresvaltext <- "of due clinical trials report summary results"
+        }
+
+
         wellPanel(
             style="padding-top: 0px; padding-bottom: 0px;",
             h2(strong("Trial Reporting"), align = "left"),
             fluidRow(
+                column(
+                    col_width,
+                    metric_box(
+                        title = "Summary Results Reporting",
+                        value = sumresval,
+                        value_text = sumresvaltext,
+                        plot = plotlyOutput('plot_clinicaltrials_sumres', height="300px"),
+                        info_id = "infoSumRes",
+                        info_title = "Summary Results Reporting",
+                        info_text = sumres_tooltip,
+                        lim_id = "limSumRes",
+                        lim_title = "Limitations: Summary Results Reporting",
+                        lim_text = lim_sumres_tooltip
+                    )
+                ),
                 column(
                     col_width,
                     metric_box(
