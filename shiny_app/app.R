@@ -682,7 +682,7 @@ server <- function (input, output, session) {
             timpubvaltext <- "No clinical trials for this metric were captured by this method for this UMC"
         } else {
             timpubval <- paste0(round(100*all_numer_timpub/all_denom_timpub), "%")
-            timpubvaltext <- "of clinical trials published results within 2 years"
+            timpubvaltext <- "of clinical trials registered in ClinicalTrials.gov or DRKS reported results within 2 years"
         }
 
         ## Value for timely pub 5a
@@ -699,7 +699,7 @@ server <- function (input, output, session) {
             timpubvaltext5a <- "No clinical trials for this metric were captured by this method for this UMC"
         } else {
             timpubval5a <- paste0(round(100*all_numer_timpub5a/all_denom_timpub5a), "%")
-            timpubvaltext5a <- "of clinical trials published results within 5 years"
+            timpubvaltext5a <- "of clinical trials registered in ClinicalTrials.gov or DRKS reported results within 5 years"
         }
 
         
@@ -764,7 +764,7 @@ server <- function (input, output, session) {
                 column(
                     col_width,
                     metric_box(
-                        title = "Timely publication (2 years)",
+                        title = "Reporting within 2 years (timely)",
                         value = timpubval,
                         value_text = timpubvaltext,
                         plot = plotlyOutput('plot_clinicaltrials_timpub_2a', height="300px"),
@@ -779,7 +779,7 @@ server <- function (input, output, session) {
                 column(
                     col_width,
                     metric_box(
-                        title = "Publication by 5 years",
+                        title = "Reporting within 5 years",
                         value = timpubval5a,
                         value_text = timpubvaltext5a,
                         plot = plotlyOutput('plot_clinicaltrials_timpub_5a', height="300px"),

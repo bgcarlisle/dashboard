@@ -1406,7 +1406,7 @@ plot_clinicaltrials_prereg <- function (dataset, umc, color_palette) {
                 ) %>%
                     layout(
                         xaxis = list(
-                            title = '<b>Year</b>',
+                            title = '<b>Completion year</b>',
                             dtick = 1
                         ),
                         yaxis = list(
@@ -1572,11 +1572,11 @@ plot_clinicaltrials_timpub_5a <- function (dataset, umc, color_palette) {
             ) %>%
             layout(
                 xaxis = list(
-                    title = '<b>Year</b>',
+                    title = '<b>Completion year</b>',
                     dtick = 1
                 ),
                 yaxis = list(
-                    title = '<b>Published within 2 years (%)</b>',
+                    title = '<b>Reported within 5 years (%)</b>',
                     range = c(0, 100)
                 ),
                 paper_bgcolor = color_palette[9],
@@ -1636,7 +1636,7 @@ plot_clinicaltrials_timpub_5a <- function (dataset, umc, color_palette) {
                     dtick = 1
                 ),
                 yaxis = list(
-                    title = '<b>Published within 2 years (%)</b>',
+                    title = '<b>Reported within 5 years (%)</b>',
                     range = c(0, 100)
                 ),
                 paper_bgcolor = color_palette[9],
@@ -1737,11 +1737,11 @@ plot_clinicaltrials_timpub_2a <- function (dataset, umc, color_palette) {
             ) %>%
             layout(
                 xaxis = list(
-                    title = '<b>Year</b>',
+                    title = '<b>Completion year</b>',
                     dtick = 1
                 ),
                 yaxis = list(
-                    title = '<b>Published within 2 years (%)</b>',
+                    title = '<b>Reported within 2 years (%)</b>',
                     range = c(0, 100)
                 ),
                 paper_bgcolor = color_palette[9],
