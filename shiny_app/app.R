@@ -1009,7 +1009,7 @@ server <- function (input, output, session) {
         
         wellPanel(
             style="padding-top: 0px; padding-bottom: 0px;",
-            h2(strong("Open Science"), align = "left"),
+            h2(strong("Open Access"), align = "left"),
             checkboxInput(
                 "opensci_absnum",
                 strong("Show absolute numbers"),
@@ -1133,7 +1133,7 @@ server <- function (input, output, session) {
 
         wellPanel(
             style="padding-top: 0px; padding-bottom: 0px;",
-            h2(strong("Open Science"), align = "left"),
+            h2(strong("Open Access"), align = "left"),
             fluidRow(
                 column(
                     12,
