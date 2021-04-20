@@ -1174,12 +1174,16 @@ plot_clinicaltrials_trn <- function (dataset, umc, color_palette) {
             ) %>%
             nrow()
 
+        ## Please note that this is not accurate, it's just done for
+        ## demonstration purposes
         plot_data <- tribble(
             ~x_label, ~colour, ~percentage,
             "All", "In abstract", round(100*all_numer_abs/all_denom),
-            "All", "Secondary information", round(100*all_numer_si/all_denom),
+            ## "All", "Secondary information", round(100*all_numer_si/all_denom),
+            "All", "In full text", round(100*all_numer_si/all_denom),
             umc, "In abstract", round(100*umc_numer_abs/umc_denom),
-            umc, "Secondary information", round(100*umc_numer_si/umc_denom),
+            ## umc, "Secondary information", round(100*umc_numer_si/umc_denom)
+            umc, "In full text", round(100*umc_numer_si/umc_denom)
         )
 
         plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
@@ -1189,7 +1193,8 @@ plot_clinicaltrials_trn <- function (dataset, umc, color_palette) {
         plot_data <- tribble(
             ~x_label, ~colour, ~percentage,
             "All", "In abstract", round(100*all_numer_abs/all_denom),
-            "All", "Secondary information", round(100*all_numer_si/all_denom)
+            ## "All", "Secondary information", round(100*all_numer_si/all_denom),
+            "All", "In full text", round(100*all_numer_si/all_denom)
         )
         
     }
