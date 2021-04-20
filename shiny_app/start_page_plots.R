@@ -1406,7 +1406,7 @@ plot_clinicaltrials_prereg <- function (dataset, umc, color_palette) {
                 ) %>%
                     layout(
                         xaxis = list(
-                            title = '<b>Completion year</b>',
+                            title = '<b>Year</b>',
                             dtick = 1
                         ),
                         yaxis = list(
