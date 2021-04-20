@@ -554,7 +554,7 @@ server <- function (input, output, session) {
 
         wellPanel(
             style="padding-top: 0px; padding-bottom: 0px;",
-            h2(strong("Clinical Trial Registry Entries"), align = "left"),
+            h2(strong("Trial Registration"), align = "left"),
             fluidRow(
                 column(
                     col_width,
@@ -742,7 +742,7 @@ server <- function (input, output, session) {
 
         wellPanel(
             style="padding-top: 0px; padding-bottom: 0px;",
-            h2(strong("Clinical Trials Reporting in Publications"), align = "left"),
+            h2(strong("Trial Reporting"), align = "left"),
             fluidRow(
                 column(
                     col_width,
