@@ -151,21 +151,19 @@ server <- function (input, output, session) {
                     8,
                     h1(style = "margin-left:0cm", strong("Dashboard for open science in clinical research"), align = "left"),
                     h4(style = "margin-left:0cm",
-                       "This proof-of-principle dashboard provides an overview of several metrics of open and robust
-                       research for several German University Medical Centres (UMCs). This dashboard is a pilot
-                       that is still under development, and should not be used to compare UMCs or inform policy.
-                       More metrics may be added in the future."),
+                       "This is a proof-of-principle dashboard for Open Science in clinical research at University
+                       Medical Centers (UMCs) in Germany. This dashboard is a pilot that is still under development,
+                       and should not be used to compare UMCs or inform policy. More metrics may be added in the future."),
                     h4(style = "margin-left:0cm",
-                       "The dashboard includes data of UMCs for which publications could be identified with a
-                       precision equal to or higher than 85%. The data displayed is based on a random sample of
-                       500 articles per UMC. An example UMC is highlighted. Besides the metrics
-                       Summary Results Reporting, Prospective Registration, and Timely Publication, all other
-                       metrics are based on publications from 2018. For the Open Science and Robustness metrics,
-                       the data can be viewed as 1) the percentage of analyzable publications which display the
-                       given metric; 2) the absolute number of eligible publications which display the given
-                       metric. For each metric, you can find an overview of the methods and limitations by clicking
-                       on the relevant symbols. For more detailed information on the methods and underlying datasets
-                       used to calculate those metrics, visit the Methods or Datasets pages."),
+                       "The dashboard includes data relating to clinical trials of UMCs in Germany. While the dashboard
+                       displays the average across all UMCs, you can also view the data for a given UMC by selecting
+                       it in the drop-down menu. Once selected, you will see this UMC's data contextualized to the average
+                       of all included UMCs. For the Open Access metrics, the data can be viewed as either 1) the percentage
+                       of analyzable publications which display the given metric; or 2) the absolute number of eligible
+                       publications which display the given metric (click on the toggle to visualise both options). For
+                       each metric, you can find an overview of the methods and limitations by clicking on the relevant
+                       symbols. For more detailed information on the methods and underlying datasets used to calculate
+                       those metrics, visit the Methods or Datasets pages."),
                     br()
                 ),
                 column(
@@ -461,7 +459,7 @@ server <- function (input, output, session) {
             preregvaltext <- "No clinical trials for this metric were captured by this method for this UMC"
         } else {
             preregval <- paste0(round(100*all_numer_prereg/all_denom_prereg), "%")
-            preregvaltext <- "of registered clinical trials were prospectively registered"
+            preregvaltext <- "of clinical trials were prospectively registered in ClinicalTrials.gov or DRKS"
         }
 
         ## Value for timely pub 2a
@@ -536,15 +534,15 @@ server <- function (input, output, session) {
                 column(
                     col_width,
                     metric_box(
-                        title = "Trial Registry Number Reporting",
+                        title = "Reporting of Trial Registration Number in publications",
                         value = paste0(round(100*all_numer_trn/all_denom_trn), "%"),
-                        value_text = "of clinical trials reported a registry number in the abstract",
+                        value_text = "of clinical trials reported a trial registration number in the abstract",
                         plot = plotlyOutput('plot_clinicaltrials_trn', height="300px"),
                         info_id = "infoTRN",
-                        info_title = "Trial Registry Number Reporting",
+                        info_title = "Reporting of Trial Registration Number in publications",
                         info_text = trn_tooltip,
                         lim_id = "limTRN",
-                        lim_title = "Limitations: Trial Registry Number Reporting",
+                        lim_title = "Limitations: Reporting of Trial Registration Number in publications",
                         lim_text = lim_trn_tooltip
                     )
                 )
@@ -636,7 +634,7 @@ server <- function (input, output, session) {
             sumresvaltext <- "No clinical trials for this metric were captured by this method for this UMC"
         } else {
             sumresval <- paste0(sumres_percent, "%")
-            sumresvaltext <- "of due clinical trials report summary results"
+            sumresvaltext <- "of due clinical trials registered in EUCTR reported summary results"
         }
 
         ## Value for prereg
@@ -738,7 +736,7 @@ server <- function (input, output, session) {
             sumresvaltext <- "No clinical trials for this metric were captured by this method for this UMC"
         } else {
             sumresval <- paste0(sumres_percent, "%")
-            sumresvaltext <- "of due clinical trials report summary results"
+            sumresvaltext <- "of due clinical trials registered in EUCTR reported summary results"
         }
 
 
@@ -749,15 +747,15 @@ server <- function (input, output, session) {
                 column(
                     col_width,
                     metric_box(
-                        title = "Summary Results Reporting",
+                        title = "Summary Results Reporting in EUCTR",
                         value = sumresval,
                         value_text = sumresvaltext,
                         plot = plotlyOutput('plot_clinicaltrials_sumres', height="300px"),
                         info_id = "infoSumRes",
-                        info_title = "Summary Results Reporting",
+                        info_title = "Summary Results Reporting in EUCTR",
                         info_text = sumres_tooltip,
                         lim_id = "limSumRes",
-                        lim_title = "Limitations: Summary Results Reporting",
+                        lim_title = "Limitations: Summary Results Reporting in EUCTR",
                         lim_text = lim_sumres_tooltip
                     )
                 ),
@@ -1011,7 +1009,7 @@ server <- function (input, output, session) {
         
         wellPanel(
             style="padding-top: 0px; padding-bottom: 0px;",
-            h2(strong("Open Science"), align = "left"),
+            h2(strong("Open Access"), align = "left"),
             checkboxInput(
                 "opensci_absnum",
                 strong("Show absolute numbers"),
@@ -1023,7 +1021,7 @@ server <- function (input, output, session) {
                     metric_box(
                         title = "Open Access (OA)",
                         value = paste0(round(100*all_numer_oa/all_denom_oa), "%"),
-                        value_text = "of 2018 publications are Open Access",
+                        value_text = "of publications are Open Access",
                         plot = plotlyOutput('plot_opensci_oa', height="300px"),
                         info_id = "infoOpenAccess",
                         info_title = "Open Access",
@@ -1135,14 +1133,14 @@ server <- function (input, output, session) {
 
         wellPanel(
             style="padding-top: 0px; padding-bottom: 0px;",
-            h2(strong("Open Science"), align = "left"),
+            h2(strong("Open Access"), align = "left"),
             fluidRow(
                 column(
                     12,
                     metric_box(
                         title = "Open Access",
                         value = paste0(round(100*all_numer_oa/all_denom_oa), "%"),
-                        value_text = "of 2018 publications are Open Access",
+                        value_text = "of publications are Open Access",
                         plot = plotlyOutput('plot_allumc_openaccess', height="300px"),
                         info_id = "infoALLUMCOpenAccess",
                         info_title = "Open Access (All UMCs)",
@@ -1248,9 +1246,9 @@ server <- function (input, output, session) {
                 column(
                     12,
                     metric_box(
-                        title = "TRN Reporting",
+                        title = "Reporting a Trial Registration Number in publications",
                         value = paste0(round(100*all_numer_trn/all_denom_trn), "%"),
-                        value_text = "of clinical trials reported a TRN in the abstract",
+                        value_text = "of clinical trials reported a trial registration number in the abstract",
                         plot = plotlyOutput('plot_allumc_clinicaltrials_trn', height="300px"),
                         info_id = "infoALLUMCTRN",
                         info_title = "TRN reporting (All UMCs)",
@@ -1265,15 +1263,15 @@ server <- function (input, output, session) {
                 column(
                     12,
                     metric_box(
-                        title = "Summary Results Reporting",
+                        title = "Summary Results Reporting in EUCTR",
                         value = paste0(round(100*all_numer_sumres/all_denom_sumres), "%"),
-                        value_text = "of due clinical trials report summary results",
+                        value_text = "of due clinical trials registered in EUCTR reported summary results",
                         plot = plotlyOutput('plot_allumc_clinicaltrials_sumres', height="300px"),
                         info_id = "infoALLUMCSumRes",
-                        info_title = "Summary results reporting (All UMCs)",
+                        info_title = "Summary results reporting in EUCTR (All UMCs)",
                         info_text = allumc_clinicaltrials_sumres_tooltip,
                         lim_id = "limALLUMCSumRes",
-                        lim_title = "Limitations: Summary results reporting (All UMCs)",
+                        lim_title = "Limitations: Summary results reporting in EUCTR (All UMCs)",
                         lim_text = lim_allumc_clinicaltrials_sumres_tooltip
                     )
                 )
@@ -1284,7 +1282,7 @@ server <- function (input, output, session) {
                     metric_box(
                         title = "Prospective registration",
                         value = paste0(round(100*all_numer_prereg/all_denom_prereg), "%"),
-                        value_text = "of registered clinical trials were prospectively registered",
+                        value_text = "of clinical trials were prospectively registered in ClinicalTrials.gov or DRKS",
                         plot = plotlyOutput('plot_allumc_clinicaltrials_prereg', height="300px"),
                         info_id = "infoALLUMCPreReg",
                         info_title = "Prospective registration (All UMCs)",

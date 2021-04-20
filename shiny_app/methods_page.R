@@ -2,47 +2,144 @@ methods_page <- tabPanel(
     "Methods", value = "tabMethods",
     h1("Methods"),
     
-    h4(HTML('This dashboard displays a proof-of-principle dataset for responsible metrics at German University
-    Medical Centers (UMCs) for 2018. Please note that the data presented in this dashboard is still under
+    h4(HTML('This is a proof-of-principle dashboard for Open Science in clinical research at German University
+    Medical Centers (UMCs). Please note that the data presented in this dashboard is still under
     development and should not be used &#8211 solely or in part &#8211 to compare UMCs or inform policy decisions.
     You can find more information on our methods for individual metrics by extending the panels below. You
     can also find a list of tools used for data collection at the bottom of this page.')),
     
-    h2("Publication search"),
-    bsCollapse(id = "methodsPanels_PublicationSearch",
-               bsCollapsePanel(strong("Publication Search"),
-                               p(HTML("Many of the assessed metrics are publication-based metrics. To assess those
-                               metrics on the institutional level, we first had to identify publications
-                               that can be assigned to one of the UMCs in Germany. We searched
-                               Web of Science for publications published in 2018 with at least one author
-                               at each UMC. We used the organisation-enhanced index of the Web of Science
-                               Core Collection to disambiguate author affiliations. As a proxy for the publication
-                               output of UMCs, we identified biomedical publications at the aforementioned
-                               institutions using a combination of biomedical journal-level subject categories
-                               in Web of Science and article-level categories in Dimensions. The results were
-                               filtered for the following document types: &#39Article&#39 and &#39Review&#39.
-                               We included publications in all languages. Web of Science searches and extractions
-                               were performed between 14/08/2020 and 22/09/2020. The Dimensions query was
-                               performed on 22/09/2020.
-                               <br>
-                               <br>To evaluate the precision of our approach, we performed a manual check of
-                               a sample of publications per UMC. A
-                               <a href=https://osf.io/a248e/>detailed protocol</a> of our precision checks
-                               is openly available in OSF. Briefly, 50 publications per UMC were manually checked
-                               as to whether any author is affiliated to the medical faculty of the university of
-                               question. Based on these results, we generated a proof-of-principle dataset with
-                               publications from UMCs with a precision equal to or greater than 85% (n=13 UMCs). For
-                               each UMC, we selected a random sample of 500 articles. Reviews were exluded from
-                               this proof-of-principle dataset as most metrics are
-                               based on articles. This dashboard displays the data of one of these UMCs and
-                               contextualizes it to the data of all UMCs included in the proof-of-principle dataset.")),
-                               value = "methodsPanels_PublicationSearch",
+    # h2("Publication search"),
+    # bsCollapse(id = "methodsPanels_PublicationSearch",
+    #            bsCollapsePanel(strong("Publication Search"),
+    #                            p(HTML("Many of the assessed metrics are publication-based metrics. To assess those
+    #                            metrics on the institutional level, we first had to identify publications
+    #                            that can be assigned to one of the UMCs in Germany. We searched
+    #                            Web of Science for publications published in 2018 with at least one author
+    #                            at each UMC. We used the organisation-enhanced index of the Web of Science
+    #                            Core Collection to disambiguate author affiliations. As a proxy for the publication
+    #                            output of UMCs, we identified biomedical publications at the aforementioned
+    #                            institutions using a combination of biomedical journal-level subject categories
+    #                            in Web of Science and article-level categories in Dimensions. The results were
+    #                            filtered for the following document types: &#39Article&#39 and &#39Review&#39.
+    #                            We included publications in all languages. Web of Science searches and extractions
+    #                            were performed between 14/08/2020 and 22/09/2020. The Dimensions query was
+    #                            performed on 22/09/2020.
+    #                            <br>
+    #                            <br>To evaluate the precision of our approach, we performed a manual check of
+    #                            a sample of publications per UMC. A
+    #                            <a href=https://osf.io/a248e/>detailed protocol</a> of our precision checks
+    #                            is openly available in OSF. Briefly, 50 publications per UMC were manually checked
+    #                            as to whether any author is affiliated to the medical faculty of the university of
+    #                            question. Based on these results, we generated a proof-of-principle dataset with
+    #                            publications from UMCs with a precision equal to or greater than 85% (n=13 UMCs). For
+    #                            each UMC, we selected a random sample of 500 articles. Reviews were exluded from
+    #                            this proof-of-principle dataset as most metrics are
+    #                            based on articles. This dashboard displays the data of one of these UMCs and
+    #                            contextualizes it to the data of all UMCs included in the proof-of-principle dataset.")),
+    #                            value = "methodsPanels_PublicationSearch",
+    #                            style = "default")),
+    
+    h3("Identification of clinical trials"),
+    bsCollapse(id = "methodsPanels_IdentificationTrials",
+               bsCollapsePanel(strong("Identification of clinical trials"),
+                               p(HTML("IntoValue study.")),
+                               value = "methodsPanels_IdentificationTrials",
                                style = "default")),
     
-    
-    h2("Open Science"),
-    bsCollapse(id = "methodsPanels_OpenScience",
+    h3("Trial Registration"),
+    bsCollapse(id = "methodsPanels_TrialRegistration",
+               methods_panel("Prospective registration",
+                             
+                             "This metric measures if the clinical trials are registered before the
+                        start date of the study, according to the information given on ClinicalTrials.gov and DRKS.
+                        The idea of prospective registration of studies is to make the trial specifications,
+                        including primary and secondary outcomes, publicly available before study start.
+                        Prospective registration adds transparency, helps protect against outcome switching.",
+                             
+                             "We used the same methods as for the timely reporting metric to identify trials
+                             from UMCs. To assess if a study has been prospectively registered, we compare
+                        the date the study was first submitted to the registry with the
+                        start date given in the registry. As some of the earlier dates in the database
+                        only stated the month but not the exact day and to account for other possible delays
+                        we chose a conservative estimate of prospective registration and allow for a delay
+                        between start and registration date of up to 60 days.",
+                             
+                             "Like in the case of the summary results metric, we only focused on the
+                        ClinicalTrials.gov and DRKS while there are other available registries as well.
+                        Also, we rely on the information on ClinicalTrials.gov and DRKS being accurate."),
                
+               methods_panel("Reporting of Trial Registration Number (TRN)",
+                             
+                             HTML("Reporting of clinical trial registration numbers in related publications
+                             facilitates transparent linkage between registration and publication and enhances
+                             the value of the individual parts towards more responsible biomedical research
+                             and evidence-based medicine. The <a 
+                             href=https://www.sciencedirect.com/science/article/pii/S0140673607618352?via%3Dihub>
+                             Consolidated Standards of Reporting Trials (CONSORT)</a>
+                             as well as the <a href=http://www.icmje.org/recommendations/>ICMJE Recommendations
+                             for the Conduct, Reporting, Editing, and Publication of Scholarly Work in Medical
+                             Journals</a> call for reporting <i>&#39trial registration number and name of the
+                             trial register&#39</i> in both the full-text and abstract."),
+                             
+                             HTML('We developed an <a href="https://github.com/maia-sh/ctregistries">open source R
+                                  package</a> for the detection and classification of clinical trial registration
+                                  numbers. Our regular-expression-based algorithm searches text strings for
+                                  matches to TRN patterns for all PubMed-indexed and ICTRP-network registries.
+                                  In a first step, we filtered the publication dataset for PubMed-classified
+                                  human clinical trials. Then, we used the aforementioned package to detect
+                                  and classify trial registration numbers in the PubMed secondary identifier
+                                  metadata and abstract.'),
+                             
+                             HTML("Our algorithm does not distinguish true TRNs that do not resolve to a registration.
+                             Moreover, the algorithm does not determine whether the TRN is reported as a registration
+                                  for the publication&#39s study (i.e., clinical trial result) or is otherwise
+                                  mentioned (i.e., in a review, reference to other clinical trials, etc.)"))),
+    h3("Trial Reporting"),
+    bsCollapse(id = "methodsPanels_TrialReporting",
+               methods_panel("Summary results reporting in EUCTR",
+                             
+                             "This metric measures how many clinical trials registered in the
+                        EU Clinical Trials Register (EUCTR) that are due to report their results have already
+                        done so. A trial is due to report its results 12 month after trial completion.
+                        Clinical trials are expensive and have often many contributing patients.
+                        A fast dissemination of the trial results is crucial to make the evidence gained
+                        in those trials available. The World Health organization recommends publishing
+                        clinical trial results within one year after the end of a study.",
+                             
+                             HTML('The data were retrieved for all UMCs included in this proof-of-principle
+                             dataset from the
+                        <a href="https://eu.trialstracker.net">EU Trials Tracker</a> by the EBM DataLab.'),
+                             
+                             "The EU Trials Tracker does not measure for how long the trials have been due."),
+               
+               methods_panel("Results reporting (2-year and 5-year reporting)",
+                             
+                             "This metric measures how many clinical trials registered in ClinicalTrials.gov
+                        or DRKS reported their results as either a journal publication or as summary
+                        results on the registry within 2 and 5 years after trial completion. Trials
+                        completed between 2009 and 2017 were considered.
+                        A fast dissemination of the trial results is crucial to make the evidence gained
+                        in those trials available. The World Health organization recommends publishing
+                        clinical trial results within one year after the end of a study.",
+                             
+                             HTML('ClinicalTrials.gov and DRKS.de were searched for studies with one of the UMCs
+                             as the responsible party/sponsor or with a principal investigator from one of the
+                             UMCs. A manual search for published results was done, searching the
+                        registry, PubMed and Google. When calculating the time to publication, we only
+                        considered trials where we could track the full timeframe since completion.
+                        The results were previously
+                        published as part of the <a href="https://s-quest.bihealth.org/intovalue/">IntoValue study</a>.
+                        Detailed methods can be found under
+                        <a href="https://doi.org/10.1101/467746">https://doi.org/10.1101/467746</a>.'),
+                             "Some detected publications might be missed in the manual search
+                        procedure as we only searched a limited number of scientific databases and did not
+                        contact the responsible parties. Furthermore, we did not include observational clinical
+                        studies in our sample. Additionally, we might overestimate the time to publication
+                        for some studies as we stopped the manual search after the first detected publication.")),
+
+    hr(),
+    h3("Open Access"),
+    bsCollapse(id = "methodsPanels_OpenAccess",
                
                methods_panel("Open Access",
                              
@@ -109,158 +206,54 @@ methods_page <- tabPanel(
                              database. The date at which a publication can be made openly accessible via self-archiving
                              depends on the publication date and the length of the embargo (if any). Therefore, the
                              number of potential green OA research articles will change over time. The Shareyourpaper
-                             permissions API was queried on 28/02/2021. The Unpaywall database was queried on 11/03/2021."),
-               
-               methods_panel("Open Data and Open Code",
-                             
-                             HTML('The Open Data and Open Code metrics measure how many publications
-                        share their raw research data or analysis code along with the publication.
-                        Openly shared data and code makes research more transparent,
-                        as research findings can be reproduced. Additionally, shared datasets
-                        can be reused and combined by other scientists to answer new research
-                        questions. The definition of Open Data used here is a low barrier definition.
-                        Only a part of the raw data underlying a study has to be freely available
-                        and no further quality criteria such as the FAIR criteria are checked. Note
-                        also that data sharing is not possible for all studies, for example if
-                        there is no dataset to be shared or if the data cannot be shared, e.g. due to privacy
-                        concerns for patient data. Data sharing under restrictions is currently not considered,
-                        but this is planned in the future.'),
-                             
-                             HTML('To identify publications which share research data or analysis code,
-                        we use the text-mining algorithm ODDPub
-                        (Code: <a href="https://github.com/quest-bih/oddpub">
-                        https://github.com/quest-bih/oddpub</a>,
-                        publication: <a href="https://datascience.codata.org/article/10.5334/dsj-2020-042/">
-                        https://datascience.codata.org/article/10.5334/dsj-2020-042/</a>)
-                        developed by QUEST. ODDPub searches the publication full-text
-                        for statements indicating sharing of raw data or analysis code.
-                        It does however not check the shared data itself.
-                        A text-mining approach is necessary, as a standardized
-                        way of sharing and reporting Open Data does not yet exist, and no database offers
-                        sufficiently comprehensive information on shared datasets or code.
-                        To assess data and code sharing for UMC publications, we first downloaded the
-                        full-texts of the publications that were accessible to us using the Unpaywall
-                        and Crossref APIs. We screened those full-texts with ODDPub and calculated the
-                        percentages of Open Data & Code relative to the publications in English and
-                                  available as full text.'),
-                             
-                             "Several limitations apply:
-                        Only full texts for Open Access publications or publications in journals to which
-                        we had a subscription could be retrieved (~78% of all detected publications).
-                        ODDPub only finds ~75% of all Open Data publications and finds false positive cases
-                        (no manual check of the results is done). ODDPub also does not verify that the
-                        indicated dataset is indeed available and whether the dataset fulfills our definition
-                        of Open Data. Open Data is not relevant for all publications, so we would not
-                        expect 100% of the publications to contain Open Data, not even in an ideal case.
-                        We considered all publications which had at least one author affiliated to one of the
-                        included UMCs. Authors with different project contributions and roles may have varing
-                        influence on the decision whether to make data or code available alongside a
-                        publication.")),
+                             permissions API was queried on 28/02/2021. The Unpaywall database was queried on 11/03/2021.")),
     
-    hr(),
-    h2("Clinical trials"),
-    bsCollapse(id = "methodsPanels_ClinicalTrials",
-               methods_panel("Summary results reporting",
-                             
-                             "This metric measures how many clinical trials registered in the
-                        EU Clinical Trials Register that are due to report their results have already
-                        done so. A trial is due to report its results 12 month after trial completion.
-                        Clinical trials are expensive and have often many contributing patients.
-                        A fast dissemination of the trial results is crucial to make the evidence gained
-                        in those trials available. The World Health organization recommends publishing
-                        clinical trial results within one year after the end of a study.",
-                             
-                             HTML('The data were retrieved for all UMCs included in this proof-of-principle
-                             dataset from the
-                        <a href="https://eu.trialstracker.net">EU Trials Tracker</a> by the EBM DataLab.'),
-                             
-                             "While the EU Clinical Trials Register is one of the most predominant
-                        European trial registries, it is not the only available registry. There are other
-                        registries such as ClinicalTrials.gov. or the German Clinical Trials Registry,
-                        which are not considered here. Additionally, the EU Trials Tracker does not
-                        measure for how long the trials have been due. Finally, we only considered the
-                             latest data available in the EU Trials Tracker. We plan to include historic
-                             data in the future."),
-               
-               methods_panel("Prospective registration",
-                             
-                             "This metric measures if the clinical trials are registered before the
-                        start date of the study, according to the information given on ClinicalTrials.gov.
-                        The idea of prospective registration of studies is to make the trial specifications,
-                        including primary and secondary outcomes, publicly available before study start.
-                        Prospective registration adds transparency, helps protect against outcome switching.",
-                             
-                             "We used the same methods as for the timely reporting metric to identify trials
-                             from UMCs. To assess if a study has been prospectively registered, we compare
-                        the date the study was first submitted to the registry with the
-                        start date given in the registry. As some of the earlier dates in the database
-                        only stated the month but not the exact day and to account for other possible delays
-                        we chose a conservative estimate of prospective registration and allow for a delay
-                        between start and registration date of up to 60 days.",
-                             
-                             "Like in the case of the summary results metric, we only focused on the
-                        ClinicalTrials.gov while there are other available registries as well.
-                        Also, we rely on the information on ClinicalTrials.gov being accurate."),
-               
-               methods_panel("Timely publication of results",
-                             
-                             "This metric measures how many clinical trials registered on ClinicalTrials.gov
-                        reported their results either as a journal publication or as summary
-                        results on the trials registry within 2 years after completion. Trials
-                        completed between 2009 and 2017 were considered.
-                        A fast dissemination of the trial results is crucial to make the evidence gained
-                        in those trials available. The World Health organization recommends publishing
-                        clinical trial results within one year after the end of a study.",
-                             
-                             HTML('ClinicalTrials.gov and DRKS.de were searched for studies with one of the UMCs
-                             as the responsible party/sponsor or with a principal investigator from one of the
-                             UMCs. A manual search for published results was done, searching the
-                        registry, PubMed and Google. When calculating the time to publication, we only
-                        considered trials where we could track the full timeframe since completion.
-                        The results were previously
-                        published as part of the <a href="https://s-quest.bihealth.org/intovalue/">IntoValue study</a>.
-                        Detailed methods can be found under
-                        <a href="https://doi.org/10.1101/467746">https://doi.org/10.1101/467746</a>.'),
-                             "Some detected publications might be missed in the manual search
-                        procedure as we only searched a limited number of scientific databases and did not
-                        contact the responsible parties. Furthermore, we did not include observational clinical
-                        studies in our sample. Additionally, we might overestimate the time to publication
-                        for some studies as we stopped the manual search after the first detected publication."),
-               
-               methods_panel("Reporting of Trial Registration Number (TRN)",
-                             
-                             HTML("Reporting of clinical trial registration numbers in related publications
-                             facilitates transparent linkage between registration and publication and enhances
-                             the value of the individual parts towards more responsible biomedical research
-                             and evidence-based medicine. The <a 
-                             href=https://www.sciencedirect.com/science/article/pii/S0140673607618352?via%3Dihub>
-                             Consolidated Standards of Reporting Trials (CONSORT)</a>
-                             as well as the <a href=http://www.icmje.org/recommendations/>ICMJE Recommendations
-                             for the Conduct, Reporting, Editing, and Publication of Scholarly Work in Medical
-                             Journals</a> call for reporting <i>&#39trial registration number and name of the
-                             trial register&#39</i> in both the full-text and abstract."),
-                             
-                             HTML('We developed an <a href="https://github.com/maia-sh/ctregistries">open source R
-                                  package</a> for the detection and classification of clinical trial registration
-                                  numbers. Our regular-expression-based algorithm searches text strings for
-                                  matches to TRN patterns for all PubMed-indexed and ICTRP-network registries.
-                                  In a first step, we filtered the publication dataset for PubMed-classified
-                                  human clinical trials. Then, we used the aforementioned package to detect
-                                  and classify trial registration numbers in the PubMed secondary identifier
-                                  metadata and abstract.'),
-                             
-                             HTML("We identified human clinical trials based on the following search term in PubMed:
-                             <code>&#39clinical trial&#39[pt] NOT (animals [mh] NOT humans [mh])</code>. However,
-                             we have not tested (1) the sensitivity of this PubMed search term (i.e., what
-                             proportion of true clinical trial publications are detected?); (2) the precision
-                             of this search term (i.e, what proportion of detected publications are not true
-                             clinical trials publications?). Furthermore, our algorithm does not
-                                  distinguish true TRNs that do not resolve to a registration. Finally, the
-                                  algorithm does not determine whether the TRN is reported as a registration
-                                  for the publication&#39s study (i.e., clinical trial result) or is otherwise
-                                  mentioned (i.e., in a review, reference to other clinical trials, etc.)"))),
-               
-    hr(),
+    # methods_panel("Open Data and Open Code",
+    #               
+    #               HTML('The Open Data and Open Code metrics measure how many publications
+    #          share their raw research data or analysis code along with the publication.
+    #          Openly shared data and code makes research more transparent,
+    #          as research findings can be reproduced. Additionally, shared datasets
+    #          can be reused and combined by other scientists to answer new research
+    #          questions. The definition of Open Data used here is a low barrier definition.
+    #          Only a part of the raw data underlying a study has to be freely available
+    #          and no further quality criteria such as the FAIR criteria are checked. Note
+    #          also that data sharing is not possible for all studies, for example if
+    #          there is no dataset to be shared or if the data cannot be shared, e.g. due to privacy
+    #          concerns for patient data. Data sharing under restrictions is currently not considered,
+    #          but this is planned in the future.'),
+    #               
+    #               HTML('To identify publications which share research data or analysis code,
+    #          we use the text-mining algorithm ODDPub
+    #          (Code: <a href="https://github.com/quest-bih/oddpub">
+    #          https://github.com/quest-bih/oddpub</a>,
+    #          publication: <a href="https://datascience.codata.org/article/10.5334/dsj-2020-042/">
+    #          https://datascience.codata.org/article/10.5334/dsj-2020-042/</a>)
+    #          developed by QUEST. ODDPub searches the publication full-text
+    #          for statements indicating sharing of raw data or analysis code.
+    #          It does however not check the shared data itself.
+    #          A text-mining approach is necessary, as a standardized
+    #          way of sharing and reporting Open Data does not yet exist, and no database offers
+    #          sufficiently comprehensive information on shared datasets or code.
+    #          To assess data and code sharing for UMC publications, we first downloaded the
+    #          full-texts of the publications that were accessible to us using the Unpaywall
+    #          and Crossref APIs. We screened those full-texts with ODDPub and calculated the
+    #          percentages of Open Data & Code relative to the publications in English and
+    #                    available as full text.'),
+    #               
+    #               "Several limitations apply:
+    #          Only full texts for Open Access publications or publications in journals to which
+    #          we had a subscription could be retrieved (~78% of all detected publications).
+    #          ODDPub only finds ~75% of all Open Data publications and finds false positive cases
+    #          (no manual check of the results is done). ODDPub also does not verify that the
+    #          indicated dataset is indeed available and whether the dataset fulfills our definition
+    #          of Open Data. Open Data is not relevant for all publications, so we would not
+    #          expect 100% of the publications to contain Open Data, not even in an ideal case.
+    #          We considered all publications which had at least one author affiliated to one of the
+    #          included UMCs. Authors with different project contributions and roles may have varing
+    #          influence on the decision whether to make data or code available alongside a
+    #          publication.")),
+    
     ## h2("Robustness"),
     ## bsCollapse(id = "methodsPanels_Robustness",
     ##            methods_panel("Robustness of animal studies",
@@ -298,22 +291,22 @@ methods_page <- tabPanel(
     ##                     exploratory research (hypothesis-generating experiments). At present, we do not have a
     ##                     way of distinguishing these studies from confirmatory, hypothesis-testing experiments."))),
                
-    h2("Tools used for data collection"),
-    helpText(HTML('<a href="http://login.webofknowledge.com/error/Error?Src=Cookie&Alias=WOK5&Error=roaming%2Cip&PathInfo=%2F&ErrorCode=AUTH_PREFERENCE_ERROR&RouterURL=http%3A%2F%2Fwww.webofknowledge.com%2F&Domain=.webofknowledge.com"
-                  >Web of Science</a>')),
-    helpText(HTML('<a href="https://app.dimensions.ai/discover/publication">Dimensions</a>')),
-    helpText(HTML('<a href="https://numbat.bgcarlisle.com/">Numbat Systematic Review Manager</a>')),
+    h3("Tools used for data collection"),
+    #helpText(HTML('<a href="http://login.webofknowledge.com/error/Error?Src=Cookie&Alias=WOK5&Error=roaming%2Cip&PathInfo=%2F&ErrorCode=AUTH_PREFERENCE_ERROR&RouterURL=http%3A%2F%2Fwww.webofknowledge.com%2F&Domain=.webofknowledge.com"
+    #              >Web of Science</a>')),
+    #helpText(HTML('<a href="https://app.dimensions.ai/discover/publication">Dimensions</a>')),
+    #helpText(HTML('<a href="https://numbat.bgcarlisle.com/">Numbat Systematic Review Manager</a>')),
     helpText(HTML('<a href="https://github.com/NicoRiedel/unpaywallR"> UnpaywallR </a>')),
     helpText(HTML('<a href="https://shareyourpaper.org/permissions/about">
                   ShareYourPaper permissions checker API</a> from the Open Access Button')),
-    helpText(HTML('<a href="https://github.com/quest-bih/oddpub" > ODDPub </a>
-                  and <a href="https://datascience.codata.org/article/10.5334/dsj-2020-042/">
-                  related publication </a>')),
+    #helpText(HTML('<a href="https://github.com/quest-bih/oddpub" > ODDPub </a>
+    #              and <a href="https://datascience.codata.org/article/10.5334/dsj-2020-042/">
+    #              related publication </a>')),
     helpText(HTML('<a href="https://github.com/maia-sh/ctregistries"> ctregistries R package </a>')),
-    helpText(HTML('<a href="https://eu.trialstracker.net/">EU Trials Tracker </a>')),
-    helpText(HTML('Data extracted with <a href="https://www.sciscore.com/">SciScore tool</a>, also see the
-                  <a href="https://www.sciencedirect.com/science/article/pii/S2589004220308907?via%3Dihub#mmc1">
-                  related publication </a>'))
+    helpText(HTML('<a href="https://eu.trialstracker.net/">EU Trials Tracker </a>'))
+    #helpText(HTML('Data extracted with <a href="https://www.sciscore.com/">SciScore tool</a>, also see the
+    #              <a href="https://www.sciencedirect.com/science/article/pii/S2589004220308907?via%3Dihub#mmc1">
+    #              related publication </a>'))
 )
 
 

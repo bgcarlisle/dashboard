@@ -1273,7 +1273,7 @@ plot_clinicaltrials_sumres <- function (dataset, umc, color_palette) {
                     title = '<b>Date</b>'
                 ),
                 yaxis = list(
-                    title = '<b>Summary results reported (%)</b>',
+                    title = '<b>Reported within 1 year (%)</b>',
                     range = c(0, 100)
                 ),
                 paper_bgcolor = color_palette[9],
@@ -1312,7 +1312,7 @@ plot_clinicaltrials_sumres <- function (dataset, umc, color_palette) {
                     title = '<b>Date</b>'
                 ),
                 yaxis = list(
-                    title = '<b>Summary results reported (%)</b>',
+                    title = '<b>Reported within 1 year (%)</b>',
                     range = c(0, 100)
                 ),
                 paper_bgcolor = color_palette[9],
@@ -1406,7 +1406,7 @@ plot_clinicaltrials_prereg <- function (dataset, umc, color_palette) {
                 ) %>%
                     layout(
                         xaxis = list(
-                            title = '<b>Completion year</b>',
+                            title = '<b>Year</b>',
                             dtick = 1
                         ),
                         yaxis = list(
