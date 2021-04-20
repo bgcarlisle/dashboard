@@ -298,22 +298,22 @@ methods_page <- tabPanel(
     ##                     exploratory research (hypothesis-generating experiments). At present, we do not have a
     ##                     way of distinguishing these studies from confirmatory, hypothesis-testing experiments."))),
                
-    h2("Tools used for data collection"),
-    helpText(HTML('<a href="http://login.webofknowledge.com/error/Error?Src=Cookie&Alias=WOK5&Error=roaming%2Cip&PathInfo=%2F&ErrorCode=AUTH_PREFERENCE_ERROR&RouterURL=http%3A%2F%2Fwww.webofknowledge.com%2F&Domain=.webofknowledge.com"
-                  >Web of Science</a>')),
-    helpText(HTML('<a href="https://app.dimensions.ai/discover/publication">Dimensions</a>')),
-    helpText(HTML('<a href="https://numbat.bgcarlisle.com/">Numbat Systematic Review Manager</a>')),
+    h3("Tools used for data collection"),
+    #helpText(HTML('<a href="http://login.webofknowledge.com/error/Error?Src=Cookie&Alias=WOK5&Error=roaming%2Cip&PathInfo=%2F&ErrorCode=AUTH_PREFERENCE_ERROR&RouterURL=http%3A%2F%2Fwww.webofknowledge.com%2F&Domain=.webofknowledge.com"
+    #              >Web of Science</a>')),
+    #helpText(HTML('<a href="https://app.dimensions.ai/discover/publication">Dimensions</a>')),
+    #helpText(HTML('<a href="https://numbat.bgcarlisle.com/">Numbat Systematic Review Manager</a>')),
     helpText(HTML('<a href="https://github.com/NicoRiedel/unpaywallR"> UnpaywallR </a>')),
     helpText(HTML('<a href="https://shareyourpaper.org/permissions/about">
                   ShareYourPaper permissions checker API</a> from the Open Access Button')),
-    helpText(HTML('<a href="https://github.com/quest-bih/oddpub" > ODDPub </a>
-                  and <a href="https://datascience.codata.org/article/10.5334/dsj-2020-042/">
-                  related publication </a>')),
+    #helpText(HTML('<a href="https://github.com/quest-bih/oddpub" > ODDPub </a>
+    #              and <a href="https://datascience.codata.org/article/10.5334/dsj-2020-042/">
+    #              related publication </a>')),
     helpText(HTML('<a href="https://github.com/maia-sh/ctregistries"> ctregistries R package </a>')),
-    helpText(HTML('<a href="https://eu.trialstracker.net/">EU Trials Tracker </a>')),
-    helpText(HTML('Data extracted with <a href="https://www.sciscore.com/">SciScore tool</a>, also see the
-                  <a href="https://www.sciencedirect.com/science/article/pii/S2589004220308907?via%3Dihub#mmc1">
-                  related publication </a>'))
+    helpText(HTML('<a href="https://eu.trialstracker.net/">EU Trials Tracker </a>'))
+    #helpText(HTML('Data extracted with <a href="https://www.sciscore.com/">SciScore tool</a>, also see the
+    #              <a href="https://www.sciencedirect.com/science/article/pii/S2589004220308907?via%3Dihub#mmc1">
+    #              related publication </a>'))
 )
 
 
