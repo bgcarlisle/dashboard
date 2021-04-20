@@ -1021,7 +1021,7 @@ server <- function (input, output, session) {
                     metric_box(
                         title = "Open Access (OA)",
                         value = paste0(round(100*all_numer_oa/all_denom_oa), "%"),
-                        value_text = "of 2018 publications are Open Access",
+                        value_text = "of publications are Open Access",
                         plot = plotlyOutput('plot_opensci_oa', height="300px"),
                         info_id = "infoOpenAccess",
                         info_title = "Open Access",
@@ -1140,7 +1140,7 @@ server <- function (input, output, session) {
                     metric_box(
                         title = "Open Access",
                         value = paste0(round(100*all_numer_oa/all_denom_oa), "%"),
-                        value_text = "of 2018 publications are Open Access",
+                        value_text = "of publications are Open Access",
                         plot = plotlyOutput('plot_allumc_openaccess', height="300px"),
                         info_id = "infoALLUMCOpenAccess",
                         info_title = "Open Access (All UMCs)",
