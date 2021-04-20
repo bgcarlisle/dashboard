@@ -435,38 +435,6 @@ server <- function (input, output, session) {
             alignment <- "right"
         }
 
-        ## Value for TRN
-
-        if (input$selectUMC == "All") {
-
-            all_numer_trn <- rm_data %>%
-                filter(
-                    is_human_ct == 1,
-                    ! is.na(abs_trn_1)
-                ) %>%
-                nrow()
-            
-            all_denom_trn <- rm_data %>%
-                filter(is_human_ct == 1) %>%
-                nrow()
-            
-        } else {
-
-            all_numer_trn <- rm_data %>%
-                filter(city == input$selectUMC) %>%
-                filter(
-                    is_human_ct == 1,
-                    ! is.na(abs_trn_1)
-                ) %>%
-                nrow()
-            
-            all_denom_trn <- rm_data %>%
-                filter(city == input$selectUMC) %>%
-                filter(is_human_ct == 1) %>%
-                nrow()
-            
-        }
-
         ## Value for prereg
 
         if (input$selectUMC == "All") {
@@ -513,6 +481,38 @@ server <- function (input, output, session) {
             timpubvaltext <- "of clinical trials published results within 2 years"
         }
 
+        
+        ## Value for TRN
+
+        if (input$selectUMC == "All") {
+
+            all_numer_trn <- rm_data %>%
+                filter(
+                    is_human_ct == 1,
+                    ! is.na(abs_trn_1)
+                ) %>%
+                nrow()
+            
+            all_denom_trn <- rm_data %>%
+                filter(is_human_ct == 1) %>%
+                nrow()
+            
+        } else {
+
+            all_numer_trn <- rm_data %>%
+                filter(city == input$selectUMC) %>%
+                filter(
+                    is_human_ct == 1,
+                    ! is.na(abs_trn_1)
+                ) %>%
+                nrow()
+            
+            all_denom_trn <- rm_data %>%
+                filter(city == input$selectUMC) %>%
+                filter(is_human_ct == 1) %>%
+                nrow()
+            
+        }
 
         wellPanel(
             style="padding-top: 0px; padding-bottom: 0px;",
@@ -531,6 +531,21 @@ server <- function (input, output, session) {
                         lim_id = "limPreReg",
                         lim_title = "Limitations: Prospective registration",
                         lim_text = lim_prereg_tooltip
+                    )
+                ),
+                column(
+                    col_width,
+                    metric_box(
+                        title = "Trial Registry Number Reporting",
+                        value = paste0(round(100*all_numer_trn/all_denom_trn), "%"),
+                        value_text = "of clinical trials reported a registry number in the abstract",
+                        plot = plotlyOutput('plot_clinicaltrials_trn', height="300px"),
+                        info_id = "infoTRN",
+                        info_title = "Trial Registry Number Reporting",
+                        info_text = trn_tooltip,
+                        lim_id = "limTRN",
+                        lim_title = "Limitations: Trial Registry Number Reporting",
+                        lim_text = lim_trn_tooltip
                     )
                 )
                 
@@ -774,21 +789,6 @@ server <- function (input, output, session) {
                         lim_id = "lim",
                         lim_title = "Limitations: Timely Publication",
                         lim_text = lim_timpub_tooltip
-                    )
-                ),
-                column(
-                    col_width,
-                    metric_box(
-                        title = "Trial Registry Number Reporting",
-                        value = paste0(round(100*all_numer_trn/all_denom_trn), "%"),
-                        value_text = "of clinical trials reported a registry number in the abstract",
-                        plot = plotlyOutput('plot_clinicaltrials_trn', height="300px"),
-                        info_id = "infoTRN",
-                        info_title = "Trial Registry Number Reporting",
-                        info_text = trn_tooltip,
-                        lim_id = "limTRN",
-                        lim_title = "Limitations: Trial Registry Number Reporting",
-                        lim_text = lim_trn_tooltip
                     )
                 )
                 
