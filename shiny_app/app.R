@@ -737,16 +737,7 @@ server <- function (input, output, session) {
             timpubvaltext5a <- "No clinical trials for this metric were captured by this method for this UMC"
         } else {
             timpubval5a <- paste0(round(100*all_numer_timpub/all_denom_timpub), "%")
-            timpubvaltext5a <- "of clinical trials published results within 2 years"
-        }
-        
-
-        if (all_denom_timpub5a == 0) {
-            timpubval5a <- "Not applicable"
-            timpubvaltext5a <- "No clinical trials for this metric were captured by this method for this UMC"
-        } else {
-            timpubval5a <- paste0(round(100*all_numer_timpub5a/all_denom_timpub5a), "%")
-            timpubvaltext5a <- "of clinical trials published results within 2 years"
+            timpubvaltext5a <- "of clinical trials published results within 5 years"
         }
 
         wellPanel(
