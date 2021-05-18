@@ -26,13 +26,12 @@ commits$date <- commits$ymd %>%
     as.Date(format="%Y %b %d")
 commits <- commits %>%
     select(hash, date) %>%
-    filter(date > Sys.Date()-365*2)
+    filter(date > Sys.Date()-365*2) #adapt as necessary
 
 output_filename <- paste0(Sys.Date(), "-eutt-history.csv")
 
+# Select sponsors you want to get the data from in EUTT
 sponsors_of_interest <- read_csv("eutt-sponsors-of-interest.csv")
-## Could not match the following (or don't know what they mean):
-## Frankfurt
 
 if (!file.exists(output_filename)) {
     tribble(
