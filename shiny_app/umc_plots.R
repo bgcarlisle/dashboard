@@ -4,9 +4,7 @@
 
 ## TODO Open Access: reviews not currently in pop dataset, but Open Access should include both articles and reviews.
 
-plot_opensci_oa <- function (dataset, absnum, color_palette) {
-
-    umc <- "All"
+umc_plot_opensci_oa <- function (dataset, umc, absnum, color_palette) {
 
     ## Calculate the numerators and the denominator for the
     ## "all" bars
@@ -285,7 +283,7 @@ plot_opensci_oa <- function (dataset, absnum, color_palette) {
 
 ## TODO: add filter for Articles if the pop dataset contains Articles and Reviews
 
-plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
+umc_plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
 
     ## Remove non-analyzable and non-English data points
     plot_data <- dataset %>%
@@ -507,7 +505,7 @@ plot_opensci_od <- function (dataset, umc, absnum, color_palette) {
 
 ## TODO: add filter for Articles if the pop dataset contains Articles and Reviews
 
-plot_opensci_oc <- function (dataset, umc, absnum, color_palette) {
+umc_plot_opensci_oc <- function (dataset, umc, absnum, color_palette) {
 
     ## Remove non-analyzable and non-English data points
     plot_data <- dataset %>%
@@ -910,9 +908,7 @@ plot_opensci_oc <- function (dataset, umc, absnum, color_palette) {
 #     
 # }
 
-plot_opensci_green_oa <- function (dataset, absnum, color_palette) {
-
-    umc <- "All"
+umc_plot_opensci_green_oa <- function (dataset, umc, absnum, color_palette) {
 
     all_closed_with_potential <- dataset %>%
         filter(
@@ -1140,14 +1136,9 @@ plot_opensci_green_oa <- function (dataset, absnum, color_palette) {
 
 ## TRN
 
-plot_clinicaltrials_trn <- function (dataset, color_palette) {
-
-    umc <- "All"
+umc_plot_clinicaltrials_trn <- function (dataset, umc, color_palette) {
 
     plot_data <- dataset
-
-    all_denom <- plot_data %>%
-        nrow()
     
     all_numer_abs <- sum(plot_data$has_iv_trn_abstract, na.rm=TRUE)
     abs_denom <- plot_data %>%
@@ -1158,12 +1149,54 @@ plot_clinicaltrials_trn <- function (dataset, color_palette) {
         filter(! is.na(has_iv_trn_ft_pdf)) %>%
         nrow()
     
-    plot_data <- tribble(
-        ~x_label, ~colour, ~percentage,
-        "All", "In abstract", round(100*all_numer_abs/abs_denom),
-        ## "All", "Secondary information", round(100*all_numer_si/all_denom),
-        "All", "In full text", round(100*all_numer_ft/ft_denom)
-    )
+    if ( umc != "all" ) {
+        ## If the selected UMC is not "all," calculate
+        ## the percentage
+
+        umc_abs_denom <- plot_data %>%
+            filter(city == umc) %>%
+            filter(! is.na(has_iv_trn_abstract)) %>%
+            nrow()
+
+        umc_numer_abs <- plot_data %>%
+            filter(city == umc) %>%
+            select(has_iv_trn_abstract) %>%
+            filter(has_iv_trn_abstract == TRUE) %>%
+            nrow()
+
+        umc_numer_ft <- plot_data %>%
+            filter(city == umc) %>%
+            select(has_iv_trn_ft_pdf) %>%
+            filter(has_iv_trn_ft_pdf == TRUE) %>%
+            nrow()
+
+        umc_ft_denom <- plot_data %>%
+            filter(city == umc) %>%
+            filter(! is.na(has_iv_trn_ft_pdf)) %>%
+            nrow()
+
+        ## Please note that this is not accurate, it's just done for
+        ## demonstration purposes
+        plot_data <- tribble(
+            ~x_label, ~colour, ~percentage,
+            "All", "In abstract", round(100*all_numer_abs/abs_denom),
+            "All", "In full text", round(100*all_numer_ft/ft_denom),
+            umc, "In abstract", round(100*umc_numer_abs/umc_abs_denom),
+            umc, "In full text", round(100*umc_numer_ft/umc_ft_denom)
+        )
+
+        plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
+        
+    } else {
+
+        plot_data <- tribble(
+            ~x_label, ~colour, ~percentage,
+            "All", "In abstract", round(100*all_numer_abs/all_denom),
+            ## "All", "Secondary information", round(100*all_numer_si/all_denom),
+            "All", "In full text", round(100*all_numer_si/all_denom)
+        )
+        
+    }
 
     plot_ly(
         plot_data,
@@ -1198,9 +1231,7 @@ plot_clinicaltrials_trn <- function (dataset, color_palette) {
 }
 
 # Summary results
-plot_clinicaltrials_sumres <- function (dataset, color_palette) {
-
-    umc <- "All"
+umc_plot_clinicaltrials_sumres <- function (dataset, umc, color_palette) {
 
     dataset <- dataset %>%
         filter (date > Sys.Date()-365*1.5) ## Only look at the last year and a half
@@ -1293,9 +1324,7 @@ plot_clinicaltrials_sumres <- function (dataset, color_palette) {
 }
 
 # Prospective registration
-plot_clinicaltrials_prereg <- function (dataset, color_palette) {
-
-    umc <- "All"
+umc_plot_clinicaltrials_prereg <- function (dataset, umc, color_palette) {
 
     dataset$year <- dataset$completion_date %>%
         format("%Y")
@@ -1455,9 +1484,7 @@ plot_clinicaltrials_prereg <- function (dataset, color_palette) {
 }
 
 # Timely publication within 5 years
-plot_clinicaltrials_timpub_5a <- function (dataset, color_palette) {
-
-    umc <- "All"
+umc_plot_clinicaltrials_timpub_5a <- function (dataset, umc, color_palette) {
 
     dataset$year <- dataset$completion_date %>%
         format("%Y")
@@ -1622,9 +1649,7 @@ plot_clinicaltrials_timpub_5a <- function (dataset, color_palette) {
 }
 
 # Timely publication within 2 years
-plot_clinicaltrials_timpub_2a <- function (dataset, color_palette) {
-
-    umc <- "All"
+umc_plot_clinicaltrials_timpub_2a <- function (dataset, umc, color_palette) {
 
     dataset$year <- dataset$completion_date %>%
         format("%Y")
@@ -1792,7 +1817,7 @@ plot_clinicaltrials_timpub_2a <- function (dataset, color_palette) {
 
 ## Randomisation
 
-plot_randomization <- function (dataset, umc, absnum, color_palette) {
+umc_plot_randomization <- function (dataset, umc, absnum, color_palette) {
 
     ## Calculate the numerator and denominator for the
     ## "all" bar
@@ -2044,7 +2069,7 @@ plot_randomization <- function (dataset, umc, absnum, color_palette) {
 }
 
 ## Blinding
-plot_blinding <- function (dataset, umc, absnum, color_palette) {
+umc_plot_blinding <- function (dataset, umc, absnum, color_palette) {
 
     ## Calculate the numerator and denominator for the
     ## "all" bar
@@ -2294,7 +2319,7 @@ plot_blinding <- function (dataset, umc, absnum, color_palette) {
 }
 
 ## Power calc
-plot_power <- function (dataset, umc, absnum, color_palette) {
+umc_plot_power <- function (dataset, umc, absnum, color_palette) {
 
     ## Calculate the numerator and denominator for the
     ## "all" bar
@@ -2548,7 +2573,7 @@ plot_power <- function (dataset, umc, absnum, color_palette) {
 }
 
 ## IACUC
-plot_iacuc <- function (dataset, umc, color_palette) {
+umc_plot_iacuc <- function (dataset, umc, color_palette) {
 
     ## Calculate the numerator and denominator for the
     ## "all" bar

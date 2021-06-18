@@ -90,7 +90,7 @@ all_umcs_page <- tabPanel(
                 ),
                 h4(
                     style = "margin-left: 0",
-                    "This dashboard provides an overview of the relative performance of several German University Medical Centres (UMCs) on several metrics of open and responsible research. For more detailed information on the methods used to calculate those metrics, click one of the following buttons."
+                    "This dashboard provides an overview of the relative performance of several German University Medical Centres (UMCs) on several metrics of open and responsible research. For more detailed information on the methods used to calculate those metrics, view the Methods page."
                 ),
                 h4(style = "margin-left:0cm",
                    "This dashboard is a pilot that is still under development, and should not be used to compare UMCs or inform policy. More metrics may be added in the future."),

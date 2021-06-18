@@ -1,19 +1,6 @@
 library(tidyverse)
 
-iv <- readRDS("2021-02-24-intovalue-enhanced-pmid.rds")
-rm_data <- read_csv(
-    "2021-01-26_pp-dataset-oa-trn-sciscore-od-animals.csv",
-    col_types="ccdddcccccdccccdlllllcddccccDlccccccccccccccccccccddddddddddddddddddddddddlcclclccd"
-    ## Need to specify column types here because read_csv
-    ## only looks at the first few rows to determine type
-    ## automatically, and if they're all empty, assumes
-    ## that they're logical. This is a problem when it
-    ## gets right to the end of the TRN columns and finds
-    ## an NCT number there and kicks back a warning.
-
-    ## NOTE: IF WE EVER ADD MORE COLUMNS, THE COLUMN TYPE
-    ## SPECIFICATION WILL NEED TO BE UPDATED MANUALLY
-)
+iv <- read_csv("2021-06-07-data.csv")
 
 ## This is the library of transformations
 transforms <- read_csv("intovalue-city-transforms.csv")
@@ -48,9 +35,6 @@ iv$city %>%
     is.na() %>%
     sum()
 
-rm_data$city %>%
-    unique()
-
 ## This prints out the names of the remaining UMC's to be identified
 iv.remaining <- iv %>%
     filter( is.na(city) ) %>%
@@ -59,10 +43,10 @@ iv.remaining <- iv %>%
 iv.remaining$lead_cities %>% unique()
 
 iv$preregistered <- iv$days_reg_to_start > 0
-iv$published_2a <- (iv$days_reg_to_publ < 365*2 & ! is.na(iv$days_reg_to_publ)) |
-    (iv$days_to_summary < 365*2 & ! is.na (iv$days_to_summary))
-iv$published_5a <- iv$days_reg_to_publ < 365*5 & ! is.na(iv$days_reg_to_publ) |
-    (iv$days_to_summary < 365*5 & ! is.na (iv$days_to_summary))
+iv$published_2a <- (iv$days_pcd_to_publication < 365*2 & ! is.na(iv$days_pcd_to_publication)) |
+    (iv$days_pcd_to_summary < 365*2 & ! is.na (iv$days_pcd_to_summary))
+iv$published_5a <- iv$days_pcd_to_publication < 365*5 & ! is.na(iv$days_pcd_to_publication) |
+    (iv$days_pcd_to_summary < 365*5 & ! is.na (iv$days_pcd_to_summary))
 
 ## This writes the final CSV out
 
@@ -70,7 +54,7 @@ iv <- iv %>%
     filter( ! is.na(city) ) %>%
     filter(has_german_umc_lead) %>%
     filter(! is_dupe) %>%
-    select(id, city, completion_date, preregistered, published_2a, published_5a)
+    select(id, city, completion_date, preregistered, published_2a, published_5a, has_iv_trn_abstract, has_iv_trn_ft_pdf, color, color_green_only, permission_postprint)
 
 iv %>%
-    write_csv("2021-04-20-IntoValue1-2.csv")
+    write_csv("2021-06-18-data-iv.csv")
