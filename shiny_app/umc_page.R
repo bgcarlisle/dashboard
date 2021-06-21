@@ -28,7 +28,13 @@ umc_page <- tabPanel(
                 selectInput(
                     "selectUMC",
                     strong("Select a UMC to view details"),
-                    choices = umclist,
+                    choices = c(
+                        "Select a UMC",
+                        iv_data %>%
+                        arrange(city) %>%
+                        distinct(city) %>%
+                        pull()
+                    ),
                     selected = NA
                 )
             )

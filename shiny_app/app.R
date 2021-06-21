@@ -28,17 +28,6 @@ iv_data <- read_csv(
     # This is the IntoValue 1-2 data set.
 )
 
-## Generates the UMC list for the drop-down menu
-ddumcs <- iv_data %>%
-    arrange(city) %>%
-    distinct(city) %>%
-    pull()
-
-umclist <- c(
-    "Select a UMC",
-    ddumcs
-)
-
 ## Load functions
 source("ui_elements.R")
 source("start_page_plots.R")
