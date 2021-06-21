@@ -1,4 +1,8 @@
 ## Define the page layout
+iv_data <- read_csv(
+    "data/2021-06-18-data-iv.csv"
+    # This is the IntoValue 1-2 data set.
+)
 umc_page <- tabPanel(
     "One UMC", value = "tabUMC",
     wellPanel(
