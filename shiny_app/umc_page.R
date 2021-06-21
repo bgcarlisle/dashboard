@@ -1,6 +1,6 @@
 ## Define the page layout
 umc_page <- tabPanel(
-    "UMC data", value = "tabUMC",
+    "One UMC", value = "tabUMC",
     wellPanel(
         br(),
         fluidRow(

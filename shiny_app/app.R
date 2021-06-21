@@ -10,37 +10,6 @@ library(shinyjs)
 library(DT)
 
 ## Load data
-rm_data <- read_csv(
-    "data/2021-03-01_pp-dataset-oa-trn-sciscore-od-animals-permissions-greenoa.csv",
-    col_types="ccdddcccccdccccdlllllcddlccccccccccccccccccccddddddddddddddddddddddddlcclclccdccccDlclclllccccdcDlllc"
-    ## Need to specify column types here because read_csv
-    ## only looks at the first few rows to determine type
-    ## automatically, and if they're all empty, assumes
-    ## that they're logical. This is a problem when it
-    ## gets right to the end of the TRN columns and finds
-    ## an NCT number there and kicks back a warning.
-
-    ## NOTE: IF WE EVER ADD MORE COLUMNS, THE COLUMN TYPE
-    ## SPECIFICATION WILL NEED TO BE UPDATED MANUALLY
-)
-
-## WARNING
-## Okay not really a warning
-## But kinda
-## So this part here will filter out everything but Articles.
-## This is because all the plots here assume that we're talking
-## about articles only. Things might change if the base data
-## set contains Reviews or whatever. We filtered these out
-## before uploading the CSV, so if you don't do that extra step
-## next time, this will catch you, but if you remove the
-## following filter, you'll need to make sure that all your
-## plots still  make sense.
-rm_data <- rm_data %>%
-    filter(
-        type == "Article" |
-        type == "Article; Data Paper" |
-        type == "Article; Proceedings Paper"
-    )
 
 eutt_data <- read_csv(
     "data/2021-02-03-eutt-pop-umcs.csv"
@@ -116,6 +85,15 @@ server <- function (input, output, session) {
     ## Define button actions
 
     observeEvent(
+        input$buttonUMC, {
+            updateTabsetPanel(
+                session, "navbarTabs",
+                selected = "tabUMC"
+            )
+        }
+    )
+
+    observeEvent(
         input$buttonAllUMCs, {
             updateTabsetPanel(
                 session, "navbarTabs",
@@ -173,6 +151,11 @@ server <- function (input, output, session) {
                     hr(),
                     br(),
                     br(),
+                    actionButton(
+                        style = "color: white; background-color: #aa1c7d;",
+                        'buttonUMC',
+                        'See one UMC'
+                    ),
                     actionButton(
                         style = "color: white; background-color: #aa1c7d;",
                         'buttonAllUMCs',
@@ -568,7 +551,7 @@ server <- function (input, output, session) {
 
             ##
                 
-            closed_with_potential <- rm_data %>%
+            closed_with_potential <- iv_data %>%
                 filter(
                     color_green_only == "closed",
                     ! is.na(permission_postprint),
@@ -577,7 +560,7 @@ server <- function (input, output, session) {
                 ) %>%
                 nrow()
             
-            greenoa_only <- rm_data %>%
+            greenoa_only <- iv_data %>%
                 filter(
                     color_green_only == "green",
                     city == input$selectUMC
@@ -637,219 +620,6 @@ server <- function (input, output, session) {
         }
 
     })
-    ## Dynamically determine column width for displayed metrics
-    ## at program start; four columns if resolution large enough,
-    ## otherwise two columns.
-
-    ## output$robustness_metrics <- renderUI({
-
-    ##     req(input$width)
-    ##     req(input$selectUMC)
-
-    ##     if (input$width < 1400) {
-    ##         col_width <- 6
-    ##         alignment <- "left"
-    ##     } else {
-    ##         col_width <- 3
-    ##         alignment <- "right"
-    ##     }
-
-    ##     ## Value for randomization
-
-    ##     if (input$selectUMC == "All") {
-
-    ##         all_numer_rando <- rm_data %>%
-    ##             filter(
-    ##                 is_animal == 1,
-    ##                 language == "English",
-    ##                 ! is.na(sciscore),
-    ##                 type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
-    ##             ) %>%
-    ##             select(randomization) %>%
-    ##             sum(na.rm=TRUE)
-            
-    ##     } else {
-
-    ##         all_numer_rando <- rm_data %>%
-    ##             filter(city == input$selectUMC) %>%
-    ##             filter(
-    ##                 is_animal == 1,
-    ##                 language == "English",
-    ##                 ! is.na(sciscore),
-    ##                 type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
-    ##             ) %>%
-    ##             select(randomization) %>%
-    ##             sum(na.rm=TRUE)
-            
-    ##     }
-
-    ##     ## Value for Blinding
-
-    ##     if (input$selectUMC == "All") {
-
-    ##     all_numer_blinded <- rm_data %>%
-    ##         filter(
-    ##             is_animal == 1,
-    ##             language == "English",
-    ##             ! is.na(sciscore),
-    ##             type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
-    ##         ) %>%
-    ##         select(blinding) %>%
-    ##         sum(na.rm=TRUE)
-            
-    ##     } else {
-
-    ##     all_numer_blinded <- rm_data %>%
-    ##         filter(city == input$selectUMC) %>%
-    ##         filter(
-    ##             is_animal == 1,
-    ##             language == "English",
-    ##             ! is.na(sciscore),
-    ##             type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
-    ##         ) %>%
-    ##         select(blinding) %>%
-    ##         sum(na.rm=TRUE)
-            
-    ##     }
-
-    ##     ## Value for Power calc
-
-    ##     if (input$selectUMC == "All") {
-
-    ##         all_numer_power <- rm_data %>%
-    ##             filter(
-    ##                 is_animal == 1,
-    ##                 language == "English",
-    ##                 ! is.na(sciscore),
-    ##                 type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
-    ##             ) %>%
-    ##             select(power) %>%
-    ##             sum(na.rm=TRUE)
-            
-    ##     } else {
-
-    ##         all_numer_power <- rm_data %>%
-    ##             filter(city == input$selectUMC) %>%
-    ##             filter(
-    ##                 is_animal == 1,
-    ##                 language == "English",
-    ##                 ! is.na(sciscore),
-    ##                 type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
-    ##             ) %>%
-    ##             select(power) %>%
-    ##             sum(na.rm=TRUE)
-            
-    ##     }
-
-    ##     ## all_numer_iacuc <- rm_data %>%
-    ##     ##     filter(
-    ##     ##         is_animal == 1,
-    ##     ##         ! is.na(sciscore),
-    ##     ##         type == "Article"
-    ##     ##     ) %>%
-    ##     ##     select(iacuc) %>%
-    ##     ##     sum(na.rm=TRUE)
-
-    ##     if (input$selectUMC == "All") {
-
-    ##         all_denom_animal_sciscore <- rm_data %>%
-    ##             filter(
-    ##                 is_animal == 1,
-    ##                 language == "English",
-    ##                 ! is.na(sciscore),
-    ##                 type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
-    ##             ) %>%
-    ##             nrow()
-            
-    ##     } else {
-
-    ##         all_denom_animal_sciscore <- rm_data %>%
-    ##             filter(city == input$selectUMC) %>%
-    ##             filter(
-    ##                 is_animal == 1,
-    ##                 language == "English",
-    ##                 ! is.na(sciscore),
-    ##                 type == "Article" | type == "Article; Data Paper" | type == "Article; Proceedings Paper"
-    ##             ) %>%
-    ##             nrow()
-            
-    ##     }
-
-    ##     all_percent_randomized <- paste0(round(100*all_numer_rando/all_denom_animal_sciscore), "%")
-    ##     all_percent_blinded <- paste0(round(100*all_numer_blinded/all_denom_animal_sciscore), "%")
-    ##     all_percent_power <- paste0(round(100*all_numer_power/all_denom_animal_sciscore), "%")
-    ##     ## all_percent_iacuc <- paste0(round(100*all_numer_iacuc/all_denom_animal_sciscore), "%")
-
-    ##     wellPanel(
-    ##         style = "padding-top: 0px; padding-bottom: 0px;",
-    ##         h2(strong("Robustness of Animal Studies"), align = "left"),
-    ##         checkboxInput(
-    ##             "animals_absnum",
-    ##             strong("Show absolute numbers"),
-    ##             value = FALSE
-    ##         ),
-    ##         fluidRow(
-    ##             column(
-    ##                 col_width,
-    ##                 metric_box(
-    ##                     title = "Randomization",
-    ##                     value = all_percent_randomized,
-    ##                     value_text = "of analyzable 2018 animal studies report on randomization",
-    ##                     plot = plotlyOutput('plot_randomization', height="300px"),
-    ##                     info_id = "infoRandomization",
-    ##                     info_title = "Randomization",
-    ##                     info_text = randomization_tooltip,
-    ##                     lim_id = "limRandomization",
-    ##                     lim_title = "Limitations: Randomization",
-    ##                     lim_text = lim_randomization_tooltip
-    ##                 )
-    ##             ),
-    ##             column(
-    ##                 col_width,
-    ##                 metric_box(
-    ##                     title = "Blinding",
-    ##                     value = all_percent_blinded,
-    ##                     value_text = "of analyzable 2018 animal studies report on blinding",
-    ##                     plot = plotlyOutput('plot_blinding', height="300px"),
-    ##                     info_id = "infoBlinding",
-    ##                     info_title = "Blinding",
-    ##                     info_text = blinding_tooltip,
-    ##                     lim_id = "limBlinding",
-    ##                     lim_title = "Limitations: Blinding",
-    ##                     lim_text = lim_blinding_tooltip
-    ##                 )
-    ##             ),
-    ##             column(
-    ##                 col_width,
-    ##                 metric_box(
-    ##                     title = "Power calculation",
-    ##                     value = all_percent_power,
-    ##                     value_text = "of analyzable 2018 animal studies report on power calculation",
-    ##                     plot = plotlyOutput('plot_power', height="300px"),
-    ##                     info_id = "infoPower",
-    ##                     info_title = "Power",
-    ##                     info_text = power_tooltip,
-    ##                     lim_id = "limPower",
-    ##                     lim_title = "Limitations: Power",
-    ##                     lim_text = lim_power_tooltip
-    ##                 )
-    ##             )##,
-    ##             ## column(
-    ##             ##     col_width,
-    ##             ##     metric_box(
-    ##             ##         title = "IACUC statement",
-    ##             ##         value = all_percent_iacuc,
-    ##             ##         value_text = "of animal studies report an IACUC statement",
-    ##             ##         plot = plotlyOutput('plot_iacuc', height="300px"),
-    ##             ##         info_id = "infoIACUC",
-    ##             ##         info_title = "IACUC",
-    ##             ##         info_text = iacuc_tooltip
-    ##             ##     )
-    ##             ## )
-    ##         )
-    ##     )        
-        
-    ## })
 
     output$registry_metrics <- renderUI({
 
@@ -964,19 +734,6 @@ server <- function (input, output, session) {
             col_width <- 3
             alignment <- "right"
         }
-
-        ## Value for TRN
-
-        all_numer_trn <- rm_data %>%
-            filter(
-                is_human_ct == 1,
-                ! is.na(abs_trn_1)
-            ) %>%
-            nrow()
-        
-        all_denom_trn <- rm_data %>%
-            filter(is_human_ct == 1) %>%
-            nrow()
         
         ## Value for summary results
         
@@ -1152,21 +909,21 @@ server <- function (input, output, session) {
 
         ## Value for Open Access
             
-        all_numer_oa <- rm_data %>%
+        all_numer_oa <- iv_data %>%
             filter(
                 color == "gold" | color == "green" | color == "hybrid"
                 
             ) %>%
             nrow()
 
-        all_denom_oa <- rm_data %>%
+        all_denom_oa <- iv_data %>%
             filter(
                 ! is.na(color)
                 
             ) %>%
             nrow()
           
-        closed_with_potential <- rm_data %>%
+        closed_with_potential <- iv_data %>%
             filter(
                 color_green_only == "closed",
                 ! is.na(permission_postprint),
@@ -1174,7 +931,7 @@ server <- function (input, output, session) {
             ) %>%
             nrow()
         
-        greenoa_only <- rm_data %>%
+        greenoa_only <- iv_data %>%
             filter(
                 color_green_only == "green",
                 ) %>%
@@ -1233,51 +990,19 @@ server <- function (input, output, session) {
 
         ## Value for All UMC Open Access
         
-        all_numer_oa <- rm_data %>%
+        all_numer_oa <- iv_data %>%
             filter(
                 color == "gold" | color == "green" | color == "hybrid"
             ) %>%
             nrow()
 
-        all_denom_oa <- rm_data %>%
+        all_denom_oa <- iv_data %>%
             filter(
                 ! is.na(color)
                 
             ) %>%
             nrow()
         
-        ## Value for All UMC Open Data
-
-        ## all_denom_od <- rm_data %>%
-        ##     filter(
-        ##         ! is.na (is_open_data),
-        ##         language == "English"
-        ##     ) %>%
-        ##     nrow()
-
-        ## all_numer_od <- rm_data %>%
-        ##     filter(
-        ##         is_open_data,
-        ##         language == "English"
-        ##     ) %>%
-        ##     nrow()
-        
-        ## Value for All UMC Open Code
- 
-        ## all_denom_oc <- rm_data %>%
-        ##     filter(
-        ##         ! is.na (is_open_code),
-        ##         language == "English"
-        ##     ) %>%
-        ##     nrow()
-
-        ## all_numer_oc <- rm_data %>%
-        ##     filter(
-        ##         is_open_code,
-        ##         language == "English"
-        ##     ) %>%
-        ##     nrow()
-
         wellPanel(
             style="padding-top: 0px; padding-bottom: 0px;",
             h2(strong("Open Access"), align = "left"),
@@ -1297,41 +1022,7 @@ server <- function (input, output, session) {
                         lim_text = lim_allumc_openaccess_tooltip
                     )
                 )
-            ),
-            ## fluidRow(
-            ##     column(
-            ##         12,
-            ##         metric_box(
-            ##             title = "Any Open Data",
-            ##             value = paste0(round(100*all_numer_od/all_denom_od), "%"),
-            ##             value_text = "of 2018 analyzable publications mentioned sharing of data",
-            ##             plot = plotlyOutput('plot_allumc_opendata', height="300px"),
-            ##             info_id = "infoALLUMCOpenData",
-            ##             info_title = "Any Open Data (All UMCs)",
-            ##             info_text = allumc_opendata_tooltip,
-            ##             lim_id = "limALLUMCOpenData",
-            ##             lim_title = "Limitations: Any Open Data (All UMCs)",
-            ##             lim_text = lim_allumc_opendata_tooltip
-            ##         )
-            ##     )
-            ## ),
-            ## fluidRow(
-            ##     column(
-            ##         12,
-            ##         metric_box(
-            ##             title = "Any Open Code",
-            ##             value = paste0(round(100*all_numer_oc/all_denom_oc), "%"),
-            ##             value_text = "of 2018 analyzable publications mentioned sharing of code",
-            ##             plot = plotlyOutput('plot_allumc_opencode', height="300px"),
-            ##             info_id = "infoALLUMCOpenCode",
-            ##             info_title = "Any Open Code (All UMCs)",
-            ##             info_text = allumc_opencode_tooltip,
-            ##             lim_id = "limALLUMCOpenCode",
-            ##             lim_title = "Limitations: Any Open Code (All UMCs)",
-            ##             lim_text = lim_allumc_opencode_tooltip
-            ##         )
-            ##     )
-            ## )
+            )
             
         )
     })
@@ -1339,18 +1030,13 @@ server <- function (input, output, session) {
     output$allumc_clinicaltrials <- renderUI({
 
         ## Value for All UMC TRN
-        
-        all_numer_trn <- rm_data %>%
-            filter(
-                is_human_ct == 1,
-                ! is.na(abs_trn_1)
-            ) %>%
-            nrow()
-        
-        all_denom_trn <- rm_data %>%
-            filter(is_human_ct == 1) %>%
-            nrow()
 
+        all_numer_trn <- sum(iv_data$has_iv_trn_abstract, na.rm=TRUE)
+        
+        all_denom_trn <- iv_data %>%
+            filter(! is.na(has_iv_trn_abstract)) %>%
+            nrow()
+        
         ## Value for All UMC summary results reporting
            
         all_numer_sumres <- eutt_data %>%
@@ -1480,7 +1166,7 @@ server <- function (input, output, session) {
     
     ## Green Open Access plot
     output$plot_opensci_green_oa <- renderPlotly({
-        return (plot_opensci_green_oa(rm_data, input$opensci_absnum, color_palette_delwen))
+        return (plot_opensci_green_oa(iv_data, input$opensci_absnum, color_palette_delwen))
     })
     
     ## TRN plot
@@ -1512,12 +1198,12 @@ server <- function (input, output, session) {
 
     ## Open Access plot
     output$umc_plot_opensci_oa <- renderPlotly({
-        return (umc_plot_opensci_oa(rm_data, input$selectUMC, input$umc_opensci_absnum, color_palette_delwen))
+        return (umc_plot_opensci_oa(iv_data, input$selectUMC, input$umc_opensci_absnum, color_palette_delwen))
     })
     
     ## Green Open Access plot
     output$umc_plot_opensci_green_oa <- renderPlotly({
-        return (umc_plot_opensci_green_oa(rm_data, input$selectUMC, input$umc_opensci_absnum, color_palette_delwen))
+        return (umc_plot_opensci_green_oa(iv_data, input$selectUMC, input$umc_opensci_absnum, color_palette_delwen))
     })
     
     ## TRN plot
@@ -1552,7 +1238,7 @@ server <- function (input, output, session) {
     ## Open Access
 
     output$plot_allumc_openaccess <- renderPlotly({
-        return(plot_allumc_openaccess(rm_data, color_palette))
+        return(plot_allumc_openaccess(iv_data, color_palette))
     })
 
     ## Clinical Trials
@@ -1560,7 +1246,7 @@ server <- function (input, output, session) {
     ## TRN
 
     output$plot_allumc_clinicaltrials_trn <- renderPlotly({
-        return(plot_allumc_clinicaltrials_trn(rm_data, color_palette))
+        return(plot_allumc_clinicaltrials_trn(iv_data, color_palette))
     })
 
     ## Summary results

@@ -224,9 +224,6 @@ plot_allumc_opencode <- function (dataset, color_palette, color_palette_bars) {
 
 plot_allumc_clinicaltrials_trn <- function (dataset, color_palette) {
 
-    dataset <- dataset %>%
-        filter( is_human_ct == 1 )
-
     plot_data <- tribble (
         ~x_label, ~colour, ~percentage
     )
@@ -234,36 +231,40 @@ plot_allumc_clinicaltrials_trn <- function (dataset, color_palette) {
     for (umc in unique(dataset$city)) {
 
         umc_numer_abs <- dataset %>%
-            filter(
-                ! is.na(abs_trn_1),
-                city == umc
-            ) %>%
+            filter(city == umc) %>%
+            select(has_iv_trn_abstract) %>%
+            filter(has_iv_trn_abstract == TRUE) %>%
             nrow()
 
-        umc_numer_si <- dataset %>%
-            filter(
-                ! is.na(si_trn_1),
-                city == umc
-            ) %>%
+        umc_numer_ft <- dataset %>%
+            filter(city == umc) %>%
+            select(has_iv_trn_ft_pdf) %>%
+            filter(has_iv_trn_ft_pdf == TRUE) %>%
             nrow()
 
         umc_numer_either <- dataset %>%
             filter(
                 city == umc,
-                ! is.na(abs_trn_1) | ! is.na(si_trn_1)
+                has_iv_trn_abstract == TRUE | has_iv_trn_ft_pdf == TRUE
             ) %>%
             nrow()
 
-        umc_denom <- dataset %>%
+        umc_ft_denom <- dataset %>%
             filter(city == umc) %>%
+            filter(! is.na(has_iv_trn_ft_pdf)) %>%
             nrow()
-
+        
+        umc_abs_denom <- dataset %>%
+            filter(city == umc) %>%
+            filter(! is.na(has_iv_trn_abstract)) %>%
+            nrow()
+        
         plot_data <- plot_data %>%
             bind_rows(
                 tribble(
                     ~x_label, ~colour, ~percentage, ~either,
-                    umc, "In abstract", round(100*umc_numer_abs/umc_denom), 100-round(100*umc_numer_either/umc_denom),
-                    umc, "Secondary information", round(100*umc_numer_si/umc_denom), 100-round(100*umc_numer_either/umc_denom)
+                    umc, "In abstract", round(100*umc_numer_abs/umc_abs_denom), 100-round(100*umc_numer_either/umc_abs_denom),
+                    umc, "In full-text", round(100*umc_numer_ft/umc_ft_denom), 100-round(100*umc_numer_either/umc_ft_denom)
                 )
             )
     }
