@@ -30,12 +30,13 @@ iv_data <- read_csv(
 
 ## Generates the UMC list for the drop-down menu
 ddumcs <- iv_data %>%
-    select(city) %>%
-    arrange(city)
+    arrange(city) %>%
+    distinct(city) %>%
+    pull()
 
 umclist <- c(
     "Select a UMC",
-    ddumcs$city %>% unique()
+    ddumcs
 )
 
 ## Load functions
