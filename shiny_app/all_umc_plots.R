@@ -51,6 +51,11 @@ plot_allumc_openaccess <- function (dataset, color_palette) {
     
     }
 
+    plot_data$x_label <- factor(
+        plot_data$x_label,
+        levels = unique(plot_data$x_label)[order(plot_data$percentage, decreasing=TRUE)]
+    )
+
     plot_ly(
         plot_data,
         x = ~reorder(x_label, sum),
@@ -84,6 +89,79 @@ plot_allumc_openaccess <- function (dataset, color_palette) {
     
 }
 
+## Green OA
+
+plot_allumc_greenoa <- function (dataset, color_palette, color_palette_bars) {
+
+    dataset <- dataset %>%
+        filter( ! is.na (color) )
+
+    plot_data <- tribble(
+        ~x_label, ~percentage
+    )
+
+    for (umc in unique(dataset$city)) {
+
+        umc_closed_with_potential <- dataset %>%
+            filter(
+                city == umc,
+                color_green_only == "closed",
+                ! is.na(permission_postprint),
+                permission_postprint == TRUE
+            ) %>%
+            nrow()
+
+        umc_numer <- dataset %>%
+            filter(
+                city == umc,
+                color_green_only == "green"
+            ) %>%
+            nrow()
+
+        umc_denom <- umc_numer + umc_closed_with_potential
+
+        plot_data <- plot_data %>%
+            bind_rows(
+                tribble(
+                    ~x_label, ~percentage,
+                    umc, round(100*umc_numer/umc_denom)
+                )
+            )
+    }
+
+    
+
+    plot_data$x_label <- factor(
+        plot_data$x_label,
+        levels = unique(plot_data$x_label)[order(plot_data$percentage, decreasing=TRUE)]
+    )
+
+    plot_ly(
+        plot_data,
+        x = ~x_label,
+        y = ~percentage,
+        type = 'bar',
+        marker = list(
+            color = color_palette_bars,
+            line = list(
+                color = 'rgb(0,0,0)',
+                width = 1.5
+            )
+        )
+    ) %>%
+        layout(
+            xaxis = list(
+                title = '<b>UMC</b>'
+            ),
+            yaxis = list(
+                title = '<b>Potential Green OA (%)</b>',
+                range = c(0, 100)
+            ),
+            paper_bgcolor = color_palette[9],
+            plot_bgcolor = color_palette[9]
+        )
+    
+}
 
 ## Open Data
 
@@ -120,11 +198,6 @@ plot_allumc_opendata <- function (dataset, color_palette, color_palette_bars) {
                 )
             )
     }
-
-    plot_data$x_label <- factor(
-        plot_data$x_label,
-        levels = unique(plot_data$x_label)[order(plot_data$percentage, decreasing=TRUE)]
-    )
 
     plot_ly(
         plot_data,

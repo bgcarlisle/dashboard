@@ -1032,6 +1032,26 @@ server <- function (input, output, session) {
                 
             ) %>%
             nrow()
+
+        ## Value for Green OA
+
+        closed_with_potential <- iv_data %>%
+                filter(
+                    color_green_only == "closed",
+                    ! is.na(permission_postprint),
+                    permission_postprint == TRUE
+                ) %>%
+                nrow()
+            
+        greenoa_only <- iv_data %>%
+            filter(
+                color_green_only == "green"
+            ) %>%
+            nrow()
+        
+        denom_greenoa <- closed_with_potential + greenoa_only
+        
+        numer_greenoa <- greenoa_only
         
         wellPanel(
             style="padding-top: 0px; padding-bottom: 0px;",
@@ -1052,6 +1072,23 @@ server <- function (input, output, session) {
                         lim_text = lim_allumc_openaccess_tooltip
                     )
                 )
+            ),
+            fluidRow(
+                column(
+                    12,
+                    metric_box(
+                        title = "Potential Green OA",
+                        value = paste0(round(100*numer_greenoa/denom_greenoa), "%"),
+                        value_text = "of paywalled publications with the potential for green OA have been made available via this route",
+                        plot = plotlyOutput('plot_allumc_greenoa', height="300px"),
+                        info_id = "infoALLUMCGreenOA",
+                        info_title = "Green OA (All UMCs)",
+                        info_text = allumc_greenoa_tooltip,
+                        lim_id = "limALLUMCGreenOA",
+                        lim_title = "Limitations: Green OA (All UMCs)",
+                        lim_text = lim_allumc_greenoa_tooltip
+                    )
+                )
             )
             
         )
@@ -1062,8 +1099,6 @@ server <- function (input, output, session) {
         iv_data_unique <- iv_data %>%
             distinct(id, .keep_all = TRUE)
 
-        
-
         ## Value for prereg
 
         all_numer_prereg <- iv_data_unique %>%
@@ -1073,7 +1108,6 @@ server <- function (input, output, session) {
         all_denom_prereg <- iv_data_unique %>%
             nrow()
 
-        
         ## Value for All UMC TRN
 
         all_numer_trn <- sum(iv_data$has_iv_trn_abstract, na.rm=TRUE)
@@ -1081,7 +1115,6 @@ server <- function (input, output, session) {
         all_denom_trn <- iv_data %>%
             filter(! is.na(has_iv_trn_abstract)) %>%
             nrow()
-        
 
         wellPanel(
             style="padding-top: 0px; padding-bottom: 0px;",
@@ -1300,6 +1333,12 @@ server <- function (input, output, session) {
         return(plot_allumc_openaccess(iv_data, color_palette))
     })
 
+    ## Green OA
+
+    output$plot_allumc_greenoa <- renderPlotly({
+        return(plot_allumc_greenoa(iv_data, color_palette, color_palette_bars))
+    })
+    
     ## Clinical Trials
 
     ## TRN

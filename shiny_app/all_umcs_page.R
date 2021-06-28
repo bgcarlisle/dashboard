@@ -5,6 +5,8 @@ allumc_openaccess_tooltip <- strwrap("The Open Access metric shows the percentag
                              model as well as an Open Access option. For some articles no Open Access
                              information was available.")
 
+allumc_greenoa_tooltip <- strwrap("")
+
 allumc_opendata_tooltip <- strwrap("The Open Data metric measures the percentage of publications in English and for
                             which the full text could be screened that mention sharing of data.
                             Openly shared data makes research more transparent, as research findings can be
