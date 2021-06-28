@@ -669,7 +669,12 @@ server <- function (input, output, session) {
         all_denom_trn <- iv_data %>%
             filter(! is.na(has_iv_trn_abstract)) %>%
             nrow()
-        
+
+        ## Value for linkage
+
+        linkage <- paste0(round(100*mean(iv_data$has_reg_pub_link, na.rm=TRUE)), "%")
+        linkagetext <- "of clinical trial registry entries link to the journal publication"
+
         wellPanel(
             style="padding-top: 0px; padding-bottom: 0px;",
             h2(strong("Trial Registration"), align = "left"),
@@ -703,10 +708,26 @@ server <- function (input, output, session) {
                         lim_title = "Limitations: Reporting of Trial Registration Number in publications",
                         lim_text = lim_trn_tooltip
                     )
+                ),
+                
+                column(
+                    col_width,
+                    metric_box(
+                        title = "Publication link in registry",
+                        value = linkage,
+                        value_text = linkagetext,
+                        plot = plotlyOutput('plot_linkage', height="300px"),
+                        info_id = "infoLinkage",
+                        info_title = "Publication link in registry",
+                        info_text = linkage_tooltip,
+                        lim_id = "limLinkage",
+                        lim_title = "Limitations: Publication link in registry",
+                        lim_text = lim_linkage_tooltip
+                    )
                 )
                 
             )
-
+            
         )
 
         
@@ -1162,6 +1183,10 @@ server <- function (input, output, session) {
     ## TRN plot
     output$plot_clinicaltrials_trn <- renderPlotly({
         return (plot_clinicaltrials_trn(iv_data, color_palette))
+    })
+
+    output$plot_linkage <- renderPlotly({
+        return (plot_linkage(iv_data, color_palette))
     })
     
     ## Summary results plot

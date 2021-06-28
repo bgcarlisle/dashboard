@@ -54,7 +54,7 @@ iv <- iv %>%
     filter( ! is.na(city) ) %>%
     filter(has_german_umc_lead) %>%
     filter(! is_dupe) %>%
-    select(id, city, completion_date, preregistered, published_2a, published_5a, has_iv_trn_abstract, has_iv_trn_ft_pdf, color, color_green_only, permission_postprint)
+    select(id, city, completion_date, preregistered, published_2a, published_5a, has_iv_trn_abstract, has_iv_trn_ft_pdf, color, color_green_only, permission_postprint, has_reg_pub_link)
 
 iv %>%
     write_csv("2021-06-18-data-iv.csv")

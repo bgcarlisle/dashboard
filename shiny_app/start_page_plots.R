@@ -1454,6 +1454,44 @@ plot_clinicaltrials_prereg <- function (dataset, color_palette) {
     
 }
 
+## Linkage
+plot_linkage <- function (dataset, color_palette) {
+
+    plot_data <- tribble(
+        ~x_label, ~percentage,
+        "All", round(100*mean(dataset$has_reg_pub_link, na.rm=TRUE))
+    )
+
+    upperlimit <- 100
+    ylabel <- "Percentage of publications"
+
+    plot_ly(
+        plot_data,
+        x = ~x_label,
+        y = ~percentage,
+        type = 'bar',
+        marker = list(
+            color = color_palette[3],
+            line = list(
+                color = 'rgb(0,0,0)',
+                width = 1.5
+            )
+        )
+    ) %>%
+        layout(
+            xaxis = list(
+                title = '<b>UMC</b>'
+            ),
+            yaxis = list(
+                title = paste('<b>', ylabel, '</b>'),
+                range = c(0, upperlimit)
+            ),
+            paper_bgcolor = color_palette[9],
+            plot_bgcolor = color_palette[9]
+        )
+    
+}
+
 # Timely publication within 5 years
 plot_clinicaltrials_timpub_5a <- function (dataset, color_palette) {
 

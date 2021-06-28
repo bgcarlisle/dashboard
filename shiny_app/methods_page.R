@@ -352,6 +352,10 @@ trn_tooltip <- strwrap("This metric measures how many clinical trials report a t
 
 paste(collapse = " ")
 
+linkage_tooltip <- strwrap("")
+
+lim_linkage_tooltip <- strwrap("")
+
 sumres_tooltip <- strwrap("This metric measures how many clinical trials registered in the
                         EU Clinical Trials Register that are due to report their results have already
                         done so. A trial is due to report its results 12 month after trial completion.
