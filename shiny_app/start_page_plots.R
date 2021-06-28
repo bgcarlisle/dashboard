@@ -1463,7 +1463,7 @@ plot_linkage <- function (dataset, color_palette) {
     )
 
     upperlimit <- 100
-    ylabel <- "Percentage of publications"
+    ylabel <- "Percentage of publications (%)"
 
     plot_ly(
         plot_data,

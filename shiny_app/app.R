@@ -245,6 +245,11 @@ server <- function (input, output, session) {
                 filter(! is.na(has_iv_trn_abstract)) %>%
                 nrow()
 
+            ## Value for linkage
+
+            umcdata <- iv_data %>%
+                filter(city == input$selectUMC)
+
             wellPanel(
                 style="padding-top: 0px; padding-bottom: 0px;",
                 h2(strong("Trial Registration"), align = "left"),
@@ -277,6 +282,21 @@ server <- function (input, output, session) {
                             lim_id = "limTRN",
                             lim_title = "Limitations: Reporting of Trial Registration Number in publications",
                             lim_text = lim_trn_tooltip
+                        )
+                    ),
+                    column(
+                        col_width,
+                        metric_box(
+                            title = "Publication link in registry",
+                            value = paste0(round(100*mean(umcdata$has_reg_pub_link, na.rm=TRUE)), "%"),
+                            value_text = "of clinical trial registry entries link to the journal publication",
+                            plot = plotlyOutput('umc_plot_linkage', height="300px"),
+                            info_id = "infoLinkage",
+                            info_title = "Publication link in registry",
+                            info_text = linkage_tooltip,
+                            lim_id = "limLinkage",
+                            lim_title = "Limitations: Publication link in registry",
+                            lim_text = lim_linkage_tooltip
                         )
                     )
                     
@@ -673,7 +693,6 @@ server <- function (input, output, session) {
         ## Value for linkage
 
         linkage <- paste0(round(100*mean(iv_data$has_reg_pub_link, na.rm=TRUE)), "%")
-        linkagetext <- "of clinical trial registry entries link to the journal publication"
 
         wellPanel(
             style="padding-top: 0px; padding-bottom: 0px;",
@@ -715,7 +734,7 @@ server <- function (input, output, session) {
                     metric_box(
                         title = "Publication link in registry",
                         value = linkage,
-                        value_text = linkagetext,
+                        value_text = "of clinical trial registry entries link to the journal publication",
                         plot = plotlyOutput('plot_linkage', height="300px"),
                         info_id = "infoLinkage",
                         info_title = "Publication link in registry",
@@ -1185,6 +1204,7 @@ server <- function (input, output, session) {
         return (plot_clinicaltrials_trn(iv_data, color_palette))
     })
 
+    ## Linkage plot
     output$plot_linkage <- renderPlotly({
         return (plot_linkage(iv_data, color_palette))
     })
@@ -1224,6 +1244,11 @@ server <- function (input, output, session) {
     ## TRN plot
     output$umc_plot_clinicaltrials_trn <- renderPlotly({
         return (umc_plot_clinicaltrials_trn(iv_data, input$selectUMC, color_palette))
+    })
+
+    ## Linkage plot
+    output$umc_plot_linkage <- renderPlotly({
+        return (umc_plot_linkage(iv_data, input$selectUMC, color_palette))
     })
     
     ## Summary results plot

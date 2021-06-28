@@ -1483,6 +1483,48 @@ umc_plot_clinicaltrials_prereg <- function (dataset, umc, color_palette) {
     
 }
 
+# Linkage
+
+umc_plot_linkage <- function (dataset, umc, color_palette) {
+
+    umcdata <- dataset %>%
+        filter (city == umc)
+    
+    plot_data <- tribble(
+        ~x_label, ~percentage,
+        umc, round(100*mean(umcdata$has_reg_pub_link, na.rm = TRUE)),
+        "All", round(100*mean(dataset$has_reg_pub_link, na.rm = TRUE))
+    )
+
+    upperlimit <- 100
+    ylabel <- "Percentage of publications (%)"
+
+     plot_ly(
+        plot_data,
+        x = ~x_label,
+        y = ~percentage,
+        type = 'bar',
+        marker = list(
+            color = color_palette[3],
+            line = list(
+                color = 'rgb(0,0,0)',
+                width = 1.5
+            )
+        )
+    ) %>%
+        layout(
+            xaxis = list(
+                title = '<b>UMC</b>'
+            ),
+            yaxis = list(
+                title = paste('<b>', ylabel, '</b>'),
+                range = c(0, upperlimit)
+            ),
+            paper_bgcolor = color_palette[9],
+            plot_bgcolor = color_palette[9]
+        )
+    
+}
 # Timely publication within 5 years
 umc_plot_clinicaltrials_timpub_5a <- function (dataset, umc, color_palette) {
 
