@@ -612,7 +612,7 @@ server <- function (input, output, session) {
                         metric_box(
                             title = "Potential Green OA",
                             value = paste0(round(100*numer_greenoa/denom_greenoa), "%"),
-                            value_text = "of publications otherwise behind a paywall are openly accessible via green OA",
+                            value_text = "of paywalled publications with the potential for green OA have been made available via this route",
                             plot = plotlyOutput('umc_plot_opensci_green_oa', height="300px"),
                             info_id = "infoGreenOA",
                             info_title = "Potential Green Open Access",
@@ -1000,7 +1000,7 @@ server <- function (input, output, session) {
                     metric_box(
                         title = "Potential Green OA",
                         value = paste0(round(100*numer_greenoa/denom_greenoa), "%"),
-                        value_text = "of publications otherwise behind a paywall are openly accessible via green OA",
+                        value_text = "of paywalled publications with the potential for green OA have been made available via this route",
                         plot = plotlyOutput('plot_opensci_green_oa', height="300px"),
                         info_id = "infoGreenOA",
                         info_title = "Potential Green Open Access",
