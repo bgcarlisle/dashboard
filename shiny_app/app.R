@@ -1057,34 +1057,14 @@ server <- function (input, output, session) {
         )
     })
 
-    output$allumc_clinicaltrials <- renderUI({
-
-        ## Value for All UMC TRN
-
-        all_numer_trn <- sum(iv_data$has_iv_trn_abstract, na.rm=TRUE)
-        
-        all_denom_trn <- iv_data %>%
-            filter(! is.na(has_iv_trn_abstract)) %>%
-            nrow()
-        
-        ## Value for All UMC summary results reporting
-           
-        all_numer_sumres <- eutt_data %>%
-            filter (
-                due_or_not == "Due",
-                status == "Reported results" |
-                status == "Reported results Terminated"
-            ) %>%
-            nrow()
-
-        all_denom_sumres <- eutt_data %>%
-            filter(due_or_not == "Due") %>%
-            nrow()
-
-        ## Value for prereg
+    output$allumc_registration <- renderUI({
 
         iv_data_unique <- iv_data %>%
             distinct(id, .keep_all = TRUE)
+
+        
+
+        ## Value for prereg
 
         all_numer_prereg <- iv_data_unique %>%
             filter(preregistered) %>%
@@ -1093,52 +1073,19 @@ server <- function (input, output, session) {
         all_denom_prereg <- iv_data_unique %>%
             nrow()
 
-        ## Value for timely pub
+        
+        ## Value for All UMC TRN
 
-        all_numer_timpub <- iv_data_unique %>%
-            filter(published_2a) %>%
+        all_numer_trn <- sum(iv_data$has_iv_trn_abstract, na.rm=TRUE)
+        
+        all_denom_trn <- iv_data %>%
+            filter(! is.na(has_iv_trn_abstract)) %>%
             nrow()
-
-        all_denom_timpub <- iv_data_unique %>%
-            nrow()
+        
 
         wellPanel(
             style="padding-top: 0px; padding-bottom: 0px;",
-            h2(strong("Clinical Trials"), align = "left"),
-            fluidRow(
-                column(
-                    12,
-                    metric_box(
-                        title = "Reporting a Trial Registration Number in publications",
-                        value = paste0(round(100*all_numer_trn/all_denom_trn), "%"),
-                        value_text = "of clinical trials reported a trial registration number in the abstract",
-                        plot = plotlyOutput('plot_allumc_clinicaltrials_trn', height="300px"),
-                        info_id = "infoALLUMCTRN",
-                        info_title = "TRN reporting (All UMCs)",
-                        info_text = allumc_clinicaltrials_trn_tooltip,
-                        lim_id = "limALLUMCTRN",
-                        lim_title = "Limitations: TRN reporting (All UMCs)",
-                        lim_text = lim_allumc_clinicaltrials_trn_tooltip
-                    )
-                )
-            ),
-            fluidRow(
-                column(
-                    12,
-                    metric_box(
-                        title = "Summary Results Reporting in EUCTR",
-                        value = paste0(round(100*all_numer_sumres/all_denom_sumres), "%"),
-                        value_text = "of due clinical trials registered in EUCTR reported summary results",
-                        plot = plotlyOutput('plot_allumc_clinicaltrials_sumres', height="300px"),
-                        info_id = "infoALLUMCSumRes",
-                        info_title = "Summary results reporting in EUCTR (All UMCs)",
-                        info_text = allumc_clinicaltrials_sumres_tooltip,
-                        lim_id = "limALLUMCSumRes",
-                        lim_title = "Limitations: Summary results reporting in EUCTR (All UMCs)",
-                        lim_text = lim_allumc_clinicaltrials_sumres_tooltip
-                    )
-                )
-            ),
+            h2(strong("Trial registration"), align = "left"),
             fluidRow(
                 column(
                     12,
@@ -1156,6 +1103,78 @@ server <- function (input, output, session) {
                     )
                 )
             ),
+            fluidRow(
+                column(
+                    12,
+                    metric_box(
+                        title = "Reporting a Trial Registration Number in publications",
+                        value = paste0(round(100*all_numer_trn/all_denom_trn), "%"),
+                        value_text = "of clinical trials reported a trial registration number in the abstract",
+                        plot = plotlyOutput('plot_allumc_clinicaltrials_trn', height="300px"),
+                        info_id = "infoALLUMCTRN",
+                        info_title = "TRN reporting (All UMCs)",
+                        info_text = allumc_clinicaltrials_trn_tooltip,
+                        lim_id = "limALLUMCTRN",
+                        lim_title = "Limitations: TRN reporting (All UMCs)",
+                        lim_text = lim_allumc_clinicaltrials_trn_tooltip
+                    )
+                )
+            )
+        )
+        
+    })
+
+    output$allumc_reporting <- renderUI({
+
+        
+        iv_data_unique <- iv_data %>%
+            distinct(id, .keep_all = TRUE)
+
+        ## Value for All UMC summary results reporting
+           
+        all_numer_sumres <- eutt_data %>%
+            filter (
+                due_or_not == "Due",
+                status == "Reported results" |
+                status == "Reported results Terminated"
+            ) %>%
+            nrow()
+
+        all_denom_sumres <- eutt_data %>%
+            filter(due_or_not == "Due") %>%
+            nrow()
+
+        ## Value for timely pub
+
+        all_numer_timpub <- iv_data_unique %>%
+            filter(published_2a) %>%
+            nrow()
+
+        all_denom_timpub <- iv_data_unique %>%
+            nrow()
+
+        wellPanel(
+            style="padding-top: 0px; padding-bottom: 0px;",
+            h2(strong("Trial reporting"), align = "left"),
+            
+            fluidRow(
+                column(
+                    12,
+                    metric_box(
+                        title = "Summary Results Reporting in EUCTR",
+                        value = paste0(round(100*all_numer_sumres/all_denom_sumres), "%"),
+                        value_text = "of due clinical trials registered in EUCTR reported summary results",
+                        plot = plotlyOutput('plot_allumc_clinicaltrials_sumres', height="300px"),
+                        info_id = "infoALLUMCSumRes",
+                        info_title = "Summary results reporting in EUCTR (All UMCs)",
+                        info_text = allumc_clinicaltrials_sumres_tooltip,
+                        lim_id = "limALLUMCSumRes",
+                        lim_title = "Limitations: Summary results reporting in EUCTR (All UMCs)",
+                        lim_text = lim_allumc_clinicaltrials_sumres_tooltip
+                    )
+                )
+            ),
+            
             fluidRow(
                 column(
                     12,
