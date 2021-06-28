@@ -70,12 +70,13 @@ plot_allumc_openaccess <- function (dataset, color_palette) {
         )
     ) %>%
         layout(
+            barmode = 'stack',
             xaxis = list(
                 title = '<b>UMC</b>'
             ),
             yaxis = list(
                 title = '<b>Percentage of publications</b>',
-                range = c(0, ceiling(max(plot_data$percentage)/5)*5)
+                range = c(0, 100)
             ),
             paper_bgcolor = color_palette[9],
             plot_bgcolor = color_palette[9]
