@@ -1493,7 +1493,19 @@ plot_linkage <- function (dataset, color_palette) {
 }
 
 # Timely publication within 5 years
-plot_clinicaltrials_timpub_5a <- function (dataset, color_palette) {
+plot_clinicaltrials_timpub_5a <- function (dataset, rt, color_palette) {
+
+    if (rt != "Summary results or publication") {
+
+        if (rt == "Summary results only") {
+            dataset$published_5a <- dataset$published_5a_sum
+        }
+        
+        if (rt == "Publication only") {
+            dataset$published_5a <- dataset$published_5a_pub
+        }
+        
+    }
 
     umc <- "All"
 
@@ -1663,7 +1675,19 @@ plot_clinicaltrials_timpub_5a <- function (dataset, color_palette) {
 }
 
 # Timely publication within 2 years
-plot_clinicaltrials_timpub_2a <- function (dataset, color_palette) {
+plot_clinicaltrials_timpub_2a <- function (dataset, rt, color_palette) {
+
+    if (rt != "Summary results or publication") {
+
+        if (rt == "Summary results only") {
+            dataset$published_2a <- dataset$published_2a_sum
+        }
+        
+        if (rt == "Publication only") {
+            dataset$published_2a <- dataset$published_2a_pub
+        }
+        
+    }
 
     umc <- "All"
 

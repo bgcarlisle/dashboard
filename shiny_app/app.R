@@ -502,6 +502,15 @@ server <- function (input, output, session) {
                             lim_id = "lim",
                             lim_title = "Limitations: Timely Publication",
                             lim_text = lim_timpub_tooltip2
+                        ),
+                        selectInput(
+                            "reporttype2a",
+                            strong("Reporting type"),
+                            choices = c(
+                                "Summary results or publication",
+                                "Summary results only",
+                                "Publication only"
+                            )
                         )
                     ),
                     column(
@@ -517,6 +526,15 @@ server <- function (input, output, session) {
                             lim_id = "lim",
                             lim_title = "Limitations: Timely Publication",
                             lim_text = lim_timpub_tooltip5
+                        ),
+                        selectInput(
+                            "reporttype5a",
+                            strong("Reporting type"),
+                            choices = c(
+                                "Summary results or publication",
+                                "Summary results only",
+                                "Publication only"
+                            )
                         )
                     )
                     
@@ -905,6 +923,15 @@ server <- function (input, output, session) {
                         lim_id = "lim",
                         lim_title = "Limitations: Timely Publication",
                         lim_text = lim_timpub_tooltip5
+                    ),
+                    selectInput(
+                        "startreporttype2a",
+                        strong("Reporting type"),
+                        choices = c(
+                            "Summary results or publication",
+                            "Summary results only",
+                            "Publication only"
+                        )
                     )
                 ),
                 column(
@@ -920,6 +947,15 @@ server <- function (input, output, session) {
                         lim_id = "lim",
                         lim_title = "Limitations: Timely Publication",
                         lim_text = lim_timpub_tooltip5
+                    ),
+                    selectInput(
+                        "startreporttype5a",
+                        strong("Reporting type"),
+                        choices = c(
+                            "Summary results or publication",
+                            "Summary results only",
+                            "Publication only"
+                        )
                     )
                 )
                 
@@ -1321,12 +1357,12 @@ server <- function (input, output, session) {
     
     ## Timely Publication plot 2a
     output$plot_clinicaltrials_timpub_2a <- renderPlotly({
-        return (plot_clinicaltrials_timpub_2a(iv_data, color_palette))
+        return (plot_clinicaltrials_timpub_2a(iv_data, input$startreporttype2a, color_palette))
     })
     
     ## Timely Publication plot 5a
     output$plot_clinicaltrials_timpub_5a <- renderPlotly({
-        return (plot_clinicaltrials_timpub_5a(iv_data, color_palette))
+        return (plot_clinicaltrials_timpub_5a(iv_data, input$startreporttype5a, color_palette))
     })
 
                                         # UMC page plots #
@@ -1363,12 +1399,12 @@ server <- function (input, output, session) {
     
     ## Timely Publication plot 2a
     output$umc_plot_clinicaltrials_timpub_2a <- renderPlotly({
-        return (umc_plot_clinicaltrials_timpub_2a(iv_data, input$selectUMC, color_palette))
+        return (umc_plot_clinicaltrials_timpub_2a(iv_data, input$selectUMC, input$reporttype2a, color_palette))
     })
     
     ## Timely Publication plot 5a
     output$umc_plot_clinicaltrials_timpub_5a <- renderPlotly({
-        return (umc_plot_clinicaltrials_timpub_5a(iv_data, input$selectUMC, color_palette))
+        return (umc_plot_clinicaltrials_timpub_5a(iv_data, input$selectUMC, input$reporttype5a, color_palette))
     })
 
                                         # All UMC's page plots #

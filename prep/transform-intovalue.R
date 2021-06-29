@@ -43,10 +43,16 @@ iv.remaining <- iv %>%
 iv.remaining$lead_cities %>% unique()
 
 iv$preregistered <- iv$days_reg_to_start > 0
+
 iv$published_2a <- (iv$days_pcd_to_publication < 365*2 & ! is.na(iv$days_pcd_to_publication)) |
     (iv$days_pcd_to_summary < 365*2 & ! is.na (iv$days_pcd_to_summary))
+iv$published_2a_sum <- iv$days_pcd_to_summary < 365*2 & ! is.na (iv$days_pcd_to_summary)
+iv$published_2a_pub <- iv$days_pcd_to_publication < 365*2 & ! is.na(iv$days_pcd_to_publication)
+
 iv$published_5a <- iv$days_pcd_to_publication < 365*5 & ! is.na(iv$days_pcd_to_publication) |
     (iv$days_pcd_to_summary < 365*5 & ! is.na (iv$days_pcd_to_summary))
+iv$published_5a_sum <- iv$days_pcd_to_summary < 365*5 & ! is.na (iv$days_pcd_to_summary)
+iv$published_5a_pub <- iv$days_pcd_to_publication < 365*5 & ! is.na(iv$days_pcd_to_publication)
 
 ## This writes the final CSV out
 
@@ -54,7 +60,7 @@ iv <- iv %>%
     filter( ! is.na(city) ) %>%
     filter(has_german_umc_lead) %>%
     filter(! is_dupe) %>%
-    select(id, city, completion_date, preregistered, published_2a, published_5a, has_iv_trn_abstract, has_iv_trn_ft_pdf, color, color_green_only, permission_postprint, has_reg_pub_link)
+    select(id, city, completion_date, preregistered, published_2a, published_2a_sum, published_2a_pub, published_5a, published_5a_sum, published_5a_pub, has_iv_trn_abstract, has_iv_trn_ft_pdf, color, color_green_only, permission_postprint, has_reg_pub_link)
 
 iv %>%
     write_csv("2021-06-18-data-iv.csv")
