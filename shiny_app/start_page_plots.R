@@ -104,9 +104,9 @@ plot_opensci_oa <- function (dataset, absnum, color_palette) {
         } else {
 
             plot_data <- tribble(
-                ~x_label, ~gold,                         ~green,                         ~hybrid,
-                "All",    round(100*all_gold/all_denom), round(100*all_green/all_denom), round(100*all_hybrid/all_denom),
-                umc,      round(100*umc_gold/umc_denom), round(100*umc_green/umc_denom), round(100*umc_hybrid/umc_denom)
+                ~x_label, ~gold,                         ~green,                         ~hybrid,                         ~na,                         ~closed,                         ~bronze,
+                "All",    round(100*all_gold/all_denom), round(100*all_green/all_denom), round(100*all_hybrid/all_denom), round(100*all_na/all_denom), round(100*all_closed/all_denom), round(100*all_bronze/all_denom),
+                umc,      round(100*umc_gold/umc_denom), round(100*umc_green/umc_denom), round(100*umc_hybrid/umc_denom), round(100*umc_na/umc_denom), round(100*umc_closed/umc_denom), round(100*umc_bronze/umc_denom)
             )
 
             plot_data$x_label <- fct_relevel(plot_data$x_label, "All", after= Inf)
@@ -131,8 +131,8 @@ plot_opensci_oa <- function (dataset, absnum, color_palette) {
         } else {
             
             plot_data <- tribble(
-                ~x_label, ~gold,                         ~green,                         ~hybrid,
-                "All",    round(100*all_gold/all_denom), round(100*all_green/all_denom), round(100*all_hybrid/all_denom)
+                ~x_label, ~gold,                         ~green,                         ~hybrid,                         ~na,                         ~closed,                         ~bronze,
+                "All",    round(100*all_gold/all_denom), round(100*all_green/all_denom), round(100*all_hybrid/all_denom), round(100*all_na/all_denom), round(100*all_closed/all_denom), round(100*all_bronze/all_denom)
             )
 
             upperlimit <- 100
@@ -142,7 +142,7 @@ plot_opensci_oa <- function (dataset, absnum, color_palette) {
         
     }
 
-    if (absnum) {
+    if (TRUE) {
         
         plot_ly(
             plot_data,
