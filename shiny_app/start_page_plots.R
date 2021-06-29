@@ -1500,6 +1500,9 @@ plot_clinicaltrials_timpub_5a <- function (dataset, color_palette) {
     dataset$year <- dataset$completion_date %>%
         format("%Y")
 
+    dataset <- dataset %>%
+        filter(year < 2021-5)
+
     years <- seq(from=min(dataset$year), to=max(dataset$year))
 
     all_denom <- dataset %>%
