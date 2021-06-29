@@ -42,6 +42,16 @@ allumc_clinicaltrials_prereg_tooltip <- strwrap("This metric measures if the cli
                         including primary and secondary outcomes, publicly available before study start.
                         Prospective registration adds transparency, helps protect against outcome switching.")
 
+allumc_clinicaltrials_timpub_tooltip5a <- strwrap("This metric measures how many clinical trials registered on ClinicalTrials.gov
+                        reported their results either as a journal publication or as summary results on the
+                        trials registry within 2 or 5 years after completion. Trials completed between 2009
+                        and 2013 were considered. The results were previously published as part of the
+                        IntoValue study (https://s-quest.bihealth.org/intovalue/). Clinical trials are expensive
+                        and often have many contributing patients. A fast dissemination of the trial results
+                        is crucial to make the evidence gained in those trials available. The World Health
+                        organization recommends publishing clinical trial results within one year after the
+                        end of a study.")
+
 allumc_clinicaltrials_timpub_tooltip <- strwrap("This metric measures how many clinical trials registered on ClinicalTrials.gov
                         reported their results either as a journal publication or as summary results on the
                         trials registry within 2 or 5 years after completion. Trials completed between 2009

@@ -620,6 +620,70 @@ plot_allumc_clinicaltrials_timpub <- function (dataset, color_palette, color_pal
     
 }
 
+## Timely reporting (5a)
+
+plot_allumc_timpub_5a <- function (dataset, color_palette, color_palette_bars) {
+
+    
+    plot_data <- tribble (
+        ~x_label, ~percentage
+    )
+
+    for (umc in unique(dataset$city)) {
+
+        umc_numer <- dataset %>%
+            filter(
+                city == umc,
+                published_5a
+            ) %>%
+            nrow()
+
+        umc_denom <- dataset %>%
+            filter(city == umc) %>%
+            nrow()
+
+        plot_data <- plot_data %>%
+            bind_rows(
+                tribble(
+                    ~x_label, ~percentage,
+                    umc, round(100*umc_numer/umc_denom),
+                )
+            )
+    }
+
+    plot_data$x_label <- factor(
+        plot_data$x_label,
+        levels = unique(plot_data$x_label)[order(plot_data$percentage, decreasing=TRUE)]
+    )
+
+     plot_ly(
+        plot_data,
+        x = ~x_label,
+        y = ~percentage,
+        type = 'bar',
+        marker = list(
+            color = color_palette_bars,
+            line = list(
+                color = 'rgb(0,0,0)',
+                width = 1.5
+            )
+        )
+    ) %>%
+        layout(
+            xaxis = list(
+                title = '<b>UMC</b>'
+            ),
+            yaxis = list(
+                title = '<b>Published within 5 years (%)</b>',
+                range = c(0, ceiling(max(plot_data$percentage)/5)*5)
+            ),
+            paper_bgcolor = color_palette[9],
+            plot_bgcolor = color_palette[9]
+        )
+    
+}
+
+
 ## Animal studies
 
 ## Randomization

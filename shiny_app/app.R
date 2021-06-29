@@ -1203,6 +1203,15 @@ server <- function (input, output, session) {
         all_denom_timpub <- iv_data_unique %>%
             nrow()
 
+        ## Value for timely pub 5a
+
+        all_numer_timpub5a <- iv_data_unique %>%
+            filter(published_5a) %>%
+            nrow()
+
+        all_denom_timpub5a <- iv_data_unique %>%
+            nrow()
+
         wellPanel(
             style="padding-top: 0px; padding-bottom: 0px;",
             h2(strong("Trial reporting"), align = "left"),
@@ -1224,12 +1233,11 @@ server <- function (input, output, session) {
                     )
                 )
             ),
-            
             fluidRow(
                 column(
                     12,
                     metric_box(
-                        title = "Timely Publication",
+                        title = "Timely Publication (2 years)",
                         value = paste0(round(100*all_numer_timpub/all_denom_timpub), "%"),
                         value_text = "of clinical trials published results within 2 years",
                         plot = plotlyOutput('plot_allumc_clinicaltrials_timpub', height="300px"),
@@ -1239,6 +1247,23 @@ server <- function (input, output, session) {
                         lim_id = "limALLUMCTimPub",
                         lim_title = "Limitations: Timely Publication (All UMCs)",
                         lim_text = lim_allumc_clinicaltrials_timpub_tooltip
+                    )
+                )
+            ),
+            fluidRow(
+                column(
+                    12,
+                    metric_box(
+                        title = "Publication within 5 years",
+                        value = paste0(round(100*all_numer_timpub5a/all_denom_timpub5a), "%"),
+                        value_text = "of clinical trials published results within 5 years",
+                        plot = plotlyOutput('plot_allumc_timpub_5a', height="300px"),
+                        info_id = "infoALLUMCTimPub5a",
+                        info_title = "Publication within 5 years (All UMCs)",
+                        info_text = allumc_clinicaltrials_timpub_tooltip5a,
+                        lim_id = "limALLUMCTimPub5a",
+                        lim_title = "Limitations: Publication within 5 years (All UMCs)",
+                        lim_text = lim_allumc_clinicaltrials_timpub_tooltip5a
                     )
                 )
             )
@@ -1386,6 +1411,10 @@ server <- function (input, output, session) {
 
     output$plot_allumc_clinicaltrials_timpub <- renderPlotly({
         return(plot_allumc_clinicaltrials_timpub(iv_data, color_palette, color_palette_bars))
+    })
+
+    output$plot_allumc_timpub_5a <- renderPlotly({
+        return(plot_allumc_timpub_5a(iv_data, color_palette, color_palette_bars))
     })
     
     output$data_table_eutt_data <- DT::renderDataTable({
