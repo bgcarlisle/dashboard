@@ -1140,7 +1140,7 @@ server <- function (input, output, session) {
                 column(
                     12,
                     metric_box(
-                        title = "Reporting a Trial Registration Number in publications",
+                        title = "Reporting of Trial Registration Number in publications",
                         value = paste0(round(100*all_numer_trn/all_denom_trn), "%"),
                         value_text = "of clinical trials reported a trial registration number in the abstract",
                         plot = plotlyOutput('plot_allumc_clinicaltrials_trn', height="300px"),
@@ -1150,6 +1150,23 @@ server <- function (input, output, session) {
                         lim_id = "limALLUMCTRN",
                         lim_title = "Limitations: TRN reporting (All UMCs)",
                         lim_text = lim_allumc_clinicaltrials_trn_tooltip
+                    )
+                )
+            ),
+            fluidRow(
+                column(
+                    12,
+                    metric_box(
+                        title = "Publication link in registry",
+                        value = paste0(round(100*mean(iv_data$has_reg_pub_link, na.rm=TRUE)), "%"),
+                        value_text = "of clinical trial registry entries link to the journal publication",
+                        plot = plotlyOutput('plot_allumc_linkage', height="300px"),
+                        info_id = "infoALLUMCLinkage",
+                        info_title = "Linkage (All UMCs)",
+                        info_text = allumc_linkage_tooltip,
+                        lim_id = "limALLUMCLinkage",
+                        lim_title = "Limitations: Linkage (All UMCs)",
+                        lim_text = lim_allumc_linkage_tooltip
                     )
                 )
             )
@@ -1357,6 +1374,12 @@ server <- function (input, output, session) {
 
     output$plot_allumc_clinicaltrials_prereg <- renderPlotly({
         return(plot_allumc_clinicaltrials_prereg(iv_data, color_palette, color_palette_bars))
+    })
+
+    ## Linkage
+
+    output$plot_allumc_linkage <- renderPlotly({
+        return(plot_allumc_linkage(iv_data, color_palette, color_palette_bars))
     })
 
     ## Timely publication
