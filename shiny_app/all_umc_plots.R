@@ -80,7 +80,7 @@ plot_allumc_openaccess <- function (dataset, color_palette) {
                 title = '<b>UMC</b>'
             ),
             yaxis = list(
-                title = '<b>Percentage of publications</b>',
+                title = '<b>Percentage of publications (%)</b>',
                 range = c(0, 100)
             ),
             paper_bgcolor = color_palette[9],
@@ -367,7 +367,7 @@ plot_allumc_clinicaltrials_trn <- function (dataset, color_palette) {
             ),
             yaxis = list(
                 title = '<b>TRN reporting (%)</b>',
-                range = c(0, ceiling(max(plot_data$percentage)/5)*5)
+                range = c(0, 100)
             ),
             paper_bgcolor = color_palette[9],
             plot_bgcolor = color_palette[9]
@@ -433,7 +433,7 @@ plot_allumc_clinicaltrials_sumres <- function (dataset, color_palette, color_pal
             ),
             yaxis = list(
                 title = '<b>Summary results reporting (%)</b>',
-                range = c(0, ceiling(max(plot_data$percentage)/5)*5)
+                range = c(0, 100)
             ),
             paper_bgcolor = color_palette[9],
             plot_bgcolor = color_palette[9]
@@ -495,7 +495,7 @@ plot_allumc_clinicaltrials_prereg <- function (dataset, color_palette, color_pal
             ),
             yaxis = list(
                 title = '<b>Prospective registration (%)</b>',
-                range = c(0, ceiling(max(plot_data$percentage)/5)*5)
+                range = c(0, 100)
             ),
             paper_bgcolor = color_palette[9],
             plot_bgcolor = color_palette[9]
@@ -550,7 +550,7 @@ plot_allumc_linkage <- function (dataset, color_palette, color_palette_bars) {
             ),
             yaxis = list(
                 title = '<b>Linked publications in registry (%)</b>',
-                range = c(0, ceiling(max(plot_data$percentage)/5)*5)
+                range = c(0, 100)
             ),
             paper_bgcolor = color_palette[9],
             plot_bgcolor = color_palette[9]
@@ -612,7 +612,7 @@ plot_allumc_clinicaltrials_timpub <- function (dataset, color_palette, color_pal
             ),
             yaxis = list(
                 title = '<b>Published within 2 years (%)</b>',
-                range = c(0, ceiling(max(plot_data$percentage)/5)*5)
+                range = c(0, 100)
             ),
             paper_bgcolor = color_palette[9],
             plot_bgcolor = color_palette[9]
@@ -675,7 +675,7 @@ plot_allumc_timpub_5a <- function (dataset, color_palette, color_palette_bars) {
             ),
             yaxis = list(
                 title = '<b>Published within 5 years (%)</b>',
-                range = c(0, ceiling(max(plot_data$percentage)/5)*5)
+                range = c(0, 100)
             ),
             paper_bgcolor = color_palette[9],
             plot_bgcolor = color_palette[9]
