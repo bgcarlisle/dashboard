@@ -832,41 +832,6 @@ server <- function (input, output, session) {
             preregvaltext <- "of registered clinical trials were prospectively registered"
         }
 
-        ## Value for timely pub
-
-        all_numer_timpub <- iv_data_unique %>%
-            filter(published_2a) %>%
-            nrow()
-
-        all_denom_timpub <- iv_data_unique %>%
-            nrow()
-
-        if (all_denom_timpub == 0) {
-            timpubval <- "Not applicable"
-            timpubvaltext <- "No clinical trials for this metric were captured by this method for this UMC"
-        } else {
-            timpubval <- paste0(round(100*all_numer_timpub/all_denom_timpub), "%")
-            timpubvaltext <- "of clinical trials registered in ClinicalTrials.gov or DRKS reported results within 2 years"
-        }
-
-        ## Value for timely pub 5a
-
-        all_numer_timpub5a <- iv_data_unique %>%
-            filter(published_5a) %>%
-            nrow()
-
-        all_denom_timpub5a <- iv_data_unique %>%
-            nrow()
-
-        if (all_denom_timpub5a == 0) {
-            timpubval5a <- "Not applicable"
-            timpubvaltext5a <- "No clinical trials for this metric were captured by this method for this UMC"
-        } else {
-            timpubval5a <- paste0(round(100*all_numer_timpub5a/all_denom_timpub5a), "%")
-            timpubvaltext5a <- "of clinical trials registered in ClinicalTrials.gov or DRKS reported results within 5 years"
-        }
-
-        
         ## Value for summary results
             
         sumres_percent <- eutt_hist %>%
@@ -912,18 +877,7 @@ server <- function (input, output, session) {
                 ),
                 column(
                     col_width,
-                    metric_box(
-                        title = "Reporting within 2 years (timely)",
-                        value = timpubval,
-                        value_text = timpubvaltext,
-                        plot = plotlyOutput('plot_clinicaltrials_timpub_2a', height="300px"),
-                        info_id = "infoTimPub2",
-                        info_title = "Timely Publication (2 years)",
-                        info_text = timpub_tooltip2,
-                        lim_id = "lim",
-                        lim_title = "Limitations: Timely Publication",
-                        lim_text = lim_timpub_tooltip5
-                    ),
+                    uiOutput("startreport2a"),
                     selectInput(
                         "startreporttype2a",
                         strong("Reporting type"),
@@ -936,18 +890,7 @@ server <- function (input, output, session) {
                 ),
                 column(
                     col_width,
-                    metric_box(
-                        title = "Reporting within 5 years",
-                        value = timpubval5a,
-                        value_text = timpubvaltext5a,
-                        plot = plotlyOutput('plot_clinicaltrials_timpub_5a', height="300px"),
-                        info_id = "infoTimPub5",
-                        info_title = "Publication by 5 years",
-                        info_text = timpub_tooltip2,
-                        lim_id = "lim",
-                        lim_title = "Limitations: Timely Publication",
-                        lim_text = lim_timpub_tooltip5
-                    ),
+                    uiOutput("startreport5a"),
                     selectInput(
                         "startreporttype5a",
                         strong("Reporting type"),
@@ -963,6 +906,100 @@ server <- function (input, output, session) {
 
         )
 
+        
+    })
+
+    output$startreport2a <- renderUI({
+
+        iv_data_unique <- iv_data %>%
+            distinct(id, .keep_all = TRUE)
+
+        all_numer_timpub <- iv_data_unique %>%
+            filter(published_2a) %>%
+            nrow()
+
+        if (input$startreporttype2a == "Summary results only") {
+            all_numer_timpub <- iv_data_unique %>%
+                filter(published_2a_sum) %>%
+                nrow()
+        }
+
+        if (input$startreporttype2a == "Publication only") {
+            all_numer_timpub <- iv_data_unique %>%
+                filter(published_2a_pub) %>%
+                nrow()
+        }
+        
+        all_denom_timpub <- iv_data_unique %>%
+            nrow()
+
+        if (all_denom_timpub == 0) {
+            timpubval <- "Not applicable"
+            timpubvaltext <- "No clinical trials for this metric were captured by this method for this UMC"
+        } else {
+                        
+            timpubval <- paste0(round(100*all_numer_timpub/all_denom_timpub), "%")
+            timpubvaltext <- "of clinical trials registered in ClinicalTrials.gov or DRKS reported results within 2 years"
+        }
+        
+        metric_box(
+            title = "Reporting within 2 years (timely)",
+            value = timpubval,
+            value_text = timpubvaltext,
+            plot = plotlyOutput('plot_clinicaltrials_timpub_2a', height="300px"),
+            info_id = "infoTimPub2",
+            info_title = "Timely Publication (2 years)",
+            info_text = timpub_tooltip2,
+            lim_id = "lim",
+            lim_title = "Limitations: Timely Publication",
+            lim_text = lim_timpub_tooltip5
+        )
+    })
+
+    output$startreport5a <-  renderUI({
+
+        iv_data_unique <- iv_data %>%
+            distinct(id, .keep_all = TRUE)
+
+        all_numer_timpub5a <- iv_data_unique %>%
+            filter(published_5a) %>%
+            nrow()
+
+        if (input$startreporttype5a == "Summary results only") {
+            all_numer_timpub5a <- iv_data_unique %>%
+                filter(published_5a_sum) %>%
+                nrow()
+        }
+
+        if (input$startreporttype5a == "Publication only") {
+            all_numer_timpub5a <- iv_data_unique %>%
+                filter(published_5a_pub) %>%
+                nrow()
+        }
+
+        all_denom_timpub5a <- iv_data_unique %>%
+            nrow()
+
+        if (all_denom_timpub5a == 0) {
+            timpubval5a <- "Not applicable"
+            timpubvaltext5a <- "No clinical trials for this metric were captured by this method for this UMC"
+        } else {
+            timpubval5a <- paste0(round(100*all_numer_timpub5a/all_denom_timpub5a), "%")
+            timpubvaltext5a <- "of clinical trials registered in ClinicalTrials.gov or DRKS reported results within 5 years"
+        }
+
+        metric_box(
+            title = "Reporting within 5 years",
+            value = timpubval5a,
+            value_text = timpubvaltext5a,
+            plot = plotlyOutput('plot_clinicaltrials_timpub_5a', height="300px"),
+            info_id = "infoTimPub5",
+            info_title = "Publication by 5 years",
+            info_text = timpub_tooltip2,
+            lim_id = "lim",
+            lim_title = "Limitations: Timely Publication",
+            lim_text = lim_timpub_tooltip5
+        )
         
     })
 
